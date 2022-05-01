@@ -8,7 +8,8 @@ namespace Interfaces
         public Recipe getByName(string name);
         public void addRecipe(Recipe recipe);
         public void updateRecipe(Recipe recipe);
-        public void removeRec(int id);
+        public void removeRec(string linkname);
         public IEnumerable<Recipe> getAll();
+        public IEnumerable<string> getAllIngredients();
     }
 }

@@ -17,14 +17,19 @@ namespace ASPRjs.Controllers
             _recipeService = recipeService;
             _env = env;
         }
-        [HttpGet("name")]
-        public IActionResult Get(string name)
+        [HttpGet("{linkname}")]
+        public IActionResult Get(string linkname)
         {
-            var recipe = _recipeService.getRecipe(name);
+            var recipe = _recipeService.getRecipe(linkname);
             if (recipe == null) return NotFound();
             return Ok(recipe);
         }
-
+        [HttpGet("ViewIngredients")]
+        public IActionResult GetIngredients()
+        {
+            var ingredients = _recipeService.getAllIngredients();
+            return Ok(ingredients);
+        }
 
         [HttpGet("ViewAll")]
         public IActionResult ViewAll()
@@ -32,17 +37,17 @@ namespace ASPRjs.Controllers
             var recipes = _recipeService.getAllRecipes();
             return Ok(recipes);
         }
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{linkname}")]
+        public IActionResult Delete(string linkname)
         {
-            _recipeService.removeRecipe(id);
+            _recipeService.removeRecipe(linkname);
             return NoContent();
         }
 
-        [HttpPut("Update/{id}")]
-        public IActionResult Update(int id, UpdateRecipe urecipe)
+        [HttpPut("Update/{linkname}")]
+        public IActionResult Update(string linkname, UpdateRecipe urecipe)
         {
-            _recipeService.updateRecipe(id, urecipe);
+            _recipeService.updateRecipe(linkname, urecipe);
             return Ok();
         }
 
@@ -50,17 +55,25 @@ namespace ASPRjs.Controllers
         public IActionResult addNewRecipe(RecipeDto recipe)
         {
             var rrecipe = _recipeService.addNewRecipe(recipe);
-            return Created($"Dishes/Recipe/{rrecipe.Name.Replace(' ','-')}", rrecipe);
+            return Created($"Dishes/Recipe/{rrecipe.LinkName}", rrecipe);
         }
 
-        [HttpPost("SaveImage/{id}")]
-        public JsonResult SaveImage(int id)
+        [HttpGet("GetImage/{linkname}")]
+        public IActionResult GetImage(string linkname)
+        {
+            var recipe = _recipeService.getRecipe(linkname);
+            if (recipe == null) return NotFound();
+            return Ok(recipe);
+        }
+
+        [HttpPost("SaveImage/{linkname}")]
+        public JsonResult SaveImage(string linkname)
         {
             try
             {
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
-                string filename = $"{id}_{postedFile.FileName}";
+                string filename = $"{linkname}-{postedFile.FileName}";
                 var physicalPath = _env.ContentRootPath + "/Images/" + filename;
 
                 using(var stream = new FileStream(physicalPath, FileMode.Create))
@@ -68,7 +81,7 @@ namespace ASPRjs.Controllers
                     postedFile.CopyTo(stream);
                     stream.Close();
                 }
-                _recipeService.changeImage(id, filename);
+                _recipeService.changeImage(linkname, filename);
 
                 return new JsonResult(filename);
             }

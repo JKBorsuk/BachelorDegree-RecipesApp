@@ -7,9 +7,10 @@ namespace Interfaces
     {
         public RecipeDto getRecipe(string name);
         public ListRecipesDto getAllRecipes();
+        public ListIngredientDto getAllIngredients();
         public Recipe addNewRecipe(RecipeDto recipe);
-        public void removeRecipe(int id);
-        public void updateRecipe(int id, UpdateRecipe urecipe);
-        public void changeImage(int id, string filename);
+        public void removeRecipe(string linkname);
+        public void updateRecipe(string linkname, UpdateRecipe urecipe);
+        public void changeImage(string linkname, string filename);
     }
 }

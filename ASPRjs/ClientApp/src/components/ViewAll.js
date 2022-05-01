@@ -16,13 +16,13 @@ export class ViewAll extends Component {
     static dishType(props) {
         switch (props) {
             case 1:
-                return 'Meat Breakfast'
+                return 'Mięsne śniadanie'
             case 2:    
-                return 'Meat Lunch/Dinner'
+                return 'Mięsny obiad/kolacja'
             case 3:    
-                return 'Vege Breakfast'
+                return 'Śniadanie vege'
             case 4:    
-                return 'Vege Lunch/Dinner'
+                return 'Vege obiad/kolacja'
         }
     }
 

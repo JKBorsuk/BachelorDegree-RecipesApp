@@ -39,6 +39,8 @@ namespace ASPRjsAPI.Mappings
 
                 cfg.CreateMap<RIngredientDto, RecipeIngredient>();
                 cfg.CreateMap<RecipeIngredient, RIngredientDto>();
+                cfg.CreateMap<RecipeIngredient, EachIngredient>()
+                .ForMember(cfg => cfg.Name, act => act.MapFrom(act => act.Name));
 
                 cfg.CreateMap<RSpiceDto, RecipeSpice>();
                 cfg.CreateMap<RecipeSpice, RSpiceDto>();

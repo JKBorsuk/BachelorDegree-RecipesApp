@@ -2,6 +2,8 @@
   "name": "asprjs",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://localhost:7049",
+  "homepage": ".",
   "dependencies": {
     "axios": "^0.26.1",
     "bootstrap": "^5.1.0",

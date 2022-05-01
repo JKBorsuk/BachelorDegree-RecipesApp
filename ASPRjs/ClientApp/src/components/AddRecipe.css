@@ -1,0 +1,110 @@
+.recipe-container-add {
+    margin: auto;
+    max-width: 700px;
+    overflow-x: hidden;
+    padding: 50px;
+    border: 3px solid rgb(211, 155, 52);;
+    border-radius: 40px;
+}
+@media only screen and (max-width: 768px){
+    .recipe-container-add {
+        padding: 20px;
+    }
+}
+
+.recipe-child-add > .recipe-data {
+    max-width: 150px;
+}
+.recipe-child-add {
+    line-height:38px;
+}
+.recipe-child-add > .recipe-data,
+.recipe-child-add > input,
+.recipe-child-add > .recipe-child-list,
+.recipe-child-add > .recipe-child-list-spice
+{
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+.recipe-child-add > .recipe-child-list {
+    text-align: right;
+    float: right;
+}
+.recipe-child-add > input {
+    float: right;
+}
+.recipe-child-add > .recipe-child-list-spice {
+    display: inline-block;
+}
+.recipe-child-add > .recipe-child-list-spice > input, 
+.recipe-child-add > .recipe-child-list-spice {
+    float: right;
+}
+.recipe-child-list-spice {
+    max-width: 300px;
+    width: 100%;
+}
+.recipe-child-list-spice > input, 
+.recipe-child-add > input, 
+.recipe-child-list > input {
+    padding: 10px;
+    max-width: 180px;
+    width: 100%;
+    border: none;
+    outline: 2px solid rgb(133, 133, 133);
+    border-radius: 10px;
+    outline-offset: -0.25em;
+}
+
+#message {
+    height: 1em;
+    margin-top: 20px;
+    font-size: 1.2em;
+    text-align: center;
+    color: #36a936;
+}
+
+.recipe-child-add, .recipe-child-add-textarea {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.recipe-child-add-file {
+    text-align: left;
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+.recipe-data> input[type=button] {
+    border: 2px solid rgb(211, 155, 52);
+    background-color: white;
+    border-radius: 15px;
+    padding: 5px 10px;
+    transition: 0.4s background-color, color ease-in;
+}
+.recipe-data> input[type=button]:hover {
+    background-color: rgb(211, 155, 52);
+    color: white;
+}
+
+.recipe-data> input[type=button]:nth-child(1) /*Niższy*/{
+    margin-left: 24px;
+}
+.recipe-data> input[type=button]:nth-child(2) /*Wyższy*/ {
+    margin-left: 10px;
+}
+div.recipe-container-add > form > button {
+    margin-top:10px;
+    border: none;
+    padding: 1rem;
+    width: 100%;
+    font-size: 1.2em;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: 0.4s;
+    background-color: #a1a1a1;
+    color: white;
+}
+div.recipe-container-add > form > button:hover {
+    background-color: rgb(133, 133, 133);
+    color: rgb(211, 155, 52);
+}

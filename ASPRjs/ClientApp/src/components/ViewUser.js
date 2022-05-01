@@ -6,7 +6,10 @@ export class ViewUser extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { user: [], user_login: window.location.href.substring(window.location.href.lastIndexOf('/') + 1), loading: false };
+        this.state = { 
+            user: [], 
+            user_login: window.location.href.substring(window.location.href.lastIndexOf('/') + 1), 
+            loading: false };
     }
 
     componentDidMount() {

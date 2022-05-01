@@ -3,6 +3,7 @@ using ASPRjs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPRjs.Migrations
 {
     [DbContext(typeof(RecipeMasterDbContext))]
-    partial class RecipeMasterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220426220214_noRequiredSource")]
+    partial class noRequiredSource
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,13 +61,10 @@ namespace ASPRjs.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("PhotoFileName")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(75)")
-                        .HasDefaultValue("Noimg.png");
+                        .HasDefaultValue("Noimg.png")
+                        .HasColumnType("varchar(75)");
 
                     b.Property<string>("Source")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Type")
@@ -145,6 +144,7 @@ namespace ASPRjs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("role")
+                        .HasDefaultValue(1)
                         .HasColumnType("int");
 
                     b.HasKey("UserId");

@@ -15,16 +15,20 @@ namespace Services
             _recipeRepository = recipeRepository;
             _mapper = mapper;
         }
-        public RecipeDto getRecipe(string name)
+        public RecipeDto getRecipe(string linkname)
         {
-            name = name.Replace('-', ' ').Replace('-',',');
-            var recipe = _recipeRepository.getByName(name);
+            var recipe = _recipeRepository.getByName(linkname);
             return _mapper.Map<RecipeDto>(recipe);
         }
         public ListRecipesDto getAllRecipes()
         {
             var recipes = _recipeRepository.getAll();
             return _mapper.Map<ListRecipesDto>(recipes);
+        }
+        public ListIngredientDto getAllIngredients()
+        {
+            var ingredients = _recipeRepository.getAllIngredients();
+            return _mapper.Map<ListIngredientDto>(ingredients);
         }
         public Recipe addNewRecipe(RecipeDto recipe)
         {
@@ -33,13 +37,13 @@ namespace Services
             _recipeRepository.addRecipe(nrecipe);
             return nrecipe;
         }
-        public void removeRecipe(int id)
+        public void removeRecipe(string linkname)
         {
-            _recipeRepository.removeRec(id);
+            _recipeRepository.removeRec(linkname);
         }
-        public void updateRecipe(int id, UpdateRecipe urecipe)
+        public void updateRecipe(string linkname, UpdateRecipe urecipe)
         {
-            var existingRecipe = _recipeRepository.getById(id);
+            var existingRecipe = _recipeRepository.getByName(linkname);
             if (existingRecipe == null) return;
             var updatedRecipe = _mapper.Map(urecipe, existingRecipe);
 
@@ -48,9 +52,9 @@ namespace Services
 
             _recipeRepository.updateRecipe(existingRecipe);
         }
-        public void changeImage(int id, string filename)
+        public void changeImage(string linkname, string filename)
         {
-            var existingRecipe = _recipeRepository.getById(id);
+            var existingRecipe = _recipeRepository.getByName(linkname);
             if (existingRecipe == null) return;
 
             existingRecipe.PhotoFileName = filename;

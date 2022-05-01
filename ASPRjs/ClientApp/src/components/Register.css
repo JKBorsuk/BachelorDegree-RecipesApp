@@ -1,0 +1,48 @@
+.reg-container {
+    padding-top: 25px;
+}
+
+.register {
+    text-align: center;
+    border: 2px solid black;
+    padding: 50px;
+    max-width: 450px;
+    margin: auto;
+
+    border-radius: 15%;
+}
+.register > form {
+    text-align: center;
+}
+
+.register > form > input {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 20rem;
+    height: 2rem;
+    padding: 1rem;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+.register > form > button {
+    border: none;
+    padding: 1rem;
+    width: 21.2rem;
+    font-size: 1.2em;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: 0.4s;
+    background-color: #c7c7c7;
+}
+.register > form > button:hover {
+    background-color: #a8a8a8;
+    color: white;
+}
+.reg-container > #message {
+    margin-top: 20px;
+    font-size: 1.2em;
+    text-align: center;
+    color: #36a936;
+}

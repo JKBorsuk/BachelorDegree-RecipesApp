@@ -11,5 +11,7 @@ namespace ASPRjsAPI.Dto
         public List<RSpiceDto> Spices { get; set; }
         public string Description { get; set; }
         public string Source { get; set; }
+        public string PhotoFileName { get; set; }
+        public string LinkName { get; set; }
     }
 }

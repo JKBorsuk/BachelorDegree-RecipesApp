@@ -14,15 +14,14 @@ namespace ASPRjs.Models
         public string Name { get; set; }
 
         public List<RecipeIngredient> Ingredients { get; set; }
-
         public List<RecipeSpice> Spices { get; set; }
 
         [Column(TypeName = "varchar(MAX)")]
         public string Description { get; set; }
         [Column(TypeName = "varchar(75)")]
         public string PhotoFileName { get; set; } = "Noimg.png";
-
-        public string Source { get; set; }
+        public string LinkName { get; set; }
+        public string Source { get; set; } = "";
 
     }
 }
