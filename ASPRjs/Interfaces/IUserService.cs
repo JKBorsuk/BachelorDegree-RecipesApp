@@ -12,7 +12,7 @@ namespace Interfaces
         public Dictionary<string, bool> dictionary(int id);
         public UserIngredient AddNewIngredient(UIngredientDto uing, string login);
         public ListIngredientDto readAllUserIngredients(string login);
-        public UserRecipesListDto readAllICanCook(string login);
+        public UserRecipesListDto readAllICanCook(string login, int type);
         public void updateUser(string login, UpdateUser user);
     }
 }

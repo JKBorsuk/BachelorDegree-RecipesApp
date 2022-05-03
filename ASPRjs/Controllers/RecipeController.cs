@@ -10,11 +10,13 @@ namespace ASPRjs.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
+        private readonly IUserService _userService;
         private readonly IWebHostEnvironment _env;
 
-        public RecipeController(IRecipeService recipeService, IWebHostEnvironment env)
+        public RecipeController(IRecipeService recipeService, IUserService userService, IWebHostEnvironment env)
         {
             _recipeService = recipeService;
+            _userService = userService;
             _env = env;
         }
         [HttpGet("{linkname}")]
@@ -51,11 +53,16 @@ namespace ASPRjs.Controllers
             return Ok();
         }
 
-        [HttpPost("AddRecipe")]
-        public IActionResult addNewRecipe(RecipeDto recipe)
+        [HttpPost("AddRecipe/{login}")]
+        public IActionResult addNewRecipe(string login,RecipeDto recipe)
         {
-            var rrecipe = _recipeService.addNewRecipe(recipe);
-            return Created($"Dishes/Recipe/{rrecipe.LinkName}", rrecipe);
+            var user = _userService.getUserByLogin(login);
+            if (user.role > 1 && HttpContext.Session.GetString("user") == login)
+            {
+                var rrecipe = _recipeService.addNewRecipe(recipe);
+                return Created($"Dishes/Recipe/{rrecipe.LinkName}", rrecipe);
+            }
+            else { return Unauthorized(); }
         }
 
         [HttpGet("GetImage/{linkname}")]

@@ -1,0 +1,25 @@
+﻿#main-recipe-master-container {
+    position: relative;
+    min-height: 100vh;
+    height: 100%;
+}
+#main-recipe-master-container > div {
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 14px;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-color: rgb(230, 230, 230);
+    box-shadow: 0 0 30px rgb(230, 230, 230);
+}
+footer > div {
+    text-align: center;
+}

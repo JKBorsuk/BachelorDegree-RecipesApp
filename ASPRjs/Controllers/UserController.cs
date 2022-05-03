@@ -24,6 +24,17 @@ namespace ASPRjs.Controllers
             if(user == null) return NotFound("User does not exist");
             return Ok(user);
         }
+        [HttpGet("IsLogged")]
+        public IActionResult isLogged()
+        {
+            return Ok(HttpContext.Session.GetString("user"));
+        }
+        [HttpGet("Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("user");
+            return Ok("User logged out");
+        }
 
         [HttpGet("Ingredients/{login}")]
         public IActionResult readIngredients(string login)
@@ -69,13 +80,31 @@ namespace ASPRjs.Controllers
             return Ok();
         }
 
-        [HttpPost("Cooking/{login}")]
-        public IActionResult findProperOnes(string login)
+        [HttpGet("Cooking/{login}/{type}")]
+        public IActionResult findProperOnes(string login, int type)
         {
-            var ones = _userService.readAllICanCook(login);
+            if (HttpContext.Session.GetString("user") != login) return NotFound("No recepies were found");
+
+            var ones = _userService.readAllICanCook(login,type);
             if(ones == null || ones.Count == 0) return NotFound("No recepies were found");
 
             return Ok(ones);
+        }
+        [HttpGet("IsAdmin/{login}")]
+        public IActionResult isAdmin(string login)
+        {
+            var user = _userService.getUserByLogin(login);
+            if(user == null) return NotFound();
+            if (user.role > 1 && HttpContext.Session.GetString("user") == login) return Ok();
+            else return NoContent();
+        }
+        [HttpGet("IsHeadAdmin/{login}")]
+        public IActionResult isHeadAdmin(string login)
+        {
+            var user = _userService.getUserByLogin(login);
+            if (user == null) return NotFound();
+            if (user.role == 3 && HttpContext.Session.GetString("user") == login) return Ok();
+            else return NoContent();
         }
     }
 }

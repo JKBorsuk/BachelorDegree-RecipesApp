@@ -1,3 +1,9 @@
+@media screen and (max-width: 768px){
+    .recipe-container-add {
+        padding: 20px;
+    }
+}
+
 .recipe-container-add {
     margin: auto;
     max-width: 700px;
@@ -5,11 +11,6 @@
     padding: 50px;
     border: 3px solid rgb(211, 155, 52);;
     border-radius: 40px;
-}
-@media only screen and (max-width: 768px){
-    .recipe-container-add {
-        padding: 20px;
-    }
 }
 
 .recipe-child-add > .recipe-data {

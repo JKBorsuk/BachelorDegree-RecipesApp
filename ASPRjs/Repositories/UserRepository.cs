@@ -45,12 +45,12 @@ namespace Repositories
         {
             return _masterDbContext.UserIngredients.Where(x => x.UserId == getByLogin(login).UserId).Select(y => y.Name);
         }
-        public List<Recipe> findOnes(Dictionary<string, bool> dictionary)
+        public List<Recipe> findOnes(Dictionary<string, bool> dictionary, int type)
         {
             bool found;
 
             List<Recipe> recipes = new List<Recipe>();
-            foreach (Recipe recipe in _masterDbContext.Recipes.Include(x => x.Ingredients))
+            foreach (Recipe recipe in _masterDbContext.Recipes.Include(x => x.Ingredients).Where(y => y.Type == type))
             {
                 found = true;
                 foreach (RecipeIngredient recipeIngredient in recipe.Ingredients)

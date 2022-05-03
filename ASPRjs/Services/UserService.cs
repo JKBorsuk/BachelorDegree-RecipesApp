@@ -74,12 +74,12 @@ namespace Services
             return _mapper.Map<ListIngredientDto>(ingredients);
         }
 
-        public UserRecipesListDto readAllICanCook(string login)
+        public UserRecipesListDto readAllICanCook(string login, int type)
         {
             Dictionary<string, bool> MyDictionary = dictionary(_userRepository.getByLogin(login).UserId);
             if(MyDictionary == null) return null;
 
-            var ones = _userRepository.findOnes(MyDictionary);
+            var ones = _userRepository.findOnes(MyDictionary, type);
             return _mapper.Map<UserRecipesListDto>(ones);
         }
         public void updateUser(string login, UpdateUser user)

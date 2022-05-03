@@ -6,9 +6,12 @@ export class Footer extends Component {
 
     render() {
         return (
+            <>
+            <div id="footer-filler"></div>
             <footer>
                 <div>Created by Jakub Borsuk, Copyright © 2022, All rights reserved.</div>
             </footer>
-        );
+            </>
+        )
     }
 }

@@ -16,11 +16,15 @@ namespace Repositories
         }
         public Recipe getById(int id)
         {
-            return _masterDbContext.Recipes.SingleOrDefault(x => x.RecipeId == id);
+            return _masterDbContext.Recipes
+                .SingleOrDefault(x => x.RecipeId == id);
         }
         public Recipe getByName(string linkname)
         {
-            return _masterDbContext.Recipes.Include(x => x.Ingredients).Include(x => x.Spices).SingleOrDefault(x => x.LinkName == linkname);
+            return _masterDbContext.Recipes
+                .Include(x => x.Ingredients)
+                .Include(x => x.Spices)
+                .SingleOrDefault(x => x.LinkName == linkname);
         }
         public IEnumerable<Recipe> getAll()
         {
@@ -46,7 +50,8 @@ namespace Repositories
 
         public void removeRec(string linkname)
         {
-            _masterDbContext.Recipes.Remove(_masterDbContext.Recipes.SingleOrDefault(x => x.LinkName == linkname));
+            _masterDbContext.Recipes
+                .Remove(_masterDbContext.Recipes.SingleOrDefault(x => x.LinkName == linkname));
             _masterDbContext.SaveChanges();
         }
 

@@ -64,7 +64,7 @@ export function Register() {
                 autoComplete="off"
                 onChange={(e) => handle(e)}
             />
-            <button>Submit</button>
+            <button>Zarejestruj się</button>
         </form>
       </div>
       <div id='message'>{message}</div>

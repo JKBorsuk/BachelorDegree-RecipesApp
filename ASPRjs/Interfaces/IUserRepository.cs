@@ -10,6 +10,6 @@ namespace Interfaces
         public void updateUser(User user);
         public void addIngredient(UserIngredient Uing);
         public IEnumerable<string> readIngredients(string login);
-        public List<Recipe> findOnes(Dictionary<string, bool> dictionary);
+        public List<Recipe> findOnes(Dictionary<string, bool> dictionary, int type);
     }
 }

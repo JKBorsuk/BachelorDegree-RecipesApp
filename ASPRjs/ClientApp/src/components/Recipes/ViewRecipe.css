@@ -1,3 +1,9 @@
+@media only screen and (max-width: 768px){
+    .recipe-container {
+        padding: 0px;
+    }
+}
+
 .recipe-container {
     margin: auto;
     max-width: 700px;
@@ -38,7 +44,7 @@
     outline-offset: -0.25em;
 }
 .recipe-ingredient:hover {
-    background-color: rgb(211, 155, 52);;
+    background-color: rgb(211, 155, 52);
     color: white;
     cursor: pointer;
     user-select: none;
