@@ -15,7 +15,8 @@ export class NavMenu extends Component {
       collapsed: true,
       login: this.props.appdata,
       loading: true,
-      sub_load1: true
+      sub_load1: true,
+      sub_load2: true
     };
   }
 
@@ -38,9 +39,23 @@ export class NavMenu extends Component {
     })
   }
 
+  isHeadAdmin() {
+    if(typeof(this.state.login) == 'string' && this.state.login.length == 0) { this.setState({sub_load2: true}); return }
+    Axios.get("Community/User/IsHeadAdmin/" + this.state.login)
+    .then(resp => {
+      if(resp.status == 200) { this.setState({sub_load2: false}) }
+      else if(resp.status == 204) this.setState({sub_load2: true})
+    })
+    .catch((er) => {
+      console.log(er)
+      this.setState({sub_load2: true})
+    })
+  }
+
   componentDidMount() {
     this.setState({loading: false})
     this.isAdmin();
+    this.isHeadAdmin();
   }
 
   render () {
@@ -68,6 +83,13 @@ export class NavMenu extends Component {
                     <NavItem>
                       <NavLink tag={Link} className="text-dark" to="/view-all">View All</NavLink>
                     </NavItem>
+                      {this.state.sub_load2 === false ?
+                      <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/change-role">Change Role</NavLink>
+                      </NavItem>
+                      :
+                      null
+                      }
                     </>
                     :
                     null

@@ -27,9 +27,6 @@ namespace Services
         {
             UserDto user = getUserById(id);
             if(user == null) return null;
-            //var userIng = _userRepository.getUserIngredients(id);
-
-            // Dictionary with maximum capacity of 20*2 => (40) cells 
             Dictionary<string, bool> dict = new Dictionary<string, bool>();
             foreach(UIngredientDto item in user.ingredients)
             {
@@ -93,6 +90,13 @@ namespace Services
             existingUser.password = updatedUser.password;
 
             _userRepository.updateUser(existingUser);
+        }
+        public User changeRole(UserDto user, int role)
+        {
+            var mapped = _mapper.Map<User>(user);
+            mapped.role = role;
+            _userRepository.updateUser(mapped);
+            return mapped;
         }
     }
 }

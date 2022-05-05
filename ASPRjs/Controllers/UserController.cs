@@ -95,6 +95,7 @@ namespace ASPRjs.Controllers
         {
             var user = _userService.getUserByLogin(login);
             if(user == null) return NotFound();
+
             if (user.role > 1 && HttpContext.Session.GetString("user") == login) return Ok();
             else return NoContent();
         }
@@ -103,8 +104,27 @@ namespace ASPRjs.Controllers
         {
             var user = _userService.getUserByLogin(login);
             if (user == null) return NotFound();
+
             if (user.role == 3 && HttpContext.Session.GetString("user") == login) return Ok();
             else return NoContent();
+        }
+        [HttpGet("ViewRole/{login}")]
+        public IActionResult ViewRole(string login)
+        {
+            var user = _userService.getUserByLogin(login);
+            if (user == null) return NotFound();
+
+            return Ok(user.role);
+        }
+        [HttpGet("ChangeRole/{login}/{role}")]
+        public async Task<IActionResult> changeRole(string login,int role)
+        {
+            var user = _userService.getUserByLogin(login);
+            if (user == null) return NotFound();
+
+            var changedUser = _userService.changeRole(user, role);
+            return Ok(changedUser);
+
         }
     }
 }

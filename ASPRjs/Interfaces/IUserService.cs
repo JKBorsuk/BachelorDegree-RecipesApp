@@ -14,5 +14,6 @@ namespace Interfaces
         public ListIngredientDto readAllUserIngredients(string login);
         public UserRecipesListDto readAllICanCook(string login, int type);
         public void updateUser(string login, UpdateUser user);
+        public User changeRole(UserDto user, int role);
     }
 }

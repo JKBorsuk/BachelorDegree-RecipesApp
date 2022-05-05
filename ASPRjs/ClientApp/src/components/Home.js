@@ -6,6 +6,22 @@ export class Home extends Component {
   render () {
     return (
       <div>
+        <div>dojebany banner z fadem po bokach</div>
+        <div>w jego środku motto [by nie myśleć tylko jeść xD]</div>
+        <div>Nie wiesz co dzisiaj sobie ugotować? Pozwól że pomogę ci rozwiązać twój problem</div>
+        <div>W tym celu powstała ta aplikacja, aby:</div>
+        <div>Przy pomocy zebranych przepisów podsunąć ci takie, które możesz zrobić od ręki</div>
+        <div>Zaoszczędzić twój czas</div>
+        <div>Doradzić, czego ci brakuje w spiżarni</div>
+        <div>Być na każde twoje wywołanie</div>
+        <div>Jeżeli nie masz jeszcze konta załóż je - obok przycisk</div>
+        <div>Wykorzystane technologie</div>
+        <div>ASP.NET, ReactJs, Bootstrap</div>
+        <div>Języki programowania</div>
+        <div>C#, JavaScript, CSS3, HTML5</div>
+      </div>
+      /*
+      <div>
         <h1>Hello, world!</h1>
         <p>Welcome to your new single-page application, built with:</p>
         <ul>
@@ -21,6 +37,7 @@ export class Home extends Component {
         </ul>
         <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
       </div>
+      */
     );
   }
 }

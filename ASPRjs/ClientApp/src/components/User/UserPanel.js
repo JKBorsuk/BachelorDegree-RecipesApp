@@ -79,6 +79,8 @@ export class UserPanel extends Component {
     }
 
     addIngredient() {
+        if(!this.state.ingredient) { this.setState({message: "Podaj nazwę składnika przed dodaniem"}); return }
+
         axios.post("Community/User/AddIngredient/" + this.state.login, {
             Name: this.state.ingredient
         })
