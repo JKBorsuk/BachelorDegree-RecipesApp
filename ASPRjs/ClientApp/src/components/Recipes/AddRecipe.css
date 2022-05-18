@@ -5,11 +5,13 @@
 }
 
 .recipe-container-add {
-    margin: auto;
+    background-color: #292b2c;
+    color: white;
+    margin: 0 auto 70px auto;
     max-width: 700px;
     overflow-x: hidden;
     padding: 50px;
-    border: 3px solid rgb(211, 155, 52);;
+    border: 3px solid white;
     border-radius: 40px;
 }
 
@@ -53,9 +55,15 @@
     max-width: 180px;
     width: 100%;
     border: none;
-    outline: 2px solid rgb(133, 133, 133);
+    outline: 2px solid rgb(199, 199, 199);
     border-radius: 10px;
     outline-offset: -0.25em;
+    background-color: #292b2c;
+    color: white;
+}
+.recipe-child-add-textarea > textarea {
+    background-color: #292b2c;
+    color: white;
 }
 
 #message {
@@ -76,15 +84,16 @@
     padding-bottom: 10px;
 }
 .recipe-data> input[type=button] {
-    border: 2px solid rgb(211, 155, 52);
-    background-color: white;
+    border: 2px solid white;
+    background-color: #292b2c;
+    color: white;
     border-radius: 15px;
     padding: 5px 10px;
-    transition: 0.4s background-color, color ease-in;
+    transition: 0.2s background-color ease-in;
 }
 .recipe-data> input[type=button]:hover {
-    background-color: rgb(211, 155, 52);
-    color: white;
+    background-color: #808080;
+    border-color: #808080;
 }
 
 .recipe-data> input[type=button]:nth-child(1) /*Niższy*/{

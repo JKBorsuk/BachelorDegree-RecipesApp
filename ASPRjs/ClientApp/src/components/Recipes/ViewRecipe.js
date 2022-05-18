@@ -18,9 +18,6 @@ export class ViewRecipe extends Component {
     }
     componentDidMount() {
         try {
-            if(typeof(this.state.login) == 'string' && this.state.login.length == 0) {
-                window.location.href = '/login';
-            }
             axios.get("Dishes/Recipe/" + this.state.linkname)
             .then((resp) => {
                 this.setState({
@@ -28,7 +25,7 @@ export class ViewRecipe extends Component {
                     ingredient: resp.data,
                     loading: false
                 })
-            }).catch((err) => { window.location = ""
+            }).catch((err) => { window.location.href = "/"
             }).finally((resp) => {
                 console.log(this.state.condition_v)
             })
@@ -41,9 +38,9 @@ export class ViewRecipe extends Component {
     dishType(props) {
         switch (props) {
             case 1:
-                return 'Mięsne śniadanie'
+                return 'Śniadanie'
             case 2:    
-                return 'Mięsny obiad/kolacja'
+                return 'Obiad/kolacja'
             case 3:    
                 return 'Śniadanie vege'
             case 4:    
@@ -123,7 +120,7 @@ export class ViewRecipe extends Component {
                                 }
                             </div>
                             {typeof(this.state.ingredient.photoFileName) == 'string' && this.state.ingredient.photoFileName != "Noimg.png" ?
-                                <div className="recipe-child recipe-image"><img id='rec-image' style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '2', objectFit: 'cover'}} src={"Images/" + this.state.ingredient.photoFileName}/></div>
+                                <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '2', objectFit: 'cover'}} src={"Images/" + this.state.ingredient.photoFileName}/></div>
                                 :
                                 null
                             }

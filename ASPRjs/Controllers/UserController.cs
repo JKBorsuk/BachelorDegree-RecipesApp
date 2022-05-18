@@ -90,22 +90,14 @@ namespace ASPRjs.Controllers
 
             return Ok(ones);
         }
-        [HttpGet("IsAdmin/{login}")]
-        public IActionResult isAdmin(string login)
+        [HttpGet("URole/{login}")]
+        public IActionResult URole(string login)
         {
             var user = _userService.getUserByLogin(login);
             if(user == null) return NotFound();
 
-            if (user.role > 1 && HttpContext.Session.GetString("user") == login) return Ok();
-            else return NoContent();
-        }
-        [HttpGet("IsHeadAdmin/{login}")]
-        public IActionResult isHeadAdmin(string login)
-        {
-            var user = _userService.getUserByLogin(login);
-            if (user == null) return NotFound();
-
-            if (user.role == 3 && HttpContext.Session.GetString("user") == login) return Ok();
+            if (user.role == 2 && HttpContext.Session.GetString("user") == login) return Accepted();
+            else if (user.role == 3 && HttpContext.Session.GetString("user") == login) return Ok();
             else return NoContent();
         }
         [HttpGet("ViewRole/{login}")]
@@ -116,15 +108,28 @@ namespace ASPRjs.Controllers
 
             return Ok(user.role);
         }
-        [HttpGet("ChangeRole/{login}/{role}")]
-        public async Task<IActionResult> changeRole(string login,int role)
+        [HttpPut("ChangeRole/{login}/{role}")]
+        public IActionResult changeRole(string login,int role)
         {
-            var user = _userService.getUserByLogin(login);
+            var user = _userService.getUserByLogin_U(login);
             if (user == null) return NotFound();
 
-            var changedUser = _userService.changeRole(user, role);
-            return Ok(changedUser);
-
+            var act_user = _userService.getUserByLogin(HttpContext.Session.GetString("user"));
+            if (act_user.role > role && login != HttpContext.Session.GetString("user"))
+            {
+                return Ok(_userService.changeRole(user, role));
+            }
+            else return Unauthorized("Too low rank");
+        }
+        [HttpDelete("DeleteIngredient/{login}/{name}")]
+        public IActionResult deleteUserIngredient(string login, string name)
+        {
+            if (HttpContext.Session.GetString("user") == login)
+            {
+                _userService.deleteIngredient(_userService.getUserByLogin_U(login), name);
+                return Ok();
+            }
+            else return Unauthorized();
         }
     }
 }

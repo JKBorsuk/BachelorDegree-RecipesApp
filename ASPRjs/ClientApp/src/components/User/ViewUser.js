@@ -16,7 +16,7 @@ export class ViewUser extends Component {
         this.WriteData();
     }
 
-    static userRole = props => {
+    static userRole = (props) => {
         switch (props) {
             case 1:
                 return 'User'
@@ -24,6 +24,8 @@ export class ViewUser extends Component {
                 return 'Admin'
             case 3:
                 return 'Head Admin'
+            default:
+                return 'none'
         }
     }
 

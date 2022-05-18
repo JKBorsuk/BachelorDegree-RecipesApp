@@ -41,6 +41,15 @@ namespace Repositories
             _masterDbContext.UserIngredients.Add(Uing);
             _masterDbContext.SaveChanges();
         }
+        public UserIngredient getByUser(User user, string name)
+        {
+            return _masterDbContext.UserIngredients.Where(x => x.UserId == user.UserId).SingleOrDefault(y => y.Name == name);
+        }
+        public void deleteIngredient(UserIngredient Uing)
+        {
+            _masterDbContext.UserIngredients.Remove(Uing);
+            _masterDbContext.SaveChanges();
+        }
         public IEnumerable<string> readIngredients(string login)
         {
             return _masterDbContext.UserIngredients.Where(x => x.UserId == getByLogin(login).UserId).Select(y => y.Name);

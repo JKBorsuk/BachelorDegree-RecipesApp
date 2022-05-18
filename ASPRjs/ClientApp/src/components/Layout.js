@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
 import { MainContainer } from './MainContainer/MainContainer';
 
 export class Layout extends Component {
@@ -9,7 +8,9 @@ export class Layout extends Component {
     super(props);
     this.state = {
       login: this.props.appdata,
-      loading: true
+      loading: true,
+      s_f: this.props.approleA,
+      s_s: this.props.approleB
     };
   }
 
@@ -21,9 +22,7 @@ export class Layout extends Component {
       <div>
         {this.state.loading == false ?
         <>
-        <Container>
-          <MainContainer children={this.props.children} appdata={this.state.login}/>
-        </Container>
+          <MainContainer children={this.props.children} appdata={this.state.login} approleA={this.state.s_f} approleB={this.state.s_s}/>
         </>
         :
         null

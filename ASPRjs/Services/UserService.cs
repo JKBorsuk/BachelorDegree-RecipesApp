@@ -91,12 +91,15 @@ namespace Services
 
             _userRepository.updateUser(existingUser);
         }
-        public User changeRole(UserDto user, int role)
+        public User changeRole(User user, int role)
         {
-            var mapped = _mapper.Map<User>(user);
-            mapped.role = role;
-            _userRepository.updateUser(mapped);
-            return mapped;
+            user.role = role;
+            _userRepository.updateUser(user);
+            return user;
+        }
+        public void deleteIngredient(User user, string nazwa)
+        {
+            _userRepository.deleteIngredient(_userRepository.getByUser(user, nazwa));
         }
     }
 }

@@ -3,9 +3,11 @@
     min-height: 100vh;
     height: 100%;
 }
-#main-recipe-master-container > div {
-    padding-top: 50px;
-    padding-bottom: 30px;
+#main-recipe-master-container > #main-recipe-background {
+    padding-top: 10px;
+    padding-bottom: 50px;
+}
+#main-recipe-master-container > #main-recipe-background > div {
 }
 
 footer {

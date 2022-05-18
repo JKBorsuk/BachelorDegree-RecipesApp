@@ -15,8 +15,8 @@ export class NavMenu extends Component {
       collapsed: true,
       login: this.props.appdata,
       loading: true,
-      sub_load1: true,
-      sub_load2: true
+      sub_load1: this.props.approleA,
+      sub_load2: this.props.approleB
     };
   }
 
@@ -26,66 +26,38 @@ export class NavMenu extends Component {
     });
   }
 
-  isAdmin() {
-    if(typeof(this.state.login) == 'string' && this.state.login.length == 0) { this.setState({sub_load1: true}); return }
-    Axios.get("Community/User/IsAdmin/" + this.state.login)
-    .then(resp => {
-      if(resp.status == 200) { this.setState({sub_load1: false}) }
-      else if(resp.status == 204) this.setState({sub_load1: true})
-    })
-    .catch((er) => {
-      console.log(er)
-      this.setState({sub_load1: true})
-    })
-  }
-
-  isHeadAdmin() {
-    if(typeof(this.state.login) == 'string' && this.state.login.length == 0) { this.setState({sub_load2: true}); return }
-    Axios.get("Community/User/IsHeadAdmin/" + this.state.login)
-    .then(resp => {
-      if(resp.status == 200) { this.setState({sub_load2: false}) }
-      else if(resp.status == 204) this.setState({sub_load2: true})
-    })
-    .catch((er) => {
-      console.log(er)
-      this.setState({sub_load2: true})
-    })
-  }
-
   componentDidMount() {
     this.setState({loading: false})
-    this.isAdmin();
-    this.isHeadAdmin();
   }
 
   render () {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+        <Navbar className="navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3" light>
           <Container>
-            <NavbarBrand tag={Link} to="/">Recipe Master</NavbarBrand>
+            <NavbarBrand tag={Link} to="/" className='text-white' >Recipe Master</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                  <NavLink tag={Link} className="text-white" to="/">Strona Główna</NavLink>
                 </NavItem>
                 {
                   this.state.loading === false ?
                     this.state.sub_load1 === false ?
                     <>
                     <NavItem>
-                      <NavLink tag={Link} className="text-dark" to="/addrecipe">Add Recipe</NavLink>
+                      <NavLink tag={Link} className="text-white" to="/addrecipe">Dodaj przepis</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink tag={Link} className="text-dark" to="/user-search">View User</NavLink>
+                        <NavLink tag={Link} className="text-white" to="/user-search">Podejrzyj użytkownika</NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink tag={Link} className="text-dark" to="/view-all">View All</NavLink>
+                      <NavLink tag={Link} className="text-white" to="/view-all">Wyświetl wszystkie przepisy</NavLink>
                     </NavItem>
                       {this.state.sub_load2 === false ?
                       <NavItem>
-                        <NavLink tag={Link} className="text-dark" to="/change-role">Change Role</NavLink>
+                        <NavLink tag={Link} className="text-white" to="/change-role">Zmień rolę</NavLink>
                       </NavItem>
                       :
                       null
@@ -99,19 +71,19 @@ export class NavMenu extends Component {
                 {!this.state.login ?
                   <>
                   <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+                    <NavLink tag={Link} className="text-white" to="/FAQ">FAQ</NavLink> 
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/register">Register</NavLink>
+                    <NavLink tag={Link} className="text-white" to="/login">Zaloguj</NavLink>
                   </NavItem>
                   </>
                   :
                   <>
                   <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/user-panel">User Panel</NavLink>
+                    <NavLink tag={Link} className="text-white" to="/user-panel">Panel użytkownika</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/logout">Logout</NavLink>
+                    <NavLink tag={Link} className="text-white" to="/logout">Wyloguj</NavLink>
                   </NavItem>
                   </>
                 }

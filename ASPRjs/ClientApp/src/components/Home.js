@@ -1,26 +1,71 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export class Home extends Component {
   static displayName = Home.name;
 
   render () {
     return (
-      <div>
-        <div>dojebany banner z fadem po bokach</div>
-        <div>w jego środku motto [by nie myśleć tylko jeść xD]</div>
-        <div>Nie wiesz co dzisiaj sobie ugotować? Pozwól że pomogę ci rozwiązać twój problem</div>
-        <div>W tym celu powstała ta aplikacja, aby:</div>
-        <div>Przy pomocy zebranych przepisów podsunąć ci takie, które możesz zrobić od ręki</div>
-        <div>Zaoszczędzić twój czas</div>
-        <div>Doradzić, czego ci brakuje w spiżarni</div>
-        <div>Być na każde twoje wywołanie</div>
+      <div id="main-home-page">
+        <div id="main-banner">
+          <div id="main-banner-text">
+            <h3>Recipe Master</h3>
+            <p>Jeden by wszystkie zebrać i ludziom podarować</p>
+          </div>
+          <img src="./Images/taryn-elliott-4099237.jpg" alt="" />
+        </div>
+        <h3>Nie wiesz co dzisiaj ugotować?</h3>
+        <p>Pozwól że pomogę Ci rozwiązać Twój problem</p>
+        <div id="main-home-container-1" className='container'>
+          <div className='row'>
+            <div className='col-sm-4 m-sm-auto'><h5>Cel powstania aplikacji</h5></div>
+            <div className='col-sm-8'>
+              <div style={{float: 'left'}}></div><div>Zaoszczędzenie Twojego czasu</div>
+              <div style={{float: 'left'}}></div><div>Przy pomocy zebranych przepisów podsunąć Ci takie dania, które możesz zrobić od ręki</div>
+              <div style={{float: 'left'}}></div><div>Doradzenie czego Ci brakuje w spiżarni</div>
+              <div style={{float: 'left'}}></div><div>Bycie na każde Twoje wywołanie</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="main-home-container-2" className='container'>
+          <div className='row'>
+            <div id="main-account-offer" className='col-sm-4'>Nie masz jeszcze konta? - Załóż je</div>
+            <Link to="/register" id="main-account-register" className='col-sm-2 offset-sm-1 my-auto'>Zarejestruj się</Link>
+          </div>
+        </div>
+
+        <div id="main-home-container-1" style={{marginTop: '2.5em'}} className='container'>
+          <div className='row'>
+            <div className='col-sm-4 m-sm-auto'><h5>Wykorzystane technologie</h5></div>
+            <div className='col-sm-8'>
+              <div style={{float: 'left'}}></div><div>ASP.NET</div>
+              <div style={{float: 'left'}}></div><div>ReactJs</div>
+              <div style={{float: 'left'}}></div><div>Bootstrap</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="main-home-container-1" style={{marginTop: '2.5em', marginBottom: '6em'}} className='container'>
+          <div className='row'>
+            <div className='col-sm-4 m-sm-auto'><h5>Języki programowania</h5></div>
+            <div className='col-sm-8'>
+              <div style={{float: 'left'}}></div><div>C#</div>
+              <div style={{float: 'left'}}></div><div>JavaScript</div>
+              <div style={{float: 'left'}}></div><div>HTML5</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      /*
         <div>Jeżeli nie masz jeszcze konta załóż je - obok przycisk</div>
         <div>Wykorzystane technologie</div>
         <div>ASP.NET, ReactJs, Bootstrap</div>
         <div>Języki programowania</div>
         <div>C#, JavaScript, CSS3, HTML5</div>
-      </div>
-      /*
+
+
       <div>
         <h1>Hello, world!</h1>
         <p>Welcome to your new single-page application, built with:</p>

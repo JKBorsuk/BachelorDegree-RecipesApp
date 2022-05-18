@@ -20,7 +20,7 @@ export class AddRecipe extends Component {
             filename: "Noimg.png",
             condition: true,
             login: this.props.appdata,
-            loading: true
+            loading: this.props.approleA
         }
         this.submit = this.submit.bind(this);
     }
@@ -36,20 +36,8 @@ export class AddRecipe extends Component {
             this.setState({response : resp.data.ingredients});
         })
         .catch(() => {})
-        this.isAdmin();
     }
 
-    isAdmin() {
-        if(typeof(this.state.login) == 'string' && this.state.login.length == 0) { window.location.href = '/' }
-        axios.get("Community/User/IsAdmin/" + this.state.login)
-        .then(resp => {
-          if(resp.status == 200) {this.setState({loading: false}) }
-          else if(resp.status == 204) window.location.href = '/';
-        })
-        .catch((er) => {
-          window.location.href = '/';
-        })
-      }
 
     addIngredient(){
         if(this.state.ingredients.length < 20) {
@@ -148,18 +136,20 @@ export class AddRecipe extends Component {
                                 onChange={(e) => this.setState({name: e.target.value})}
                             />
                         </div>
+                        <hr/>
                         <div className='recipe-child-add' style={{clear: 'both'}}>
                             <div className='recipe-data'>Typ*:</div>
                             <div className='recipe-child-list'>
                                 <input list="typelist" id="type" value={this.state.type} onChange={(e) => this.setState({type: e.target.value})} autoComplete="off" placeholder="type"/>
                                 <datalist id="typelist">
-                                    <option value="1">Meat Breakfast</option>
-                                    <option value="2">Meat Lunch/Dinner</option>
+                                    <option value="1">Breakfast</option>
+                                    <option value="2">Lunch/Dinner</option>
                                     <option value="3">Vege Breakfast</option>
                                     <option value="4">Vege Lunch/Dinner</option>
                                 </datalist>
                             </div>
                         </div>
+                        <hr/>
                         <div style={{clear: 'both'}}className='recipe-child-add'>
                             <div className='recipe-data'><div style={{clear: 'both', float: 'right'}}></div>Składniki*<input type="button" value="Dodaj" onClick={this.addIngredient.bind(this)}/></div>
                             {(typeof(this.state.ingredients) == 'object') ?
@@ -205,6 +195,7 @@ export class AddRecipe extends Component {
                                 onChange={(e) => this.setState({linkname: e.target.value})}
                             />
                         </div>
+                        <hr/>
                         <div className='recipe-child-add' style={{clear: 'both'}}>
                             <div className='recipe-data'>Źródło:</div>
                             <input
@@ -216,6 +207,7 @@ export class AddRecipe extends Component {
                                 onChange={(e) => this.setState({source: e.target.value})}
                             />
                         </div>
+                        <hr/>
                         <div className="recipe-child-add-file">
                             <input type="file" id="myimage" name="myimage" ref="file"/>
                         </div>

@@ -8,8 +8,8 @@ export class Footer extends Component {
         return (
             <>
             <div id="footer-filler"></div>
-            <footer>
-                <div>Created by Jakub Borsuk, Copyright © 2022, All rights reserved.</div>
+            <footer className='bg-dark text-white'>
+                <div>Stworzone przez Jakub Borsuk, Copyright © 2022, Wszelkie prawa zastrzeżone.</div>
             </footer>
             </>
         )

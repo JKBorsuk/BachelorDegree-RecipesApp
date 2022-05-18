@@ -5,11 +5,12 @@
 }
 
 .recipe-container {
-    margin: auto;
+    background-color: #292b2c;
+    margin: 0 auto 70px auto;
     max-width: 700px;
     overflow-x: hidden;
     padding: 50px;
-    border: 3px solid rgb(211, 155, 52);;
+    border: 3px solid white;
     border-radius: 40px;
 }
 .recipe-child:not(:first-child) {
@@ -33,24 +34,23 @@
     color: black;
 }
 .recipe-ingredient {
-    border: 3px solid white;
+    user-select: none;
+    color: white;
+    border: 3px solid #292b2c;
     padding: 5px 10px;
     margin-top: 3px;
     margin-bottom: 3px;
     border-radius: 15px;
     width: auto;
     transition: 0.4s;
-    outline: 2px solid rgb(211, 155, 52);
+    outline: 2px solid white;
     outline-offset: -0.25em;
 }
 .recipe-ingredient:hover {
-    background-color: rgb(211, 155, 52);
-    color: white;
+    background-color: white;
+    color: black;
     cursor: pointer;
     user-select: none;
-}
-.recipe-source > hr {
-    background-color: rgb(156, 102, 0);
 }
 .recipe-spice:not(:first-child):before {
     content: ", ";
