@@ -67,6 +67,9 @@ namespace ASPRjsAPI.Mappings
                 .ForMember(dest => dest.Recipes, act => act.MapFrom(src => src))
                 .ForMember(dest => dest.Count, act => act.MapFrom(src => src.Count()));
 
+                cfg.CreateMap<List<Recipe>[], ArrayUserRecipesDto>()
+                .ForMember(dest => dest.AllRecipes, act => act.MapFrom(src => src))
+                .ForMember(dest => dest.Count, act => act.MapFrom(src => src.Count()));
                 #endregion
 
             }).CreateMapper();

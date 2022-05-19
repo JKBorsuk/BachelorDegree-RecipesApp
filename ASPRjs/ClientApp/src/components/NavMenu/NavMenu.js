@@ -30,6 +30,10 @@ export class NavMenu extends Component {
     this.setState({loading: false})
   }
 
+  submitSearch(e) {
+    e.preventDefault();
+  }
+
   render () {
     return (
       <header>
@@ -88,6 +92,14 @@ export class NavMenu extends Component {
                   </>
                 }
               </ul>
+              {this.state.login ? 
+                <div id='navbar-search-module'> 
+                  <input type="text" placeholder="Szukaj"/> 
+                  <div>Szukaj</div>
+                </div>
+                :
+                null
+              }
             </Collapse>
           </Container>
         </Navbar>

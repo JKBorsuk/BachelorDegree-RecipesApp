@@ -54,7 +54,8 @@ export class UserPanel extends Component {
         }
         axios.get("Community/User/Cooking/" + this.state.login + "/" + this.state.dishType)
         .then((resp) => {
-            this.setState({recipeList: resp.data.recipes, message: "", loading_dishes: false});
+            console.log(resp);
+            //this.setState({recipeList: resp.data.recipes, message: "", loading_dishes: false});
         })
         .catch(err => {
             console.log(err);

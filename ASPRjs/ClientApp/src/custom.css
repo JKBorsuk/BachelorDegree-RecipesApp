@@ -17,9 +17,10 @@ body {
   background-image: url('bckgrd/pexels-malidate-van-784633.jpg');
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
+  background-position: top;
 }
 
-/* Home.js */
+/* Home.js and media queries */
 
 @media (max-width: 768px) {
   #main-home-container-1 > .row > .col-sm-4 {
@@ -28,6 +29,10 @@ body {
   #main-home-container-2 > .row > #main-account-offer {
     margin-bottom: 10px;
   }
+  .register {
+    max-width: 100%;
+  }
+
 }
 
 

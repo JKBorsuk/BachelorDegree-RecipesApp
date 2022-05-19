@@ -20,3 +20,28 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+#navbar-search-module {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  padding: 5px 0;
+}
+#navbar-search-module > input {
+  flex: 1;
+  padding: 5px;
+  margin-right: 10px;
+  border-radius: 2px;
+  border: none;
+}
+#navbar-search-module > div {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+
+  transition: 100ms background-color ease-in-out;
+}
+#navbar-search-module > div:hover {
+  background-color: rgb(70, 70, 70)
+}

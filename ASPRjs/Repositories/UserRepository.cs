@@ -43,7 +43,15 @@ namespace Repositories
         }
         public UserIngredient getByUser(User user, string name)
         {
-            return _masterDbContext.UserIngredients.Where(x => x.UserId == user.UserId).SingleOrDefault(y => y.Name == name);
+            try
+            {
+                UserIngredient userIngredient = _masterDbContext.UserIngredients.Where(x => x.UserId == user.UserId).SingleOrDefault(y => y.Name == name);
+                return userIngredient;
+            }
+            catch(InvalidOperationException ex)
+            {
+                return null;
+            }
         }
         public void deleteIngredient(UserIngredient Uing)
         {
@@ -54,25 +62,38 @@ namespace Repositories
         {
             return _masterDbContext.UserIngredients.Where(x => x.UserId == getByLogin(login).UserId).Select(y => y.Name);
         }
-        public List<Recipe> findOnes(Dictionary<string, bool> dictionary, int type)
+        public List<Recipe>[] findOnes(Dictionary<string, bool> dictionary, int type)
         {
             bool found;
+            int count = 0;
 
             List<Recipe> recipes = new List<Recipe>();
+            List<Recipe> recipes_reserve = new List<Recipe>(); // recipes that can be done by adding up to 3 random elements
+            List<RecipeIngredient> reserveIngredients = new List<RecipeIngredient>(); // those elements
+
             foreach (Recipe recipe in _masterDbContext.Recipes.Include(x => x.Ingredients).Where(y => y.Type == type))
             {
+                reserveIngredients.Clear();
+
                 found = true;
                 foreach (RecipeIngredient recipeIngredient in recipe.Ingredients)
                 {
                     if (!dictionary.ContainsKey(recipeIngredient.Name))
                     {
                         found = false;
-                        break;
+                        reserveIngredients.Add(recipeIngredient);
                     }
+                    else count++;
                 }
                 if (found == true) { recipes.Add(recipe); found = false; }
+                else if(recipe.Ingredients.Count <= count + 3)
+                {
+                    recipes_reserve.Add(recipe);
+                    recipes_reserve. // dodaj tylko te elementy których brakuje!!
+                    count = 0;
+                }
             }
-            return recipes;
+            return new List<Recipe>[] { recipes, recipes_reserve };
         }
     }
 }
