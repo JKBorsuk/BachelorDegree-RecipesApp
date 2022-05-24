@@ -1,120 +1,93 @@
-@media screen and (max-width: 768px){
-    .recipe-container-add {
-        padding: 20px;
+@media (max-width: 768px){
+    .arec-row-ingspec {
+        text-align: left;
     }
 }
 
 .recipe-container-add {
-    background-color: #292b2c;
+    background-color: #292b2caf;
     color: white;
     margin: 0 auto 70px auto;
-    max-width: 700px;
+    width: 100%;
     overflow-x: hidden;
     padding: 50px;
     border: 3px solid white;
-    border-radius: 40px;
+    border-radius: 10px;
 }
 
-.recipe-child-add > .recipe-data {
-    max-width: 150px;
-}
-.recipe-child-add {
-    line-height:38px;
-}
-.recipe-child-add > .recipe-data,
-.recipe-child-add > input,
-.recipe-child-add > .recipe-child-list,
-.recipe-child-add > .recipe-child-list-spice
-{
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
-}
-.recipe-child-add > .recipe-child-list {
+.row > .arec-row-input-text {
     text-align: right;
-    float: right;
 }
-.recipe-child-add > input {
-    float: right;
-}
-.recipe-child-add > .recipe-child-list-spice {
-    display: inline-block;
-}
-.recipe-child-add > .recipe-child-list-spice > input, 
-.recipe-child-add > .recipe-child-list-spice {
-    float: right;
-}
-.recipe-child-list-spice {
-    max-width: 300px;
+
+.row > .arec-row-input-text > input,
+.recipe-child-list > .row > .col-8 > input,
+.recipe-child-list > .row > .col-4 > input,
+.recipe-child-list-spice > .row > .col-8 > input {
     width: 100%;
-}
-.recipe-child-list-spice > input, 
-.recipe-child-add > input, 
-.recipe-child-list > input {
     padding: 10px;
-    max-width: 180px;
-    width: 100%;
     border: none;
     outline: 2px solid rgb(199, 199, 199);
     border-radius: 10px;
-    outline-offset: -0.25em;
-    background-color: #292b2c;
-    color: white;
-}
-.recipe-child-add-textarea > textarea {
+    outline-offset: -0.2em;
     background-color: #292b2c;
     color: white;
 }
 
-#message {
-    height: 1em;
-    margin-top: 20px;
-    font-size: 1.2em;
-    text-align: center;
-    color: #36a936;
+.arec-row-ingredients-spices {
+    padding-bottom: 20px;
 }
 
-.recipe-child-add, .recipe-child-add-textarea {
-    padding-top: 10px;
-    padding-bottom: 10px;
+.arec-row-ingredients-spices > .col-sm-8 > .recipe-child-list:not(:first-child),
+.arec-row-ingredients-spices > .col-sm-8 > .recipe-child-list-spice:not(:first-child) {
+    margin-top: 5px;
 }
+
+.arec-row-input > input[type=button] {
+    border: 2px solid white;
+    background-color: #292b2caf;
+    color: white;
+    border-radius: 15px;
+    padding: 5px 10px;
+    transition: 0.2s border-color, color ease-in-out;
+}
+
+.arec-row-input > input[type=button]:hover {
+    border-color: rgb(211, 155, 52);
+    color: rgb(211, 155, 52);
+}
+
+.arec-row-ingspec, .arec-row-text {
+    text-align: right;
+}
+
+
 .recipe-child-add-file {
     text-align: left;
     padding-top: 30px;
     padding-bottom: 10px;
 }
-.recipe-data> input[type=button] {
-    border: 2px solid white;
-    background-color: #292b2c;
-    color: white;
-    border-radius: 15px;
-    padding: 5px 10px;
-    transition: 0.2s background-color ease-in;
-}
-.recipe-data> input[type=button]:hover {
-    background-color: #808080;
-    border-color: #808080;
+
+.recipe-child-add-textarea {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-.recipe-data> input[type=button]:nth-child(1) /*Niższy*/{
-    margin-left: 24px;
+.recipe-child-add-textarea > textarea {
+    background-color: #292b2c;
+    color: white;
 }
-.recipe-data> input[type=button]:nth-child(2) /*Wyższy*/ {
-    margin-left: 10px;
-}
+
 div.recipe-container-add > form > button {
-    margin-top:10px;
+    margin-top: 0.5em;
     border: none;
     padding: 1rem;
     width: 100%;
     font-size: 1.2em;
     border-radius: 0.2rem;
-    cursor: pointer;
     transition: 0.4s;
-    background-color: #a1a1a1;
-    color: white;
+    background-color: #c7c7c7;
 }
 div.recipe-container-add > form > button:hover {
-    background-color: rgb(133, 133, 133);
+    background-color: white;
     color: rgb(211, 155, 52);
 }

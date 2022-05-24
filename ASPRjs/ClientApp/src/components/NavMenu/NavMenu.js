@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Container, DropdownItem, DropdownMenu, DropdownToggle, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
 import './NavMenu.css';
+import { Dropdown } from 'bootstrap';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -14,7 +14,6 @@ export class NavMenu extends Component {
     this.state = {
       collapsed: true,
       login: this.props.appdata,
-      loading: true,
       sub_load1: this.props.approleA,
       sub_load2: this.props.approleB
     };
@@ -26,10 +25,6 @@ export class NavMenu extends Component {
     });
   }
 
-  componentDidMount() {
-    this.setState({loading: false})
-  }
-
   submitSearch(e) {
     e.preventDefault();
   }
@@ -37,69 +32,58 @@ export class NavMenu extends Component {
   render () {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3" light>
+        <Navbar className="navbar-expand-md navbar-toggleable-md navbar-dark bg-dark border-bottom box-shadow mb-3" light>
           <Container>
             <NavbarBrand tag={Link} to="/" className='text-white' >Recipe Master</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
+            <Collapse className="d-md-inline-flex flex-md-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-white" to="/">Strona Główna</NavLink>
+                  <NavLink tag={Link} className="text-white-Hoverable" to="/">Strona Główna</NavLink>
                 </NavItem>
-                {
-                  this.state.loading === false ?
-                    this.state.sub_load1 === false ?
-                    <>
+                {this.state.sub_load1 === false && this.state.sub_load2 === true ?
+                  <NavItem>
+                    <NavLink tag={Link} className="text-white-Hoverable" to="/addrecipe">Dodaj przepis</NavLink>
+                  </NavItem>
+                  :
+                  null
+                }
+                {this.state.sub_load1 === false && this.state.sub_load2 === false ?
+                  <>
                     <NavItem>
-                      <NavLink tag={Link} className="text-white" to="/addrecipe">Dodaj przepis</NavLink>
+                      <NavLink tag={Link} className="text-white-Hoverable" to="/addrecipe">Dodaj przepis</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink tag={Link} className="text-white" to="/user-search">Podejrzyj użytkownika</NavLink>
+                      <NavLink tag={Link} className="text-white-Hoverable" to="/change-role">Zmień rolę</NavLink>
                     </NavItem>
-                    <NavItem>
-                      <NavLink tag={Link} className="text-white" to="/view-all">Wyświetl wszystkie przepisy</NavLink>
-                    </NavItem>
-                      {this.state.sub_load2 === false ?
-                      <NavItem>
-                        <NavLink tag={Link} className="text-white" to="/change-role">Zmień rolę</NavLink>
-                      </NavItem>
-                      :
-                      null
-                      }
-                    </>
-                    :
-                    null
+                  </>
                   :
                   null
                 }
                 {!this.state.login ?
                   <>
                   <NavItem>
-                    <NavLink tag={Link} className="text-white" to="/FAQ">FAQ</NavLink> 
+                    <NavLink tag={Link} className="text-white-Hoverable" to="/FAQ">FAQ</NavLink> 
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} className="text-white" to="/login">Zaloguj</NavLink>
+                    <NavLink tag={Link} className="text-white-Hoverable" to="/login">Zaloguj</NavLink>
                   </NavItem>
                   </>
                   :
                   <>
                   <NavItem>
-                    <NavLink tag={Link} className="text-white" to="/user-panel">Panel użytkownika</NavLink>
+                    <NavLink tag={Link} className="text-white-Hoverable" to="/user-panel">Panel użytkownika</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} className="text-white" to="/logout">Wyloguj</NavLink>
+                    <NavLink tag={Link} className="text-white-Hoverable" to="/logout">Wyloguj</NavLink>
                   </NavItem>
                   </>
                 }
               </ul>
-              {this.state.login ? 
-                <div id='navbar-search-module'> 
-                  <input type="text" placeholder="Szukaj"/> 
-                  <div>Szukaj</div>
-                </div>
-                :
-                null
-              }
+              <div id='navbar-search-module' className='mr-2'> 
+                <input type="text" placeholder="Szukaj"/> 
+                <div>Szukaj</div>
+              </div>
             </Collapse>
           </Container>
         </Navbar>

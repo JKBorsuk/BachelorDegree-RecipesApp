@@ -25,7 +25,6 @@ namespace ASPRjs.Models
 
             #region User
             modelBuilder.Entity<User>().Property(e => e.role).HasDefaultValue(1);
-            //modelBuilder.Entity<User>().Property(e => e.role).IsRequired(false);
             #endregion
         }
     }

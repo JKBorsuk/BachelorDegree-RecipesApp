@@ -41,12 +41,12 @@ export default class App extends Component {
   }
 
   URole(props) {
-    if(typeof(props) == 'string' && props.length == 0) { this.setState({sub_load1: true, loading: false}); return }
+    if(typeof(props) === 'string' && props.length === 0) { this.setState({sub_load1: true, loading: false}); return }
     axios.get("Community/User/URole/" + props)
     .then(resp => {
-      if(resp.status == 200) {this.setState({sub_load1: false, sub_load2: false})}
-      else if(resp.status == 202) {this.setState({sub_load1: false, sub_load2: true})}
-      else if(resp.status == 204) this.setState({sub_load1: true, sub_load2: true})
+      if(resp.status === 200) {this.setState({sub_load1: false, sub_load2: false})}
+      else if(resp.status === 202) {this.setState({sub_load1: false, sub_load2: true})}
+      else if(resp.status === 204) this.setState({sub_load1: true, sub_load2: true})
 
       this.setState({login: props, loading: false})
     })
@@ -58,11 +58,11 @@ export default class App extends Component {
 
   render () {
     return (
-      this.state.loading == false ?
+      this.state.loading === false ?
       <>
       <Layout appdata={this.state.login} approleA={this.state.sub_load1} approleB={this.state.sub_load2}>
         <Switch>
-          <Route exact path='/' component={Home} />
+          <Route exact path='/'><Home appdata={this.state.login}/></Route>
           <Route path='/counter' component={Counter} />
           <Route path='/fetch-data' component={FetchData} />
           <Route path='/view-all'>{!this.state.login || this.state.sub_load1 === true ? <Redirect to="/login"/> : <ViewAll appdata={this.state.login}/>}</Route>

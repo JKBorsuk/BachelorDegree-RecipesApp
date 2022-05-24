@@ -11,5 +11,6 @@ namespace Interfaces
         public void removeRec(string linkname);
         public IEnumerable<Recipe> getAll();
         public IEnumerable<string> getAllIngredients();
+        public IEnumerable<Recipe> getNewestForShowCase();
     }
 }

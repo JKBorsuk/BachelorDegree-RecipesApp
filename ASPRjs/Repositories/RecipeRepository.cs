@@ -60,5 +60,10 @@ namespace Repositories
             _masterDbContext.Recipes.Update(recipe);
             _masterDbContext.SaveChanges();
         }
+
+        public IEnumerable<Recipe> getNewestForShowCase()
+        {
+            return _masterDbContext.Recipes.OrderByDescending(x => x.RecipeId).Take(3);
+        }
     }
 }

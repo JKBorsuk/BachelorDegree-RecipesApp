@@ -12,6 +12,7 @@ export class LoginUser extends Component {
             login: "",
             password: "",
             islogged: this.props.appdata,
+            loading: false,
             message: ""
         }
         this.submit = this.submit.bind(this);
@@ -20,20 +21,22 @@ export class LoginUser extends Component {
 
     submit(e) {
         e.preventDefault();
+        this.setState({loading: true})
         try {
             Axios.post("Community/User/Login", {
                 login: this.state.login,
                 password: this.state.password
             })
             .then(() => {
+                this.setState({loading: false})
                 window.location.href = '/';
             })
             .catch(() => {
-                this.setState({message: "Niepoprawny login lub hasło"})
+                this.setState({loading: false, message: "Niepoprawny login lub hasło"})
             })
         }
         catch(err) {
-            this.setState({message: "Niepoprawny login lub hasło"})
+            this.setState({loading: false, message: "Niepoprawny login lub hasło"})
         }
     }
 
@@ -57,6 +60,13 @@ export class LoginUser extends Component {
                         <Link to="/register" id="rsuggestion-redirect">Zarejestruj się</Link>
                     </div>
                 </div>
+                {this.state.loading?
+                    <div id="reg-loading--l">
+                        <div id="user-panel-loading-signature"><div className='RMasterloader'/></div>
+                    </div>
+                    :
+                    null
+                }
             </div>
             {this.state.message ?
                 <div id='ErrorMessage-container' onClick={this.hideMessage_L}>

@@ -86,7 +86,7 @@ namespace ASPRjs.Controllers
             if (HttpContext.Session.GetString("user") != login) return NotFound("No recepies were found");
 
             var ones = _userService.readAllICanCook(login,type);
-            if(ones == null || ones.Count == 0) return NotFound("No recepies were found");
+            if (ones.AllRecipes[0] == null || ones.AllRecipes[0].Count == 0) return NotFound("No recepies were found");
 
             return Ok(ones);
         }

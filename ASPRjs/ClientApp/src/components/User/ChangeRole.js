@@ -27,6 +27,7 @@ export class ChangeRole extends Component {
         return(
             <div className="reg-container">
                 <div className="register">
+                <div className='display-6' style={{letterSpacing: '1px', marginBottom: '1em', userSelect: 'none'}}>Awans / Degradacja</div>
                     <form onSubmit={(e) => this.submit(e)}>
                         <input
                             type="text"

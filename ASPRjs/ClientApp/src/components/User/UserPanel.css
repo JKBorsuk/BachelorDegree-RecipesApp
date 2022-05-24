@@ -34,23 +34,15 @@
 
 .user-panel-container {
     margin: 40px 0 80px 0;
-    display: flex;
     min-height: 800px;
 }
-.user-panel-main-block:first-child {
+.user-panel-container > .row > .col-lg-4 {
     border: 3px solid white;
     border-radius: 6px;
-    max-width: 30%;
-    margin-right: 30px;
     padding: 25px;
     background-color: #292b2c;
 }
-.user-panel-main-block {
-    flex: 1;
-    width: auto;
-    height: auto;
-}
-.user-panel-main-block > #user-panel-user-ingredients-container {
+.user-panel-container > .row > .col-lg-4 > #user-panel-user-ingredients-container {
     height: 100%;
     width: 100%;
     position: relative;
@@ -63,27 +55,116 @@
     border-radius: 8px;
     padding: 20px;
 }
+
+/* Uingredient */
+
 #user-panel-uingredients-scroll > .user-panel-uingredients-scroll-element {
-    cursor: pointer;
+    position: relative;
+
     text-align: center;
-    padding: 20px 0;
+    padding: 15px 0;
+    height: 78px;
     border-radius: 10px;
     width: 100%;
     border: 2px solid white;
     color:white;
     user-select: none;
-    transition: 100ms background-color ease-in;
+    transition: 100ms;
 }
 #user-panel-uingredients-scroll > .user-panel-uingredients-scroll-element:hover {
     background-color: rgb(70, 70, 70);
 }
+
+.user-uingredient-edit {
+    color: rgb(126, 126, 126);
+    transition: 100ms color ease-in-out;
+    margin: 0 auto;
+    width: min-content;
+
+    transition: 200ms;
+
+    visibility: hidden;
+    opacity: 0;
+    -moz-opacity: 0;
+}
+
+.user-uingredient {
+    transform: translateY(50%);
+    -o-transform: translateY(50%);
+    -ms-transform: translateY(50%);
+    -moz-transform: translateY(50%);
+    -webkit-transform: translateY(50%);
+}
+
+/* DISABLING HOVER EFFECT HERE */
+
+.scroll-element-hoverableEdit > .user-uingredient{
+    transition: 100ms transform;
+}
+.scroll-element-hoverableEdit:hover  > .user-uingredient {
+    transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -webkit-transform: translateY(0);
+}
+/* !! -- END -- !! */
+
+.user-uingredient-edit:hover {
+    color: white;
+}
+.user-panel-uingredients-scroll-element:hover > .user-uingredient-edit,
+.user-panel-uingredients-scroll-element:hover > .user-uingredient-delete {
+    cursor: pointer;
+    visibility: visible;
+    opacity: 1;
+    -moz-opacity: 1;
+}
+
+.user-uingredient-delete {
+    top: 0;
+    right: 0;
+    position: absolute;
+    height: 100%;
+    width: 20%;
+    border-style: dashed;
+    border-color: white;
+    border-width: 0 0 0 2px;
+
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+
+    opacity: 0;
+    -moz-opacity: 0;
+    visibility: hidden;
+
+    transition: 200ms background-color, opacity, visibility ease-in-out;
+}
+.user-uingredient-delete > div {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+
+    transition: 100ms color ease-in-out;
+}
+.user-uingredient-delete:hover {
+    background-color: rgb(59, 0, 0);
+}
+.user-uingredient-delete:hover > div {
+    color:rgb(255, 104, 104)
+}
+
+/* -- END -- */
+
 #user-panel-uingredients-scroll > .user-panel-uingredients-scroll-element:not(:first-child) {
     margin-top: 20px;
 }
 #user-panel-user-ingredients-container > #user-panel-uingredients-inputs {
+    margin-top: 1.5em;
     width: 100%;
-    position: absolute;
-    bottom: 0;
     display: flex;
 }
 #user-panel-uingredients-inputs > #user-panel-allIngr {
@@ -121,13 +202,12 @@
 */
 
 /*RIGHT SIDE*/
-.user-panel-main-block:nth-child(2) {
-    max-width: 70%;
+.user-panel-container > .row > .col-lg-8 {
     display: flex;
     flex-direction: column;
 }
 
-.user-panel-main-block:nth-child(2) > #user-panel-button {
+.user-panel-container > .row > .col-lg-8 > #user-panel-button {
     color: rgb(211, 155, 52);
     width: 100%;
     padding: 25px;
@@ -138,15 +218,15 @@
     border-radius: 10px;
     transition: 100ms background-color ease-in;
 }
-.user-panel-main-block:nth-child(2) > #user-panel-button:hover {
+.user-panel-container > .row > .col-lg-8 > #user-panel-button:hover {
     cursor: pointer;
     background-color: rgb(70, 70, 70);
 }
-.user-panel-main-block > #user-panel-main-labels {
+.user-panel-container > .row > .col-lg-8 > #user-panel-main-labels {
     margin-top: 15px;
     display: flex;
 }
-.user-panel-main-block > #user-panel-main-labels > label {
+.user-panel-container > .row > .col-lg-8 > #user-panel-main-labels > label {
     flex: 1;
     text-align: center;
     max-width: 400px;
@@ -158,25 +238,25 @@
     color: rgb(211, 155, 52);
     user-select: none;
 }
-.user-panel-main-block > #user-panel-main-labels > label:hover {
+.user-panel-container > .row > .col-lg-8 > #user-panel-main-labels > label:hover {
     cursor: pointer;
 }
-.user-panel-main-block > #user-panel-main-labels > label:not(:last-child) {
+.user-panel-container > .row > .col-lg-8 > #user-panel-main-labels > label:not(:last-child) {
     margin-right: 20px;
 }
-.user-panel-main-block > #user-panel-main-labels > input:checked + label {
+.user-panel-container > .row > .col-lg-8 > #user-panel-main-labels > input:checked + label {
     background-color: rgb(70, 70, 70);
 }
 
 /* RECIPE LIST */
-.user-panel-main-block > #user-panel-view-result {
+.user-panel-container > .row > .col-lg-8 > #user-panel-view-result {
     position: relative;
     overflow-y: scroll;
     background-color: #292b2caf;
     margin-top: 15px;
     width: 100%;
+    min-height: 623px;
     height: 100%;
-    max-height: 614px;
     padding: 25px;
     border: 3px solid white;
     border-radius: 6px;
@@ -262,3 +342,73 @@ a:hover > .user-panel-recipe-list-element > .user-list-element-container > .list
     border-style: solid;
     border-color: white;
 }
+
+/* Ingredient Edit */
+
+.user-uingredient-edit-form {
+    margin-left: 5%;
+    margin-right: 25%;
+    margin-top: 20px;
+    display: none;
+}
+.user-uingredient-edit-form > form {
+    display: flex;
+}
+form > .uingredient-bad {
+    cursor: pointer;
+    border: 2px solid white;
+    width: 35px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+
+    transition: 200ms background-color, color ease-in-out;
+}
+.user-uingredient-edit-form > form > input {
+    width: 100%;
+    outline: none;
+    border-style: solid;
+    border-width: 2px 0 2px 0;
+    border-color: white;
+    background-color: #0000005b;
+    color: white;
+}
+form > .uingredient-ok {
+    cursor: pointer;
+    border: 2px solid white;
+    width: 35px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    transition: 200ms background-color, color ease-in-out;
+}
+form > .uingredient-bad:hover {
+    background-color: white;
+    color: red;
+}
+form > .uingredient-ok:hover {
+    background-color: white;
+    color: green;
+}
+
+/* -- END -- */
+
+/*
+            {this.state.IngredientEdit?
+            <div id="IngredientEdit-container">
+                <form onSubmit="">
+                    <div id="IngredientEdit">
+                        <input 
+                        type="text" 
+                        placeholder={'Nowa nazwa dla ' + this.state.IngredientOName} 
+                        value={this.state.IngredientNName} 
+                        onChange={(e) => this.setState({IngredientNName: e.target.value})}
+                        autoFocus
+                        />
+                    </div>
+                    <button hidden></button>
+                </form>
+            </div>
+            :
+            null}
+
+*/

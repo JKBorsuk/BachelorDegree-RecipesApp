@@ -25,10 +25,7 @@ export class ViewRecipe extends Component {
                     ingredient: resp.data,
                     loading: false
                 })
-            }).catch((err) => { window.location.href = "/"
-            }).finally((resp) => {
-                console.log(this.state.condition_v)
-            })
+            }).catch(() => { window.location.href = "/" })
         }
         catch(err) {
             console.log(err.status)
@@ -63,7 +60,6 @@ export class ViewRecipe extends Component {
     show_LessSigns(props) {
         const pom = this.shorten(props);
         if(typeof(props) == 'string') {
-            console.log(pom);
             switch(props[pom + 1])
             {
                 case 'c':
@@ -81,27 +77,38 @@ export class ViewRecipe extends Component {
                 {this.state.loading === false ?
                 <div>
                     {this.state.condition_v === true ?
-                    <div className="recipe-container">
+                    <div className="recipe-container container">
                         <div className="recipe">
                             <div className="recipe-title">{this.state.ingredient.name}</div>
                             <div className="recipe-type"><p>{this.dishType(this.state.ingredient.type)}</p></div>
-                            <div className="recipe-child recipe-description">{this.state.ingredient.description}</div>
-                            <div className="recipe-child recipe-ingredients">
-                                {(typeof(this.state.ingredient.ingredients) == "object") ?
-                                    <div>
-                                        {this.state.ingredient.ingredients.map(p => 
-                                            <a href={"https://www.google.com/search?q=" + p.name}>
-                                                <div key={p.name} className="recipe-ingredient" style={{display: "inline-block"}}>
-                                                    {p.name + " - " + p.amount}
-                                                </div>
-                                            </a>
-                                        )}
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="recipe-child recipe-description">{this.state.ingredient.description}</div>
+                                    <div className="recipe-child recipe-ingredients">
+                                        {(typeof(this.state.ingredient.ingredients) == "object") ?
+                                            <div>
+                                                {this.state.ingredient.ingredients.map(p => 
+                                                    <a href={"https://www.google.com/search?q=" + p.name}>
+                                                        <div key={p.name} className="recipe-ingredient" style={{display: "inline-block"}}>
+                                                            {p.name + " - " + p.amount}
+                                                        </div>
+                                                    </a>
+                                                )}
+                                            </div>
+                                        :
+                                        <div>Bez składników</div>
+                                        }
                                     </div>
-                                :
-                                <div>Bez składników</div>
-                                }
+                                </div>
+                                <div className="col-md-6">
+                                    {typeof(this.state.ingredient.photoFileName) == 'string' && this.state.ingredient.photoFileName != "Noimg.png" ?
+                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '1.7', objectFit: 'cover'}} src={"Images/" + this.state.ingredient.photoFileName}/></div>
+                                        :
+                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '1.7', objectFit: 'cover'}} src="Images/Noimg.png"/></div>
+                                    }
+                                </div>
                             </div>
-                            <div className="recipe-child recipe-spices"><hr/>
+                            <div className="recipe-child recipe-spices">
                                 {(typeof(this.state.ingredient.spices) == "object") && this.state.ingredient.spices.length > 0?
                                 <div>
                                     <p>Dodatki</p>
@@ -119,11 +126,6 @@ export class ViewRecipe extends Component {
                                 </div>
                                 }
                             </div>
-                            {typeof(this.state.ingredient.photoFileName) == 'string' && this.state.ingredient.photoFileName != "Noimg.png" ?
-                                <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '2', objectFit: 'cover'}} src={"Images/" + this.state.ingredient.photoFileName}/></div>
-                                :
-                                null
-                            }
                             <div className="recipe-child recipe-source"><hr/><p style={{fontStyle: "italic"}}>Źródło</p> 
                             {this.state.ingredient.source ?
                                 <a href={this.state.ingredient.source}>{this.show_LessSigns(this.state.ingredient.source)}</a>
@@ -138,7 +140,7 @@ export class ViewRecipe extends Component {
                     </div>}
                 </div>
                 :
-                <div>Ładowanie</div>}
+                <div id="user-panel-loading-signature"><div className='RMasterloader'/></div>}
             </div>
         )
     }

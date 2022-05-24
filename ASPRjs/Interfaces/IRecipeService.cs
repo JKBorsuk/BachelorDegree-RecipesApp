@@ -12,5 +12,6 @@ namespace Interfaces
         public void removeRecipe(string linkname);
         public void updateRecipe(string linkname, UpdateRecipe urecipe);
         public void changeImage(string linkname, string filename);
+        public ListRecipesDto getNewestRecipes();
     }
 }

@@ -13,8 +13,11 @@ html {
   }
 }
 
-.text-dark:hover {
-  color: rgb(211, 155, 52);
+.text-white-Hoverable {
+  color: white !important;
+}
+.text-white-Hoverable:hover {
+  color: rgb(211, 155, 52) !important;
 }
 
 .box-shadow {

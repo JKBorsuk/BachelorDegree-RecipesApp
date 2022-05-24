@@ -1,6 +1,8 @@
 import {Component} from 'react';
+import { Link } from 'react-router-dom';
 import axios from "axios";
 import './UserPanel.css';
+import $ from 'jquery';
 
 export class UserPanel extends Component {
     static displayName = UserPanel.name;
@@ -10,12 +12,15 @@ export class UserPanel extends Component {
         this.state = {
             userIngredients: [],
             recipeList: [],
+            recipeReserveList: [],
             allIngredients: [],
             ingredient: "",
-            login: this.props.appdata,
+            login: (String)(this.props.appdata),
             dishType: 0,
-            searchStart: false,
             message: "",
+            IngredientNName: "",
+            IngredientOName: "",
+            IngredientEdit: false,
             loading_dishes: false
         }
         this.onChangeValue = this.onChangeValue.bind(this);
@@ -49,13 +54,12 @@ export class UserPanel extends Component {
     recipeSearch() {
         this.setState({loading_dishes: true})
         if(this.state.dishType == 0) {
-            this.setState({message: "Najpierw wybierz porę i rodzaj posiłku"});
+            this.setState({message: "Najpierw wybierz porę i rodzaj posiłku", loading_dishes: false});
             return
         }
         axios.get("Community/User/Cooking/" + this.state.login + "/" + this.state.dishType)
         .then((resp) => {
-            console.log(resp);
-            //this.setState({recipeList: resp.data.recipes, message: "", loading_dishes: false});
+            this.setState({recipeList: resp.data.allRecipes[0], recipeReserveList: resp.data.allRecipes[1], message: "", loading_dishes: false});
         })
         .catch(err => {
             console.log(err);
@@ -79,6 +83,7 @@ export class UserPanel extends Component {
     addIngredient() {
         if(!this.state.ingredient) { this.setState({message: "Podaj nazwę składnika przed dodaniem"}); return }
         if(!this.state.allIngredients.some(el => el === this.state.ingredient) || this.state.userIngredients.some(el => el === this.state.ingredient)) { this.setState({message: "Składnika nie ma w bazie danych bądź jest już w twojej spiżarni"}); return }
+        if((this.state.userIngredients.length + 1) >= 50) { this.setState({message: "Maksymalna liczba składników w spiżarni wynosi 50"}); }
         axios.post("Community/User/AddIngredient/" + this.state.login, {
             Name: this.state.ingredient
         })
@@ -109,6 +114,23 @@ export class UserPanel extends Component {
         }
     }
 
+    editIngredient_ShowEditor(props) {
+        this.setState({IngredientOName: props, IngredientEdit: true});
+        document.getElementById("uingredient_"+props).style.height = "110px";
+        document.getElementById("uingredient-edit-form-"+props).style.display = "block";
+        $('.user-panel-uingredients-scroll-element').removeClass('scroll-element-hoverableEdit');
+    }
+    editIngredient_HideEditor(props) {
+        this.setState({IngredientOName: "", IngredientEdit: false})
+        document.getElementById("uingredient_"+props).style.height = "";
+        document.getElementById("uingredient-edit-form-"+props).style.display = "";
+        $('.user-panel-uingredients-scroll-element').addClass('scroll-element-hoverableEdit');
+    }
+
+    // editIngredient_SaveChanges() {
+    //
+    //}
+
     render() {
         return(
             <div id="user-panel-wrapper">
@@ -116,65 +138,83 @@ export class UserPanel extends Component {
                     <h3>Witaj w swojej spiżarni!</h3>
                     <p>Tutaj możesz dodawać / modyfikować jej zawartość co pozwoli na dopasowanie pod ciebie przepisów.</p>
                 </div>
-                <div className='user-panel-container'>
-                    <div className='user-panel-main-block'>
-                        <div id='user-panel-user-ingredients-container'>
-                            <div id='user-panel-uingredients-scroll'>
-                                {(typeof(this.state.userIngredients) == 'object') ?
-                                    this.state.userIngredients.map(k => 
-                                        <div className='user-panel-uingredients-scroll-element' key={k} onClick={() => this.deleteIngredient(k)}>
-                                            {k}
-                                        </div>
-                                    )
-                                :
-                                null
-                                }
-                            </div>
-                            <div id='user-panel-uingredients-inputs'>
-                                <input list="allIngr" id="user-panel-allIngr" autoComplete='off' placeholder='Pomidor ...' value={this.state.ingredient} onChange={e => this.setState({ingredient: e.target.value})}/>
-                                <datalist id="allIngr">
-                                    {(typeof(this.state.allIngredients) == 'object') && this.state.ingredient ?
-                                        this.state.allIngredients.map((p,ind) => 
-                                            <option value={p}></option>
-                                        )
-                                        :
-                                        null
-                                    }
-                                </datalist>
-                                <div id="user-panel-allIngr-Add" onClick={this.addIngredient}>Dodaj</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='user-panel-main-block'>
-                        <div id="user-panel-button" onClick={this.recipeSearch}>Szukaj</div>
-                        <div onChange={this.onChangeValue} id="user-panel-main-labels">
-                            <input type="radio" name="drone" value="1" id="ms" hidden/><label htmlFor="ms">Śniadanie</label>
-                            <input type="radio" name="drone" value="2" id="mok" hidden/><label htmlFor="mok">Obiad/kolacja</label>
-                            <input type="radio" name="drone" value="3" id="sv" hidden/><label htmlFor="sv">Śniadanie Vege</label>
-                            <input type="radio" name="drone" value="4" id="okv" hidden/><label htmlFor="okv">Obiad/kolacja Vege</label>
-                        </div>
-                        <div id="user-panel-view-result">
-                            {typeof(this.state.recipeList) == 'object'?
-                                this.state.loading_dishes == false ?
-                                    this.state.recipeList.map(k =>
-                                        <a href={'/recipes/' + k.linkName} key={k.name}>
-                                            <div className='user-panel-recipe-list-element'>
-                                                <div className="user-list-element-container">
-                                                    <div className="list-element-img">
-                                                        <img src={'/Images/'+ k.photoFileName} alt=""/>
-                                                    </div>
-                                                    <div className="list-element-text">
-                                                        <h5>{k.name}</h5>
-                                                    </div>
+                <div className='user-panel-container container'>
+                    <div className='row'>
+                        <div className='col-lg-4'>
+                            <div id='user-panel-user-ingredients-container'>
+                                <div id='user-panel-uingredients-scroll'>
+                                    {(typeof(this.state.userIngredients) == 'object') ?
+                                        this.state.userIngredients.map(k =>
+                                            <div className='user-panel-uingredients-scroll-element scroll-element-hoverableEdit' key={k} id={'uingredient_'+k}>
+                                                <div className='user-uingredient'>{k}</div>
+                                                {!this.state.IngredientEdit? <div className='user-uingredient-edit' onClick={() => this.editIngredient_ShowEditor(k)}>Edytuj</div> : null}
+                                                <div className='user-uingredient-delete'><div onClick={() => this.deleteIngredient(k)}>{'\u2715'}</div></div>
+                                                <div className='user-uingredient-edit-form' id={'uingredient-edit-form-'+k}>
+                                                    <form>
+                                                        <div className='uingredient-bad' onClick={() => this.editIngredient_HideEditor(k)}>{'\u2715'}</div>
+                                                        <input  list="allIngr"
+                                                                value={this.state.IngredientNName}
+                                                                onChange={(e) => this.setState({IngredientNName: e.target.value})}
+                                                                placeholder={k}
+                                                                autoComplete="off"
+                                                                autoFocus
+                                                        />
+                                                        <div className='uingredient-ok'>{'\u2713'}</div>
+                                                        <button hidden></button>
+                                                    </form>
                                                 </div>
                                             </div>
-                                        </a>
-                                    )
+                                        )
                                     :
-                                    <div id="user-panel-loading-signature">Loading ...</div>
-                                :
-                                null
-                            }
+                                    null
+                                    }
+                                </div>
+                                <div id='user-panel-uingredients-inputs'>
+                                    <input list="allIngr" id="user-panel-allIngr" autoComplete='off' placeholder='Pomidor ...' value={this.state.ingredient} onChange={e => this.setState({ingredient: e.target.value})}/>
+                                    <datalist id="allIngr">
+                                        {(typeof(this.state.allIngredients) == 'object') && this.state.ingredient || this.state.IngredientNName ?
+                                            this.state.allIngredients.map((p) => 
+                                                <option value={p}></option>
+                                            )
+                                            :
+                                            null
+                                        }
+                                    </datalist>
+                                    <div id="user-panel-allIngr-Add" onClick={this.addIngredient}>Dodaj</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-lg-8'>
+                            <div id="user-panel-button" onClick={this.recipeSearch}>Szukaj</div>
+                            <div onChange={this.onChangeValue} id="user-panel-main-labels">
+                                <input type="radio" name="drone" value="1" id="ms" hidden/><label htmlFor="ms">Śniadanie</label>
+                                <input type="radio" name="drone" value="2" id="mok" hidden/><label htmlFor="mok">Obiad/kolacja</label>
+                                <input type="radio" name="drone" value="3" id="sv" hidden/><label htmlFor="sv">Śniadanie Vege</label>
+                                <input type="radio" name="drone" value="4" id="okv" hidden/><label htmlFor="okv">Obiad/kolacja Vege</label>
+                            </div>
+                            <div id="user-panel-view-result">
+                                {typeof(this.state.recipeList) == 'object'?
+                                    this.state.loading_dishes == false ?
+                                        this.state.recipeList.map(k =>
+                                            <Link to={'/recipes/' + k.linkName} key={k.name}>
+                                                <div className='user-panel-recipe-list-element'>
+                                                    <div className="user-list-element-container">
+                                                        <div className="list-element-img">
+                                                            <img src={'/Images/'+ k.photoFileName} alt=""/>
+                                                        </div>
+                                                        <div className="list-element-text">
+                                                            <h5>{k.name}</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        )
+                                        :
+                                        <div id="user-panel-loading-signature"><div className='RMasterloader'/></div>
+                                    :
+                                    null
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

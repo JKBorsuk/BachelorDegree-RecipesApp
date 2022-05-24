@@ -65,7 +65,7 @@ namespace Repositories
         public List<Recipe>[] findOnes(Dictionary<string, bool> dictionary, int type)
         {
             bool found;
-            int count = 0;
+            int count;
 
             List<Recipe> recipes = new List<Recipe>();
             List<Recipe> recipes_reserve = new List<Recipe>(); // recipes that can be done by adding up to 3 random elements
@@ -76,6 +76,8 @@ namespace Repositories
                 reserveIngredients.Clear();
 
                 found = true;
+                count = 0;
+
                 foreach (RecipeIngredient recipeIngredient in recipe.Ingredients)
                 {
                     if (!dictionary.ContainsKey(recipeIngredient.Name))
@@ -85,11 +87,21 @@ namespace Repositories
                     }
                     else count++;
                 }
-                if (found == true) { recipes.Add(recipe); found = false; }
-                else if(recipe.Ingredients.Count <= count + 3)
+
+                if (found == true) recipes.Add(recipe);
+                else if (recipe.Ingredients.Count <= count + 3)
                 {
-                    recipes_reserve.Add(recipe);
-                    recipes_reserve. // dodaj tylko te elementy których brakuje!!
+                    var newRec = new Recipe()
+                    {
+                        Name = recipe.Name,
+                        LinkName = recipe.LinkName,
+                        PhotoFileName = recipe.PhotoFileName,
+                        Ingredients = reserveIngredients,
+                    };
+
+                    recipes_reserve.Add(newRec);
+
+                    reserveIngredients.Clear();
                     count = 0;
                 }
             }

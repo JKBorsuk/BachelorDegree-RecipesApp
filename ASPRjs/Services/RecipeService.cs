@@ -61,5 +61,11 @@ namespace Services
 
             _recipeRepository.updateRecipe(existingRecipe);
         }
+        public ListRecipesDto getNewestRecipes()
+        {
+            var listRecipes = _recipeRepository.getNewestForShowCase();
+
+            return _mapper.Map<ListRecipesDto>(listRecipes);
+        }
     }
 }

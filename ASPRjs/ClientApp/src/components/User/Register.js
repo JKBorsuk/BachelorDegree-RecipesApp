@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import Axios from 'axios';
 import './Register.css';
 import { validLogin, validPassword, validName } from './Regex/regex';
@@ -12,6 +12,7 @@ export class Register extends Component {
       login: "",
       name: "",
       password: "",
+      loading: false,
       message: ""
     }
     this.hideMessage_R = this.hideMessage_R.bind(this);
@@ -19,20 +20,21 @@ export class Register extends Component {
 
   submit(e) {
     e.preventDefault();
+    this.setState({loading: true})
     if (!validName.test(this.state.name)) {
-      this.setState({message: "Imię nie może być puste i mieć więcej niż 20 liter"})
+      this.setState({loading: false, message: "Imię nie może być puste i mieć więcej niż 20 liter"})
       document.getElementById('name').style.borderColor = "rgb(211, 155, 52)";
       return;
     }
     else document.getElementById('name').style.borderColor = "";
     if (!validLogin.test(this.state.login)) {
-      this.setState({message: "Twój login musi mieć długość od 3 do 20 znaków i składać się z samych liter"})
+      this.setState({loading: false, message: "Twój login musi mieć długość od 3 do 20 znaków i składać się z samych liter"})
       document.getElementById('login').style.borderColor = "rgb(211, 155, 52)";
       return;
     }
     else document.getElementById('login').style.borderColor = "";
     if (!validPassword.test(this.state.password)) {
-      this.setState({message: "Twoje hasło musi mieć długość od 6 do 20 znaków, mieć co najmniej jedną liczbę i znak specjalny"})
+      this.setState({loading: false, message: "Twoje hasło musi mieć długość od 6 do 20 znaków, mieć co najmniej jedną liczbę i znak specjalny"})
       document.getElementById('password').style.borderColor = "rgb(211, 155, 52)";
       return;
     }
@@ -43,10 +45,11 @@ export class Register extends Component {
       password: this.state.password,
       name: this.state.name
     }).then(() => {
+      this.setState({loading: false})
       window.location.href = './login';
     })
     .catch(() => {
-      this.setState({message: "This user already exist"});
+      this.setState({loading: false, message: "This user already exist"});
     })
   }
 
@@ -87,6 +90,13 @@ export class Register extends Component {
               <button>Zarejestruj się</button>
           </form>
         </div>
+        {this.state.loading?
+          <div id="reg-loading--l">
+              <div id="user-panel-loading-signature"><div className='RMasterloader'/></div>
+          </div>
+          :
+          null
+        }
       </div>
       {this.state.message ?
         <div id='ErrorMessage-container' onClick={this.hideMessage_R}>

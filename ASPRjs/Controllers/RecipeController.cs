@@ -88,14 +88,21 @@ namespace ASPRjs.Controllers
                     postedFile.CopyTo(stream);
                     stream.Close();
                 }
-                _recipeService.changeImage(linkname, filename);
-
                 return new JsonResult(filename);
             }
             catch (Exception ex)
             {
                 return new JsonResult("Noimg.png");
             }
+        }
+
+        [HttpGet("GetThreeNewest")]
+        public IActionResult getNewest()
+        {
+            var list = _recipeService.getNewestRecipes();
+            if (list == null) return NotFound();
+
+            return Ok(list);
         }
     }
 }

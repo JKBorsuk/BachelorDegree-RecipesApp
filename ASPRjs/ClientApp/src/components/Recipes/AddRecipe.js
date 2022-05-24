@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import './AddRecipe.css';
+import { Row } from 'reactstrap';
 
 export class AddRecipe extends Component {
     static displayName = AddRecipe.name;
@@ -12,7 +13,8 @@ export class AddRecipe extends Component {
             linkname: "",
             type: '',
             source: "",
-            description: "Opis*\n\n* - wymagane",
+            loading: false,
+            description: "*Opis\n\n* - wymagane",
             ingredients: [],
             spices: [],
             response: [],
@@ -20,7 +22,6 @@ export class AddRecipe extends Component {
             filename: "Noimg.png",
             condition: true,
             login: this.props.appdata,
-            loading: this.props.approleA
         }
         this.submit = this.submit.bind(this);
     }
@@ -57,10 +58,12 @@ export class AddRecipe extends Component {
     }
     
     submit(e) {
+        e.preventDefault();
         this.setState({
             type: parseInt(this.state.type),
+            loading: true
         })
-        e.preventDefault();
+        try {
         axios.post("Dishes/Recipe/AddRecipe/" + this.state.login, {
             type: this.state.type,
             name: this.state.name,
@@ -68,31 +71,27 @@ export class AddRecipe extends Component {
             spices: this.state.spices,
             description: this.state.description,
             source: this.state.source,
-            photoFileName: this.state.filename,
+            photoFileName: document.getElementById('myimage').files[0].name ? this.state.linkname + '-' + document.getElementById('myimage').files[0].name : this.state.filename,
             linkName: this.state.linkname
             })
-            .catch(() => {
-                this.setState({message: "LinkName is propably occupied", condition: false})
-                document.getElementById('message').style.color = "red";  
+            .catch(() => {this.setState({message: "Najprawdopodobniej zajęty link", loading: false}); return})
+            .then(() => {
+                try {
+                    this.bodyFormData = new FormData();
+                    this.bodyFormData.append('file', this.refs.file.files[0]);
+                    axios.post("Dishes/Recipe/SaveImage/" + this.state.linkname, this.bodyFormData)
+                    .then(() => {
+                        this.setState({message: "Utworzono", loading: false});
+                    })
+                }
+                catch(err) {
+                    this.setState({message: "Utworzono bez zdjęcia", loading: false})
+                }
             })
-        
-        if(this.state.condition) {
-            try {
-                this.setState({filename: document.getElementById('myimage').files[0].name})
-                this.bodyFormData = new FormData();
-                this.bodyFormData.append('file', this.refs.file.files[0]);
-                axios.post("Dishes/Recipe/SaveImage/" + this.state.linkname, this.bodyFormData)
-                .then(() => {
-                    this.setState({message: "Recipe created"})
-                    document.getElementById('message').style.color = "green";
-                })
-            }
-            catch(err) {
-                this.setState({message: "Recipe created, without image"});
-                document.getElementById('message').style.color = '#B3FF00';
-            }
         }
-        else this.setState({condition: true})
+        catch(err) {
+            this.setState({message: "Podano błędne wartości lub link jest zajęty", loading: false})
+        }
     }
 
     handleIngredientNameChange = (e,index) => {
@@ -122,25 +121,26 @@ export class AddRecipe extends Component {
     render() {
         return (
             <div>
-            {this.state.loading == false ?
-                <div className='recipe-container-add'>
+                <div className='recipe-container-add container'>
                     <form onSubmit={this.submit}>
-                        <div className='recipe-child-add'>
-                            <div className='recipe-data'>Nazwa*:</div>
-                            <input
-                                type="text"
-                                id="name"
-                                value={this.state.name}
-                                placeholder="name"
-                                autoComplete="off"
-                                onChange={(e) => this.setState({name: e.target.value})}
-                            />
+                        <div className='row'>
+                                <div className='col-sm-4 arec-row-text my-auto'>*Nazwa:</div>
+                                <div className='col-sm-8 arec-row-input-text'>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        value={this.state.name}
+                                        placeholder="Nazwa"
+                                        autoComplete="off"
+                                        onChange={(e) => this.setState({name: e.target.value})}
+                                    />
+                                </div>
                         </div>
-                        <hr/>
-                        <div className='recipe-child-add' style={{clear: 'both'}}>
-                            <div className='recipe-data'>Typ*:</div>
-                            <div className='recipe-child-list'>
-                                <input list="typelist" id="type" value={this.state.type} onChange={(e) => this.setState({type: e.target.value})} autoComplete="off" placeholder="type"/>
+                        <div className='row'><div className='col-sm-8 offset-sm-4'><hr/></div></div>
+                        <div className='row'>
+                            <div className='col-sm-4 arec-row-text my-auto'>*Typ:</div>
+                            <div className='col-sm-8 arec-row-input-text'>
+                                <input list="typelist" id="type" value={this.state.type} onChange={(e) => this.setState({type: e.target.value})} autoComplete="off" placeholder="Typ"/>
                                 <datalist id="typelist">
                                     <option value="1">Breakfast</option>
                                     <option value="2">Lunch/Dinner</option>
@@ -149,78 +149,117 @@ export class AddRecipe extends Component {
                                 </datalist>
                             </div>
                         </div>
-                        <hr/>
-                        <div style={{clear: 'both'}}className='recipe-child-add'>
-                            <div className='recipe-data'><div style={{clear: 'both', float: 'right'}}></div>Składniki*<input type="button" value="Dodaj" onClick={this.addIngredient.bind(this)}/></div>
-                            {(typeof(this.state.ingredients) == 'object') ?
-                            this.state.ingredients.map((el,index) =>
-                            <div className='recipe-child-list'>
-                                <input list="typelist-i" id={"ingredient"+index} value={el.name} onChange={(e) => this.handleIngredientNameChange(e,index)} autoComplete="off" placeholder={"ingredient " + (index+1)}/>
-                                <datalist id="typelist-i">
-                                    {(typeof(this.state.response) == 'object') && el.name ?
-                                        this.state.response.map((p,ind) => 
-                                            <option value={p}></option>
-                                        )
-                                        :
-                                        null
-                                    }
-                                </datalist>
-                                <input type="text" id={"amount"+index} value={el.amount} placeholder="amount" onChange={(e) => this.handleIngredientAmountChange(e,index)} autoComplete="off"/>
+                        <div className='row'><div className='col-sm-8 offset-sm-4'><hr/></div></div>
+                        <div className='row arec-row-ingredients-spices'>
+                            <div className='col-sm-4'>
+                                <div className='row'>
+                                    <div className="col-sm-6 arec-row-ingspec my-auto">*Składniki</div>
+                                    <div className='col-sm-6 arec-row-input'><input type="button" value="Dodaj" onClick={this.addIngredient.bind(this)}/></div>
+                                </div>
                             </div>
-                            )
-                            :
-                            null
-                            }
-                        </div>
-                        <div className='recipe-child-add' style={{clear: 'both'}}>
-                            <div className='recipe-data'>Dodatki<input type="button" value="Dodaj" onClick={this.addSpice.bind(this)}/><div style={{clear: 'both', float: 'right'}}></div></div>
-                            {(typeof(this.state.spices) == 'object') ?
-                            this.state.spices.map((el,index) =>
-                            <div className='recipe-child-list-spice'>
-                                <input type="text" id={"spice"+index} autoComplete="off" placeholder={"spice " + (index+1)} value={el.name} onChange={(e) => this.handleSpiceNameChange(e,index)}/>
+                            <div className='col-sm-8'>
+                                {(typeof(this.state.ingredients) == 'object') ?
+                                this.state.ingredients.map((el,index) =>
+                                    <div className='recipe-child-list'>
+                                        <div className='row'>
+                                            <div className='col-8'>
+                                                <input list="typelist-i" id={"ingredient"+index} value={el.name} onChange={(e) => this.handleIngredientNameChange(e,index)} autoComplete="off" placeholder={"Składnik nr " + (index+1)}/>
+                                                <datalist id="typelist-i">
+                                                    {(typeof(this.state.response) == 'object') && this.state.ingredients[index].name ?
+                                                        this.state.response.map(p => 
+                                                            <option value={p}></option>
+                                                        )
+                                                        :
+                                                        null
+                                                    }
+                                                </datalist>
+                                            </div>
+                                            <div className='col-4'>
+                                                <input type="text" id={"amount"+index} value={el.amount} placeholder="Ilość" onChange={(e) => this.handleIngredientAmountChange(e,index)} autoComplete="off"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    )
+                                    :
+                                    null
+                                }
                             </div>
-                            )
-                            :
-                            null
-                            }
                         </div>
-                        <div className='recipe-child-add' style={{clear: 'both'}}>
-                            <div className='recipe-data'>Nazwa linku*:</div>
-                            <input
-                                type="text"
-                                id="linkname"
-                                value={this.state.linkname}
-                                placeholder="kanapka-z-papryką-itd"
-                                autoComplete="off"
-                                onChange={(e) => this.setState({linkname: e.target.value})}
-                            />
+                        <div className='row arec-row-ingredients-spices'>
+                            <div className='col-sm-4'>
+                                <div className='row'>
+                                    <div className="col-sm-6 arec-row-ingspec my-auto">Dodatki</div>
+                                    <div className="col-sm-6 arec-row-input"><input type="button" value="Dodaj" onClick={this.addSpice.bind(this)}/></div>
+                                </div>
+                            </div>
+                            <div className="col-sm-8">
+                                {(typeof(this.state.spices) == 'object') ?
+                                this.state.spices.map((el,index) =>
+                                <div className='recipe-child-list-spice'>
+                                    <div className='row'>
+                                        <div className='col-8'>
+                                            <input type="text" id={"spice"+index} autoComplete="off" placeholder={"Przyprawa / Dodatek nr " + (index+1)} value={el.name} onChange={(e) => this.handleSpiceNameChange(e,index)}/>
+                                        </div>
+                                    </div>
+                                </div>
+                                )
+                                :
+                                null
+                                }
+                            </div>
                         </div>
-                        <hr/>
-                        <div className='recipe-child-add' style={{clear: 'both'}}>
-                            <div className='recipe-data'>Źródło:</div>
-                            <input
-                                type="text"
-                                id="source"
-                                value={this.state.source}
-                                placeholder="https://www.source"
-                                autoComplete="off"
-                                onChange={(e) => this.setState({source: e.target.value})}
-                            />
+                        <div className='row'>
+                            <div className='col-sm-4 arec-row-text my-auto'>*Nazwa linku:</div>
+                            <div className='col-sm-8 arec-row-input-text'>
+                                <input
+                                    type="text"
+                                    id="linkname"
+                                    value={this.state.linkname}
+                                    placeholder="Link do przepisu (spacja jako '-', bez znaków polskich) np 'kanapka-z-papryka-itd'"
+                                    autoComplete="off"
+                                    onChange={(e) => this.setState({linkname: e.target.value})}
+                                />
+                            </div>
                         </div>
-                        <hr/>
-                        <div className="recipe-child-add-file">
+                        <div className='row'><div className='col-sm-8 offset-sm-4'><hr/></div></div>
+                        <div className='row'>
+                            <div className='col-sm-4 arec-row-text my-auto'>Źródło:</div>
+                                <div className='col-sm-8 arec-row-input-text'>
+                                <input
+                                    type="text"
+                                    id="source"
+                                    value={this.state.source}
+                                    placeholder="https://www.source"
+                                    autoComplete="off"
+                                    onChange={(e) => this.setState({source: e.target.value})}
+                                />
+                            </div>
+                        </div>
+                        <div className='row'><div className='col-sm-8 offset-sm-4'><hr/></div></div>
+                        <div className="recipe-child-add-file text-center mb-4">
                             <input type="file" id="myimage" name="myimage" ref="file"/>
                         </div>
                         <div className='recipe-child-add-textarea'>
-                            <textarea rows='10' name="description" id="description" value={this.state.description} onChange={(e) => this.setState({description: e.target.value})} style={{width: '100%'}}></textarea>
+                            <textarea rows='20' name="description" id="description" value={this.state.description} onChange={(e) => this.setState({description: e.target.value})} style={{width: '100%'}}></textarea>
                         </div>
                         <button>Submit</button>
                     </form>
-                <div id="message">{!this.state.message === "" ? <div>{this.state.message + ", Sprawdź jak wygląda tutaj: "} <a style={{textDecoration: 'none', color: 'rgb(211, 155, 52)'}} href={"./recipes/" + this.state.linkname}>link</a></div> : <div>{this.state.message}</div>}</div>
+                {this.state.message ?
+                    <div id='ErrorMessage-container' onClick={() => this.setState({message: ""})}>
+                        <div id="ErrorMessage">{this.state.message}</div>
+                    </div>
+                    :
+                    null
+                }
                 </div>
                 :
-                <div>Ładowanie</div>
-            }
+                {this.state.loading?
+                    <div id="reg-loading--l">
+                        <div id="user-panel-loading-signature"><div className='RMasterloader'/></div>
+                    </div>
+                    :
+                    null
+                }
             </div>
         );
     }

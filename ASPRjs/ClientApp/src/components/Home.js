@@ -1,22 +1,40 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 export class Home extends Component {
   static displayName = Home.name;
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: this.props.appdata,
+      newest: ""
+    }
+  }
+
+  componentDidMount() {
+    axios.get("Dishes/Recipe/GetThreeNewest")
+    .then(response => {
+      this.setState({newest: response.data.recipes});
+    })
+  }
+
   render () {
     return (
       <div id="main-home-page">
-        <div id="main-banner">
-          <div id="main-banner-text">
-            <h3>Recipe Master</h3>
-            <p>Jeden by wszystkie zebrać i ludziom podarować</p>
+        <div id="main-banner-wrapper">
+          <div id="main-banner">
+            <div id="main-banner-text">
+              <h3>Recipe Master</h3>
+              <p>Jeden by wszystkie zebrać i ludziom podarować</p>
+            </div>
+            <img src="/Images/taryn-elliott-4099237.jpg" alt=""/>
           </div>
-          <img src="./Images/taryn-elliott-4099237.jpg" alt="" />
         </div>
         <h3>Nie wiesz co dzisiaj ugotować?</h3>
         <p>Pozwól że pomogę Ci rozwiązać Twój problem</p>
-        <div id="main-home-container-1" className='container'>
+        <div className="main-home-container-1 container">
           <div className='row'>
             <div className='col-sm-4 m-sm-auto'><h5>Cel powstania aplikacji</h5></div>
             <div className='col-sm-8'>
@@ -28,14 +46,18 @@ export class Home extends Component {
           </div>
         </div>
 
-        <div id="main-home-container-2" className='container'>
-          <div className='row'>
-            <div id="main-account-offer" className='col-sm-4'>Nie masz jeszcze konta? - Załóż je</div>
-            <Link to="/register" id="main-account-register" className='col-sm-2 offset-sm-1 my-auto'>Zarejestruj się</Link>
+        {!this.state.login?
+          <div className="main-home-container-2 container">
+            <div className='row'>
+              <div id="main-account-offer" className='col-6 col-sm-4'>Nie masz jeszcze konta? - Załóż je</div>
+              <Link to="/register" id="main-account-register" className='col-4 offset-1 col-sm-2 offset-sm-1 my-auto'>Zarejestruj się</Link>
+            </div>
           </div>
-        </div>
+          :
+          null
+        }
 
-        <div id="main-home-container-1" style={{marginTop: '2.5em'}} className='container'>
+        <div className="main-home-container-1 container" style={{marginTop: '2.5em'}}>
           <div className='row'>
             <div className='col-sm-4 m-sm-auto'><h5>Wykorzystane technologie</h5></div>
             <div className='col-sm-8'>
@@ -46,7 +68,7 @@ export class Home extends Component {
           </div>
         </div>
 
-        <div id="main-home-container-1" style={{marginTop: '2.5em', marginBottom: '6em'}} className='container'>
+        <div className="main-home-container-1 container" style={{marginTop: '2.5em'}}>
           <div className='row'>
             <div className='col-sm-4 m-sm-auto'><h5>Języki programowania</h5></div>
             <div className='col-sm-8'>
@@ -57,6 +79,35 @@ export class Home extends Component {
           </div>
         </div>
 
+        <div className="main-home-container-3 container" style={{marginBottom: '5em'}}>
+          <h4>Najnowsze dodane przepisy:</h4>
+          <div className='row'>
+            {this.state.newest.length > 0 ?
+              <>
+                <div className='col-sm-4'>
+                  <figure>
+                    <Link to={'/recipes/' + this.state.newest[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[0].photoFileName} alt={this.state.newest[0].name}/></Link>
+                    <figcaption className='mt-2'>{this.state.newest[0].name}</figcaption>
+                  </figure>
+                </div>
+                <div className='col-sm-4'>
+                  <figure>
+                    <Link to={'/recipes/' + this.state.newest[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[1].photoFileName} alt={this.state.newest[1].name}/></Link>
+                    <figcaption className='mt-2'>{this.state.newest[1].name}</figcaption>
+                  </figure>
+                </div>
+                <div className='col-sm-4'>
+                  <figure>
+                    <Link to={'/recipes/' + this.state.newest[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[2].photoFileName} alt={this.state.newest[2].name}/></Link>
+                    <figcaption className='mt-2'>{this.state.newest[2].name}</figcaption>
+                  </figure>
+                </div>
+              </>
+              :
+              null
+            }
+          </div>
+        </div>
       </div>
       /*
         <div>Jeżeli nie masz jeszcze konta załóż je - obok przycisk</div>

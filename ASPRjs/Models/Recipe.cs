@@ -18,7 +18,7 @@ namespace ASPRjs.Models
 
         [Column(TypeName = "varchar(MAX)")]
         public string Description { get; set; }
-        [Column(TypeName = "varchar(75)")]
+        [Column(TypeName = "varchar(MAX)")]
         public string PhotoFileName { get; set; } = "Noimg.png";
         public string LinkName { get; set; }
         public string Source { get; set; } = "";
