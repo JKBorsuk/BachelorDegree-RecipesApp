@@ -86,7 +86,7 @@ namespace ASPRjs.Controllers
             if (HttpContext.Session.GetString("user") != login) return NotFound("No recepies were found");
 
             var ones = _userService.readAllICanCook(login,type);
-            if (ones.AllRecipes[0] == null || ones.AllRecipes[0].Count == 0) return NotFound("No recepies were found");
+            if (ones.AllRecipes[0].Count == 0 && ones.AllRecipes[1].Count == 0) return NotFound("No recepies were found");
 
             return Ok(ones);
         }
@@ -130,6 +130,16 @@ namespace ASPRjs.Controllers
                 return Ok();
             }
             else return Unauthorized();
+        }
+        [HttpPut("UpdateIngredient/{login}/{name},{newname}")]
+        public IActionResult updateIngredient(string login, string name, string newname)
+        {
+            if (HttpContext.Session.GetString("user") == login)
+            {
+                _userService.updateIngredient(_userService.getUserByLogin_U(login), name, newname);
+                return Ok(newname);
+            }
+            else return Unauthorized(name);
         }
     }
 }

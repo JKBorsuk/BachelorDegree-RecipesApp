@@ -140,7 +140,7 @@ export class ViewRecipe extends Component {
                     </div>}
                 </div>
                 :
-                <div id="user-panel-loading-signature"><div className='RMasterloader'/></div>}
+                <div className="user-panel-loading-signature"><div className='RMasterloader'/></div>}
             </div>
         )
     }

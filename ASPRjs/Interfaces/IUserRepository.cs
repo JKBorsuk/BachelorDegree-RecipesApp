@@ -8,6 +8,7 @@ namespace Interfaces
         public User getByLogin(string login);
         public void addUser(User user);
         public void updateUser(User user);
+        public void updateIngredient(UserIngredient Uing);
         public UserIngredient getByUser(User user, string name);
         public void deleteIngredient(UserIngredient Uing);
         public void addIngredient(UserIngredient Uing);

@@ -62,7 +62,7 @@ export class LoginUser extends Component {
                 </div>
                 {this.state.loading?
                     <div id="reg-loading--l">
-                        <div id="user-panel-loading-signature"><div className='RMasterloader'/></div>
+                        <div className="user-panel-loading-signature"><div className='RMasterloader'/></div>
                     </div>
                     :
                     null

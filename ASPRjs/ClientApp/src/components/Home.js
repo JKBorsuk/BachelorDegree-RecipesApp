@@ -38,10 +38,10 @@ export class Home extends Component {
           <div className='row'>
             <div className='col-sm-4 m-sm-auto'><h5>Cel powstania aplikacji</h5></div>
             <div className='col-sm-8'>
-              <div style={{float: 'left'}}></div><div>Zaoszczędzenie Twojego czasu</div>
-              <div style={{float: 'left'}}></div><div>Przy pomocy zebranych przepisów podsunąć Ci takie dania, które możesz zrobić od ręki</div>
-              <div style={{float: 'left'}}></div><div>Doradzenie czego Ci brakuje w spiżarni</div>
-              <div style={{float: 'left'}}></div><div>Bycie na każde Twoje wywołanie</div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u276F'}</div><div className='col-10'>Zaoszczędzenie Twojego czasu</div></div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u276F'}</div><div className='col-10'>Przy pomocy zebranych przepisów podsunąć Ci takie dania, które możesz zrobić od ręki</div></div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u276F'}</div><div className='col-10'>Doradzenie czego Ci brakuje w spiżarni</div></div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u276F'}</div><div className='col-10'>Bycie na każde Twoje wywołanie</div></div>
             </div>
           </div>
         </div>
@@ -61,9 +61,10 @@ export class Home extends Component {
           <div className='row'>
             <div className='col-sm-4 m-sm-auto'><h5>Wykorzystane technologie</h5></div>
             <div className='col-sm-8'>
-              <div style={{float: 'left'}}></div><div>ASP.NET</div>
-              <div style={{float: 'left'}}></div><div>ReactJs</div>
-              <div style={{float: 'left'}}></div><div>Bootstrap</div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u276F'}</div><div className='col-10'>ASP.NET</div></div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u276F'}</div><div className='col-10'>ReactJs</div></div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u276F'}</div><div className='col-10'>Bootstrap</div></div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u276F'}</div><div className='col-10'>jQuery</div></div>
             </div>
           </div>
         </div>
@@ -72,9 +73,9 @@ export class Home extends Component {
           <div className='row'>
             <div className='col-sm-4 m-sm-auto'><h5>Języki programowania</h5></div>
             <div className='col-sm-8'>
-              <div style={{float: 'left'}}></div><div>C#</div>
-              <div style={{float: 'left'}}></div><div>JavaScript</div>
-              <div style={{float: 'left'}}></div><div>HTML5</div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u2713'}</div><div className='col-10'>C#</div></div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u2713'}</div><div className='col-10'>JavaScript</div></div>
+              <div className='row'><div className='col-1 text-end' style={{color: 'rgb(0, 199, 0)'}}>{'\u2713'}</div><div className='col-10'>HTML5</div></div>
             </div>
           </div>
         </div>
@@ -87,20 +88,20 @@ export class Home extends Component {
                 <div className='col-sm-4'>
                   <figure>
                     <Link to={'/recipes/' + this.state.newest[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[0].photoFileName} alt={this.state.newest[0].name}/></Link>
-                    <figcaption className='mt-2'>{this.state.newest[0].name}</figcaption>
                   </figure>
+                  <figcaption className='mt-2'>{this.state.newest[0].name}</figcaption>
                 </div>
                 <div className='col-sm-4'>
                   <figure>
                     <Link to={'/recipes/' + this.state.newest[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[1].photoFileName} alt={this.state.newest[1].name}/></Link>
-                    <figcaption className='mt-2'>{this.state.newest[1].name}</figcaption>
                   </figure>
+                  <figcaption className='mt-2'>{this.state.newest[1].name}</figcaption>
                 </div>
                 <div className='col-sm-4'>
                   <figure>
                     <Link to={'/recipes/' + this.state.newest[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[2].photoFileName} alt={this.state.newest[2].name}/></Link>
-                    <figcaption className='mt-2'>{this.state.newest[2].name}</figcaption>
                   </figure>
+                  <figcaption className='mt-2'>{this.state.newest[2].name}</figcaption>
                 </div>
               </>
               :

@@ -58,6 +58,11 @@ namespace Repositories
             _masterDbContext.UserIngredients.Remove(Uing);
             _masterDbContext.SaveChanges();
         }
+        public void updateIngredient(UserIngredient Uing)
+        {
+            _masterDbContext.UserIngredients.Update(Uing);
+            _masterDbContext.SaveChanges();
+        }
         public IEnumerable<string> readIngredients(string login)
         {
             return _masterDbContext.UserIngredients.Where(x => x.UserId == getByLogin(login).UserId).Select(y => y.Name);
@@ -96,7 +101,7 @@ namespace Repositories
                         Name = recipe.Name,
                         LinkName = recipe.LinkName,
                         PhotoFileName = recipe.PhotoFileName,
-                        Ingredients = reserveIngredients,
+                        Ingredients = new List<RecipeIngredient>(reserveIngredients),
                     };
 
                     recipes_reserve.Add(newRec);

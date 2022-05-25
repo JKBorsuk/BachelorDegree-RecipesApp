@@ -117,19 +117,33 @@ export class UserPanel extends Component {
     editIngredient_ShowEditor(props) {
         this.setState({IngredientOName: props, IngredientEdit: true});
         document.getElementById("uingredient_"+props).style.height = "110px";
-        document.getElementById("uingredient-edit-form-"+props).style.display = "block";
+        document.getElementById("uingredient-edit-form-"+props).style.visibility = "visible";
+        document.getElementById("uingredient-delete-"+props).style.visibility = "hidden";
         $('.user-panel-uingredients-scroll-element').removeClass('scroll-element-hoverableEdit');
     }
     editIngredient_HideEditor(props) {
-        this.setState({IngredientOName: "", IngredientEdit: false})
+        this.setState({IngredientOName: "", IngredientNName: "", IngredientEdit: false})
         document.getElementById("uingredient_"+props).style.height = "";
-        document.getElementById("uingredient-edit-form-"+props).style.display = "";
+        document.getElementById("uingredient-edit-form-"+props).style.visibility = "";
+        document.getElementById("uingredient-delete-"+props).style.visibility = "";
         $('.user-panel-uingredients-scroll-element').addClass('scroll-element-hoverableEdit');
     }
 
-    // editIngredient_SaveChanges() {
-    //
-    //}
+    editIngredient_SaveChanges(e) {
+        e.preventDefault();
+        if(!this.state.IngredientNName) { this.setState({message: "Podaj nazwę składnika przed dodaniem"}); return }
+        if(!this.state.allIngredients.some(el => el === this.state.IngredientNName) || this.state.userIngredients.some(el => el === this.state.IngredientNName)) { this.setState({message: "Składnika nie ma w bazie danych bądź jest już w twojej spiżarni"}); return }
+        axios.put("Community/User/UpdateIngredient/" + this.state.login + '/' + this.state.IngredientOName + ',' + this.state.IngredientNName)
+        .then(() => {
+            let array = this.state.userIngredients;
+            array[array.indexOf(this.state.IngredientOName)] = this.state.IngredientNName;
+            document.getElementById("uingredient_"+this.state.IngredientOName).style.height = "";
+            document.getElementById("uingredient-edit-form-"+this.state.IngredientOName).style.visibility = "";
+            document.getElementById("uingredient-delete-"+this.state.IngredientOName).style.visibility = "";
+            this.setState({IngredientOName: "", IngredientNName: "", IngredientEdit: false, userIngredients: array});
+            $('.user-panel-uingredients-scroll-element').addClass('scroll-element-hoverableEdit');
+        })
+    }
 
     render() {
         return(
@@ -148,7 +162,7 @@ export class UserPanel extends Component {
                                             <div className='user-panel-uingredients-scroll-element scroll-element-hoverableEdit' key={k} id={'uingredient_'+k}>
                                                 <div className='user-uingredient'>{k}</div>
                                                 {!this.state.IngredientEdit? <div className='user-uingredient-edit' onClick={() => this.editIngredient_ShowEditor(k)}>Edytuj</div> : null}
-                                                <div className='user-uingredient-delete'><div onClick={() => this.deleteIngredient(k)}>{'\u2715'}</div></div>
+                                                <div className='user-uingredient-delete' id={'uingredient-delete-'+k}><div onClick={() => this.deleteIngredient(k)}>{'\u2715'}</div></div>
                                                 <div className='user-uingredient-edit-form' id={'uingredient-edit-form-'+k}>
                                                     <form>
                                                         <div className='uingredient-bad' onClick={() => this.editIngredient_HideEditor(k)}>{'\u2715'}</div>
@@ -159,7 +173,7 @@ export class UserPanel extends Component {
                                                                 autoComplete="off"
                                                                 autoFocus
                                                         />
-                                                        <div className='uingredient-ok'>{'\u2713'}</div>
+                                                        <div className='uingredient-ok' onClick={(e) => this.editIngredient_SaveChanges(e)}>{'\u2713'}</div>
                                                         <button hidden></button>
                                                     </form>
                                                 </div>
@@ -184,15 +198,15 @@ export class UserPanel extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-lg-8'>
-                            <div id="user-panel-button" onClick={this.recipeSearch}>Szukaj</div>
-                            <div onChange={this.onChangeValue} id="user-panel-main-labels">
-                                <input type="radio" name="drone" value="1" id="ms" hidden/><label htmlFor="ms">Śniadanie</label>
-                                <input type="radio" name="drone" value="2" id="mok" hidden/><label htmlFor="mok">Obiad/kolacja</label>
-                                <input type="radio" name="drone" value="3" id="sv" hidden/><label htmlFor="sv">Śniadanie Vege</label>
-                                <input type="radio" name="drone" value="4" id="okv" hidden/><label htmlFor="okv">Obiad/kolacja Vege</label>
+                        <div className='col-lg-8 mt-4 mt-lg-0'>
+                            <div className='row ms-lg-1'><div id="user-panel-button" className='col-12' onClick={this.recipeSearch}>Szukaj</div></div>
+                            <div onChange={this.onChangeValue} id="user-panel-main-labels" className='row ms-lg-1'>
+                                <input type="radio" name="drone" value="1" id="ms" hidden/><label htmlFor="ms" className='col-sm-3'><div className='centered'>Śniadanie</div></label>
+                                <input type="radio" name="drone" value="2" id="mok" hidden/><label htmlFor="mok" className='col-sm-3'><div className='centered'>Obiad / kolacja</div></label>
+                                <input type="radio" name="drone" value="3" id="sv" hidden/><label htmlFor="sv" className='col-sm-3'><div className='centered'>Śniadanie Vege</div></label>
+                                <input type="radio" name="drone" value="4" id="okv" hidden/><label htmlFor="okv" className='col-sm-3'><div className='centered'>Obiad / kolacja Vege</div></label>
                             </div>
-                            <div id="user-panel-view-result">
+                            <div id="user-panel-view-result" className='row ms-lg-1'>
                                 {typeof(this.state.recipeList) == 'object'?
                                     this.state.loading_dishes == false ?
                                         this.state.recipeList.map(k =>
@@ -210,7 +224,7 @@ export class UserPanel extends Component {
                                             </Link>
                                         )
                                         :
-                                        <div id="user-panel-loading-signature"><div className='RMasterloader'/></div>
+                                        <div className="user-panel-loading-signature"><div className='RMasterloader'/></div>
                                     :
                                     null
                                 }
@@ -218,6 +232,42 @@ export class UserPanel extends Component {
                         </div>
                     </div>
                 </div>
+                {this.state.recipeReserveList.length > 0?
+                    <div className='user-panel-reserve-container' style={{width: '100%', border: '2px solid red'}}>
+                        {console.log(this.state.recipeReserveList)}
+                        <div className='text-center p-3'><h3>Są dla Ciebie propozycje:</h3></div>
+                        <div id='user-reserve-recipes'>
+                            {typeof(this.state.recipeReserveList) == 'object'?
+                                this.state.recipeReserveList.map(el =>
+                                    <div className='reserve-recipe'>
+                                        <Link to={'/recipes/' + el.linkName} key={el.name} style={{textDecoration: 'none', color: 'black'}}>
+                                            <div className='user-panel-recipe-list-element'>
+                                                <div className="user-list-element-container">
+                                                    <div className="list-element-img">
+                                                        <img src={'/Images/'+ el.photoFileName} alt=""/>
+                                                    </div>
+                                                    <div className="list-element-text">
+                                                        <h5>{el.name}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                        <div className='text-center missing-ingredients'>
+                                                <div>Brakujące składniki:</div>
+                                                    {el.ingredients.map(sk => 
+                                                        <div className='missing-ingredient'>{sk.name}</div>
+                                                    )}
+                                        </div>
+                                    </div>
+                                )
+                                :
+                                null
+                            } 
+                        </div>
+                    </div>
+                    :
+                    null
+                }
                 {this.state.message ?
                     <div id='ErrorMessage-container' onClick={this.hideMessage}>
                         <div id="ErrorMessage">{this.state.message}</div>

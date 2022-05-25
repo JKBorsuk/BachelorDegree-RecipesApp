@@ -97,9 +97,15 @@ namespace Services
             _userRepository.updateUser(user);
             return user;
         }
-        public void deleteIngredient(User user, string nazwa)
+        public void deleteIngredient(User user, string name)
         {
-            _userRepository.deleteIngredient(_userRepository.getByUser(user, nazwa));
+            _userRepository.deleteIngredient(_userRepository.getByUser(user, name));
+        }
+        public void updateIngredient(User user, string name, string newName)
+        {
+            var existingIngredient = _userRepository.getByUser(user, name);
+            existingIngredient.Name = newName;
+            _userRepository.updateIngredient(existingIngredient);
         }
     }
 }

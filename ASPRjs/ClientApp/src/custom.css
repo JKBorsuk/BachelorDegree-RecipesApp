@@ -22,16 +22,8 @@ body {
 
 /* Home.js and media queries */
 
-@media (max-width: 575px) {
-  .arec-row-text {
-    text-align: center;
-  }
-  .arec-row-ingredients-spices > .col-sm-4 > .row > .arec-row-input {
-    margin-top: 5px;
-  }
-}
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
   /* Home.js */
   #main-banner {
@@ -43,12 +35,112 @@ body {
   /* -- END -- */
 
   
+  .arec-row-text {
+    text-align: center;
+  }
+  .arec-row-ingredients-spices > .col-sm-4 > .row > .arec-row-input {
+    margin-top: 5px;
+  }
+
   /* Register.js */
   .register {
     max-width: 100%;
   }
   /* -- END -- */
 
+  .user-panel-container > .row > .col-lg-8 > #user-panel-view-result {
+    height: 400px;
+  }
+  /* Left Side Padding */
+  .user-panel-container > .row > .col-lg-4 {
+    padding: 10px;
+  }
+  /* Left Side Scroll */
+  .user-panel-container > .row > .col-lg-4 > #user-panel-user-ingredients-container {
+    width: 50%;
+  }
+  #user-panel-user-ingredients-container > #user-panel-uingredients-scroll {
+    max-height: 300px;
+    height: 100%;
+  }
+  #user-panel-uingredients-scroll > .user-panel-uingredients-scroll-element {
+    text-align: left;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-right: 20%;
+    height: 58px;
+  }
+  .user-panel-uingredients-scroll-element > .user-uingredient {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+  }
+  #user-panel-user-ingredients-container > #user-panel-uingredients-inputs {
+    position: absolute;
+    bottom: 50%;
+    left: calc(100% + 5px);
+    display: block;
+    transform: translateY(50%);
+    -o-transform: translateY(50%);
+    -ms-transform: translateY(50%);
+    -moz-transform: translateY(50%);
+    -webkit-transform: translateY(50%);
+
+    text-align: center;
+  }
+  #user-panel-uingredients-inputs > #user-panel-allIngr, #user-panel-uingredients-inputs > #user-panel-allIngr-Add {
+    margin: 0.5em auto;
+    flex: none;
+  }
+  #user-panel-uingredients-inputs > #user-panel-allIngr {
+    width: 70%;
+  }
+  #user-panel-uingredients-inputs > #user-panel-allIngr-Add {
+    width: min-content;
+    padding: 4px 10px;
+  }
+  .user-uingredient-delete {
+    opacity: 1;
+    -moz-opacity: 1;
+    visibility: visible;
+    background-color: rgb(59, 0, 0);
+  }
+  .user-uingredient-edit-form, .user-uingredient-edit {
+    display: none;
+  }
+  .scroll-element-hoverableEdit:hover  > .user-uingredient {
+    transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%)
+  }
+  .user-uingredient {
+    transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -webkit-transform: translateY(0);
+  }
+  /* -- END -- */
+  #user-panel-main-labels {
+    display: block;
+    text-align: center;
+  }
+  #user-panel-main-labels > label {
+    flex:none;
+    width: 50%;
+  }
+  #user-panel-main-labels > label:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
+  /* -- END -- */
 
   /* AddRecipe.js */
   .arec-row-ingspec {
@@ -65,6 +157,88 @@ body {
   }
   /* -- END -- */
 
+}
+@media (min-width:768px) and (max-width: 991px) {
+    /* Left Side Padding */
+    .user-panel-container > .row > .col-lg-4 {
+      padding: 10px;
+    }
+    .user-panel-container > .row > .col-lg-8 > #user-panel-view-result {
+      height: 450px;
+    }
+    /* Left Side Scroll */
+    .user-panel-container > .row > .col-lg-4 > #user-panel-user-ingredients-container {
+      width: 50%;
+    }
+    #user-panel-user-ingredients-container > #user-panel-uingredients-scroll {
+      max-height: 400px;
+      height: 100%;
+    }
+    #user-panel-uingredients-scroll > .user-panel-uingredients-scroll-element {
+      text-align: left;
+      padding-top: 5px;
+      padding-left: 10px;
+      padding-bottom: 5px;
+      padding-right: 20%;
+      height: 58px;
+    }
+    .user-panel-uingredients-scroll-element > .user-uingredient {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -webkit-transform: translateY(-50%);
+    }
+    #user-panel-user-ingredients-container > #user-panel-uingredients-inputs {
+      position: absolute;
+      bottom: 50%;
+      left: calc(100% + 5px);
+      display: block;
+      transform: translateY(50%);
+      -o-transform: translateY(50%);
+      -ms-transform: translateY(50%);
+      -moz-transform: translateY(50%);
+      -webkit-transform: translateY(50%);
+  
+      text-align: center;
+    }
+    #user-panel-uingredients-inputs > #user-panel-allIngr, #user-panel-uingredients-inputs > #user-panel-allIngr-Add {
+      margin: 0.5em auto;
+      flex: none;
+    }
+    #user-panel-uingredients-inputs > #user-panel-allIngr {
+      width: 70%;
+    }
+    #user-panel-uingredients-inputs > #user-panel-allIngr-Add {
+      width: min-content;
+      padding: 4px 10px;
+    }
+    .user-uingredient-delete {
+      opacity: 1;
+      -moz-opacity: 1;
+      visibility: visible;
+      background-color: rgb(59, 0, 0);
+    }
+    .user-uingredient-edit-form, .user-uingredient-edit {
+      display: none;
+    }
+    .scroll-element-hoverableEdit:hover  > .user-uingredient {
+      transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -webkit-transform: translateY(-50%)
+    }
+    .user-uingredient {
+      transform: translateY(0);
+      -o-transform: translateY(0);
+      -ms-transform: translateY(0);
+      -moz-transform: translateY(0);
+      -webkit-transform: translateY(0);
+    }
+    /* -- END -- */
 }
 
 
@@ -148,18 +322,8 @@ body {
   background-color: #292b2c;
 }
 
-.main-home-container-1:nth-child(2n) > .row > div > div:nth-child(2n+1):before {
-  content: "\276F";
-  margin-right: 0.6em;
-  color: rgb(0, 199, 0);
-}
-.main-home-container-1:nth-child(2n+1) > .row > div > div:nth-child(2n+1):before {
-  content: "\2713";
-  margin-right: 0.6em;
-  color: rgb(0, 199, 0);
-}
 .main-home-container-1 > .row > div div:not(:last-child) {
-  margin-bottom: 1em;
+  margin-bottom: 0.6em;
 }
 .main-home-container-1 > .row > .col-sm-8 {
   text-align: left;
@@ -210,11 +374,35 @@ body {
   margin-bottom: 20px;
 }
 
-.row > .col-sm-4 > figure > a > img {
-  border-radius: 5px;
-  aspect-ratio: 1.7;
-  object-fit: cover;
-  object-position: center;
+.row > .col-sm-4 > figure {
+  padding-top: 50%;
+  position: relative;
+
+  transition: 100ms color ease-in-out;
 }
 
-/* -- END -- */
+.row > .col-sm-4 > figure:hover {
+  color:rgb(211, 155, 52)
+}
+
+.main-home-container-3 > .row > .col-sm-4 > figcaption {
+  margin: 0 10px;
+  margin-bottom: 1.5em;
+}
+
+.row > .col-sm-4 > figure > a > img {
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border: 0px solid rgba(255, 255, 255, 0);
+
+  transition: 60ms border ease-in-out;
+}
+.row > .col-sm-4 > figure > a > img:hover {
+  border-width: 5px 0 5px 0;
+}

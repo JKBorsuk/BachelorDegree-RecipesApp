@@ -131,14 +131,14 @@
     border-color: white;
     border-width: 0 0 0 2px;
 
-    border-top-right-radius: 7px;
-    border-bottom-right-radius: 7px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 
     opacity: 0;
     -moz-opacity: 0;
     visibility: hidden;
 
-    transition: 200ms background-color, opacity, visibility ease-in-out;
+    transition: 200ms background-color;
 }
 .user-uingredient-delete > div {
     display: grid;
@@ -190,16 +190,7 @@
 #user-panel-uingredients-inputs > #user-panel-allIngr-Add:hover {
     background-color: rgb(70, 70, 70);
 }
-/*
-#user-panel-user-ingredients-container > #user-panel-uingredients-inputs > input[type=button] {
-    min-width: 30%;
-    padding: 4px;
-    position: absolute;
-    right: 0;
-    background-color: red;
-    border: 2px soldid blue;
-}
-*/
+
 
 /*RIGHT SIDE*/
 .user-panel-container > .row > .col-lg-8 {
@@ -207,7 +198,7 @@
     flex-direction: column;
 }
 
-.user-panel-container > .row > .col-lg-8 > #user-panel-button {
+.user-panel-container > .row > .col-lg-8 > .row > #user-panel-button {
     color: rgb(211, 155, 52);
     width: 100%;
     padding: 25px;
@@ -218,19 +209,19 @@
     border-radius: 10px;
     transition: 100ms background-color ease-in;
 }
-.user-panel-container > .row > .col-lg-8 > #user-panel-button:hover {
+.user-panel-container > .row > .col-lg-8 > .row > #user-panel-button:hover {
     cursor: pointer;
     background-color: rgb(70, 70, 70);
 }
-.user-panel-container > .row > .col-lg-8 > #user-panel-main-labels {
+#user-panel-main-labels {
     margin-top: 15px;
     display: flex;
 }
-.user-panel-container > .row > .col-lg-8 > #user-panel-main-labels > label {
+#user-panel-main-labels > label {
     flex: 1;
+    height: 78px;
     text-align: center;
     max-width: 400px;
-    padding: 25px 0;
     border-radius: 10px;
     transition: 0.4s;
     border: 2px solid white;
@@ -238,34 +229,47 @@
     color: rgb(211, 155, 52);
     user-select: none;
 }
+#user-panel-main-labels > label > .centered {
+    position: relative;
+
+    top: 50%;
+    transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
 .user-panel-container > .row > .col-lg-8 > #user-panel-main-labels > label:hover {
     cursor: pointer;
 }
-.user-panel-container > .row > .col-lg-8 > #user-panel-main-labels > label:not(:last-child) {
+#user-panel-main-labels > label:not(:last-child) {
     margin-right: 20px;
 }
 .user-panel-container > .row > .col-lg-8 > #user-panel-main-labels > input:checked + label {
     background-color: rgb(70, 70, 70);
 }
 
+.user-panel-container> .row > .col-lg-8 > .row {
+    display: block;
+}
 /* RECIPE LIST */
 .user-panel-container > .row > .col-lg-8 > #user-panel-view-result {
     position: relative;
     overflow-y: scroll;
     background-color: #292b2caf;
     margin-top: 15px;
-    width: 100%;
-    min-height: 623px;
-    height: 100%;
+    min-width: 100%;
+    height: 620px;
     padding: 25px;
     border: 3px solid white;
     border-radius: 6px;
 }
-#user-panel-loading-signature {
+.user-panel-loading-signature {
     position: absolute;
     top: 50%;
     left: 50%; 
     transform: translate(-50%,-50%);
+    width: auto;
 }
 #user-panel-view-result > a {
     display: block;
@@ -347,9 +351,9 @@ a:hover > .user-panel-recipe-list-element > .user-list-element-container > .list
 
 .user-uingredient-edit-form {
     margin-left: 5%;
-    margin-right: 25%;
+    margin-right: 5%;
     margin-top: 20px;
-    display: none;
+    visibility: hidden;
 }
 .user-uingredient-edit-form > form {
     display: flex;
@@ -365,6 +369,7 @@ form > .uingredient-bad {
 }
 .user-uingredient-edit-form > form > input {
     width: 100%;
+    padding-left: 5px;
     outline: none;
     border-style: solid;
     border-width: 2px 0 2px 0;
@@ -392,23 +397,14 @@ form > .uingredient-ok:hover {
 
 /* -- END -- */
 
-/*
-            {this.state.IngredientEdit?
-            <div id="IngredientEdit-container">
-                <form onSubmit="">
-                    <div id="IngredientEdit">
-                        <input 
-                        type="text" 
-                        placeholder={'Nowa nazwa dla ' + this.state.IngredientOName} 
-                        value={this.state.IngredientNName} 
-                        onChange={(e) => this.setState({IngredientNName: e.target.value})}
-                        autoFocus
-                        />
-                    </div>
-                    <button hidden></button>
-                </form>
-            </div>
-            :
-            null}
-
-*/
+#user-reserve-recipes {
+    padding: 10px;
+    overflow-y: scroll;
+    height: 620px;
+    border: 2px solid green;
+}
+.reserve-recipe {}
+#user-reserve-recipes > .reserve-recipe > .missing-ingredients {
+    background-color: #292b2c;
+    border: 2px solid white;
+}
