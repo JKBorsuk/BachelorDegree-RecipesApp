@@ -45,6 +45,9 @@ namespace ASPRjsAPI.Mappings
                 cfg.CreateMap<RSpiceDto, RecipeSpice>();
                 cfg.CreateMap<RecipeSpice, RSpiceDto>();
 
+                cfg.CreateMap<RIngredientDto[], UIngredientDto[]>();
+                cfg.CreateMap<UIngredientDto[], UserIngredient[]>();
+
                 #endregion
 
                 cfg.CreateMap<IEnumerable<string>, ListIngredientDto>()

@@ -48,14 +48,21 @@ namespace ASPRjs.Controllers
         public IActionResult Register(RegisterUser ruser)
         {
             var user = _userService.addNewUser(ruser);
-            return Created($"api/users/{user.login}", user);
+            return Created($"Community/User/{user.login}", user);
         }
 
         [HttpPost("AddIngredient/{login}")]
         public IActionResult addIngredients(UIngredientDto userIngredient, string login)
         {
             var ingredient = _userService.AddNewIngredient(userIngredient, login);
-            return Created($"api/users/Ingredients/{ingredient.UIngredientId}", ingredient);
+            return Created($"Community/User/Ingredients/{ingredient.UIngredientId}", ingredient);
+        }
+        [HttpPost("AddIngredients/{login}")]
+        public IActionResult addMultiIngredients(ArrayUIngredientDto userIngredients, string login)
+        {
+            if (_userService.getUserByLogin_U(login).ingredients.Count + userIngredients.UIngredients.Length > 50) return Unauthorized("Limit");
+            _userService.addMulitIngredients(userIngredients,login);
+            return Ok();
         }
 
         [HttpPost("Login")]

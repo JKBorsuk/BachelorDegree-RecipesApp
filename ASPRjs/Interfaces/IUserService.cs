@@ -10,6 +10,7 @@ namespace Interfaces
         public User getUserByLogin_U(string login); // do logowania
         public User addNewUser(RegisterUser user);
         public Dictionary<string, bool> dictionary(int id);
+        public void addMulitIngredients(ArrayUIngredientDto userIngredients, string login);
         public UserIngredient AddNewIngredient(UIngredientDto uing, string login);
         public ListIngredientDto readAllUserIngredients(string login);
         public ArrayUserRecipesDto readAllICanCook(string login, int type);

@@ -18,6 +18,7 @@ import { ChangeRole } from './components/User/ChangeRole';
 import axios from 'axios';
 
 import './custom.css'
+import './css/fontello.css'
 
 export default class App extends Component {
   static displayName = App.name;

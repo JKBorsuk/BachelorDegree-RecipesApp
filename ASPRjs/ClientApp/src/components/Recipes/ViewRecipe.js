@@ -11,6 +11,7 @@ export class ViewRecipe extends Component {
             linkname: window.location.href.substring(window.location.href.lastIndexOf('/') + 1),
             ingredient: [],
             max_width: 400,
+            description: "",
             condition_v: false,
             login: this.props.appdata,
             loading: true
@@ -23,9 +24,13 @@ export class ViewRecipe extends Component {
                 this.setState({
                     condition_v: true,
                     ingredient: resp.data,
-                    loading: false
+                    loading: false,
+                    description: resp.data.description
                 })
             }).catch(() => { window.location.href = "/" })
+            .finally(() => {
+                document.getElementById('recipe-description-id').innerHTML = this.state.description.replaceAll('\\n','<br/><br/>');
+            })
         }
         catch(err) {
             console.log(err.status)
@@ -83,7 +88,7 @@ export class ViewRecipe extends Component {
                             <div className="recipe-type"><p>{this.dishType(this.state.ingredient.type)}</p></div>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <div className="recipe-child recipe-description">{this.state.ingredient.description}</div>
+                                    <div className="recipe-child recipe-description" id="recipe-description-id"></div>
                                     <div className="recipe-child recipe-ingredients">
                                         {(typeof(this.state.ingredient.ingredients) == "object") ?
                                             <div>
@@ -102,9 +107,9 @@ export class ViewRecipe extends Component {
                                 </div>
                                 <div className="col-md-6">
                                     {typeof(this.state.ingredient.photoFileName) == 'string' && this.state.ingredient.photoFileName != "Noimg.png" ?
-                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '1.7', objectFit: 'cover'}} src={"Images/" + this.state.ingredient.photoFileName}/></div>
+                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '1.4', objectFit: 'cover'}} src={"Images/" + this.state.ingredient.photoFileName}/></div>
                                         :
-                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '1.7', objectFit: 'cover'}} src="Images/Noimg.png"/></div>
+                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '1.4', objectFit: 'cover'}} src="Images/Noimg.png"/></div>
                                     }
                                 </div>
                             </div>

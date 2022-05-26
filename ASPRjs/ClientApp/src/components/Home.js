@@ -49,8 +49,8 @@ export class Home extends Component {
         {!this.state.login?
           <div className="main-home-container-2 container">
             <div className='row'>
-              <div id="main-account-offer" className='col-6 col-sm-4'>Nie masz jeszcze konta? - Załóż je</div>
-              <Link to="/register" id="main-account-register" className='col-4 offset-1 col-sm-2 offset-sm-1 my-auto'>Zarejestruj się</Link>
+              <div id="main-account-offer" className='col-6 col-sm-4'>Nie masz jeszcze konta?<br/>Załóż je</div>
+              <Link to="/register" id="main-account-register" className='col-4 offset-1 col-sm-2 my-auto'>Zarejestruj się</Link>
             </div>
           </div>
           :
@@ -80,44 +80,35 @@ export class Home extends Component {
           </div>
         </div>
 
-        <div className="main-home-container-3 container" style={{marginBottom: '5em'}}>
-          <h4>Najnowsze dodane przepisy:</h4>
-          <div className='row'>
-            {this.state.newest.length > 0 ?
-              <>
-                <div className='col-sm-4'>
-                  <figure>
-                    <Link to={'/recipes/' + this.state.newest[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[0].photoFileName} alt={this.state.newest[0].name}/></Link>
-                  </figure>
-                  <figcaption className='mt-2'>{this.state.newest[0].name}</figcaption>
-                </div>
-                <div className='col-sm-4'>
-                  <figure>
-                    <Link to={'/recipes/' + this.state.newest[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[1].photoFileName} alt={this.state.newest[1].name}/></Link>
-                  </figure>
-                  <figcaption className='mt-2'>{this.state.newest[1].name}</figcaption>
-                </div>
-                <div className='col-sm-4'>
-                  <figure>
-                    <Link to={'/recipes/' + this.state.newest[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[2].photoFileName} alt={this.state.newest[2].name}/></Link>
-                  </figure>
-                  <figcaption className='mt-2'>{this.state.newest[2].name}</figcaption>
-                </div>
-              </>
-              :
-              null
-            }
+        {this.state.newest.length > 0 ?
+          <div className="main-home-container-3 container" style={{marginBottom: '5em'}}>
+            <h4>Najnowsze dodane przepisy:</h4>
+            <div className='row'>
+                  <div className='col-sm-4'>
+                    <figure>
+                      <Link to={'/recipes/' + this.state.newest[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[0].photoFileName} alt={this.state.newest[0].name}/></Link>
+                    </figure>
+                    <figcaption className='mt-2'>{this.state.newest[0].name}</figcaption>
+                  </div>
+                  <div className='col-sm-4'>
+                    <figure>
+                      <Link to={'/recipes/' + this.state.newest[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[1].photoFileName} alt={this.state.newest[1].name}/></Link>
+                    </figure>
+                    <figcaption className='mt-2'>{this.state.newest[1].name}</figcaption>
+                  </div>
+                  <div className='col-sm-4'>
+                    <figure>
+                      <Link to={'/recipes/' + this.state.newest[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[2].photoFileName} alt={this.state.newest[2].name}/></Link>
+                    </figure>
+                    <figcaption className='mt-2'>{this.state.newest[2].name}</figcaption>
+                  </div>
+            </div>
           </div>
-        </div>
+          :
+          null
+        }
       </div>
       /*
-        <div>Jeżeli nie masz jeszcze konta załóż je - obok przycisk</div>
-        <div>Wykorzystane technologie</div>
-        <div>ASP.NET, ReactJs, Bootstrap</div>
-        <div>Języki programowania</div>
-        <div>C#, JavaScript, CSS3, HTML5</div>
-
-
       <div>
         <h1>Hello, world!</h1>
         <p>Welcome to your new single-page application, built with:</p>

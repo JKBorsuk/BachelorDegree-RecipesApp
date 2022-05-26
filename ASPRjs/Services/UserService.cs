@@ -55,6 +55,15 @@ namespace Services
         {
             return _userRepository.getByLogin(login);
         }
+        public void addMulitIngredients(ArrayUIngredientDto userIngredients, string login)
+        {
+            var user = getUserByLogin_U(login);
+            foreach(var item in userIngredients.UIngredients)
+            {
+                user.ingredients.Add(new UserIngredient() { Name = item.Name });
+            }
+            _userRepository.updateUser(user);
+        }
 
         public UserIngredient AddNewIngredient(UIngredientDto uing, string login)
         {

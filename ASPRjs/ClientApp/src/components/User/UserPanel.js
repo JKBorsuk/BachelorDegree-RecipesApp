@@ -20,8 +20,10 @@ export class UserPanel extends Component {
             message: "",
             IngredientNName: "",
             IngredientOName: "",
+            pantryEditElements: [],
             IngredientEdit: false,
-            loading_dishes: false
+            loading_dishes: false,
+            pantryEdit: false
         }
         this.onChangeValue = this.onChangeValue.bind(this);
         this.recipeSearch = this.recipeSearch.bind(this);
@@ -63,7 +65,7 @@ export class UserPanel extends Component {
         })
         .catch(err => {
             console.log(err);
-            this.setState({message: "Brak dopasowań do \"" + this.whatMealType((Number)(this.state.dishType)) + "\"", loading_dishes: false})
+            this.setState({message: "Brak dopasowań do \"" + this.whatMealType((Number)(this.state.dishType)) + "\"", loading_dishes: false, recipeList: []})
         })
     }
 
@@ -145,8 +147,56 @@ export class UserPanel extends Component {
         })
     }
 
+    editPantry_ShowEditor(props) {
+        this.setState({pantryEdit: true, pantryEditElements: props})
+    }
+
+    editPantry_HideEditor() {
+        this.setState({pantryEdit: false, pantryEditElements: []})
+    }
+
+    editPantry_Save() {
+        let count = this.state.pantryEditElements.length
+        if(this.state.userIngredients.length + count <= 50) {
+            axios.post("Community/User/AddIngredients/"+this.state.login,{
+                UIngredients: this.state.pantryEditElements
+            })
+            .then((resp) => {
+                console.log(resp);
+
+                let firstChild;
+                let secondChild;
+                let thirdChild;
+
+                switch(count) {
+                    case 2:
+                        firstChild = this.state.pantryEditElements[0].name;
+                        secondChild = this.state.pantryEditElements[1].name;
+                        this.setState({pantryEdit: false, pantryEditElements: [], userIngredients: [...this.state.userIngredients, firstChild, secondChild]})
+                        this.recipeSearch();
+                        break
+                    case 3:
+                        firstChild = this.state.pantryEditElements[0].name;
+                        secondChild = this.state.pantryEditElements[1].name;
+                        thirdChild = this.state.pantryEditElements[2].name;
+                        this.setState({pantryEdit: false, pantryEditElements: [], userIngredients: [...this.state.userIngredients, firstChild, secondChild, thirdChild]})
+                        this.recipeSearch();
+                        break
+                    default:
+                        firstChild = this.state.pantryEditElements[0].name;
+                        this.setState({pantryEdit: false, pantryEditElements: [], userIngredients: [...this.state.userIngredients, firstChild]})
+                        this.recipeSearch();
+                        break
+                }
+                this.setState({pantryEdit: false, pantryEditElements: []})
+            })
+            .catch((err) => {alert("Błąd")})
+        }
+    }
+
     render() {
         return(
+            <>
             <div id="user-panel-wrapper">
                 <div id="user-panel-info">
                     <h3>Witaj w swojej spiżarni!</h3>
@@ -207,6 +257,32 @@ export class UserPanel extends Component {
                                 <input type="radio" name="drone" value="4" id="okv" hidden/><label htmlFor="okv" className='col-sm-3'><div className='centered'>Obiad / kolacja Vege</div></label>
                             </div>
                             <div id="user-panel-view-result" className='row ms-lg-1'>
+                                {typeof(this.state.recipeReserveList) == 'object' && this.state.recipeReserveList.length > 0 ?
+                                    <>
+                                        <div style={{border: '1px dashed white', paddingTop: '1em'}} className="mb-3">
+                                            <h5 className='text-center' style={{paddingBottom: '0.5em'}}>Posiłki godne polecenia:</h5>
+                                            {this.state.recipeReserveList.map(el =>
+                                                <div className='reserve-recipe mb-3'>
+                                                    <div className='user-panel-recipe-list-element' key={el.name}>
+                                                        <div className="user-list-element-container">
+                                                            <div className="list-element-img">
+                                                                <img src={'/Images/'+ el.photoFileName} alt=""/>
+                                                            </div>
+                                                            <div className="list-element-text">
+                                                                <div className='reserve-recipe-add' onClick={() => this.editPantry_ShowEditor(el.ingredients)}>Dodaj</div>
+                                                                <div className='reserve-recipe-name'>
+                                                                    <h5>{el.name}</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </>
+                                    :
+                                    null
+                                }
                                 {typeof(this.state.recipeList) == 'object'?
                                     this.state.loading_dishes == false ?
                                         this.state.recipeList.map(k =>
@@ -217,7 +293,7 @@ export class UserPanel extends Component {
                                                             <img src={'/Images/'+ k.photoFileName} alt=""/>
                                                         </div>
                                                         <div className="list-element-text">
-                                                            <h5>{k.name}</h5>
+                                                            <div className='reserve-recipe-name'><h5>{k.name}</h5></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -232,42 +308,6 @@ export class UserPanel extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.recipeReserveList.length > 0?
-                    <div className='user-panel-reserve-container' style={{width: '100%', border: '2px solid red'}}>
-                        {console.log(this.state.recipeReserveList)}
-                        <div className='text-center p-3'><h3>Są dla Ciebie propozycje:</h3></div>
-                        <div id='user-reserve-recipes'>
-                            {typeof(this.state.recipeReserveList) == 'object'?
-                                this.state.recipeReserveList.map(el =>
-                                    <div className='reserve-recipe'>
-                                        <Link to={'/recipes/' + el.linkName} key={el.name} style={{textDecoration: 'none', color: 'black'}}>
-                                            <div className='user-panel-recipe-list-element'>
-                                                <div className="user-list-element-container">
-                                                    <div className="list-element-img">
-                                                        <img src={'/Images/'+ el.photoFileName} alt=""/>
-                                                    </div>
-                                                    <div className="list-element-text">
-                                                        <h5>{el.name}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                        <div className='text-center missing-ingredients'>
-                                                <div>Brakujące składniki:</div>
-                                                    {el.ingredients.map(sk => 
-                                                        <div className='missing-ingredient'>{sk.name}</div>
-                                                    )}
-                                        </div>
-                                    </div>
-                                )
-                                :
-                                null
-                            } 
-                        </div>
-                    </div>
-                    :
-                    null
-                }
                 {this.state.message ?
                     <div id='ErrorMessage-container' onClick={this.hideMessage}>
                         <div id="ErrorMessage">{this.state.message}</div>
@@ -276,6 +316,29 @@ export class UserPanel extends Component {
                     null
                 }
             </div>
+            {this.state.pantryEdit === true?
+                <div id='pantryEdit-absolute-wrapper'>
+                    <div id='pantryEdit-absolute'>
+                        <div className='centered'>
+                            <div><h2>Dodać te składniki?</h2></div>
+                            {typeof(this.state.pantryEditElements) == 'object'?
+                                this.state.pantryEditElements.map(el =>
+                                    <div className='pantryEdit-ingredient'>{el.name}</div>
+                                )
+                                :
+                                null
+                            }
+                            <div className='pantryEdit-buttons'>
+                                <div className='pantryEdit-button btn-bckgrd-red' onClick={() => this.editPantry_HideEditor()}>Anuluj</div>
+                                <div className='pantryEdit-button btn-bckgrd-green' onClick={() => this.editPantry_Save()}>OK</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                :
+                null 
+            }
+            </>
         )
     }
 }

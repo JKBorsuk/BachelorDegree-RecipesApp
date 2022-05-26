@@ -14,7 +14,7 @@ export class AddRecipe extends Component {
             type: '',
             source: "",
             loading: false,
-            description: "*Opis\n\n* - wymagane",
+            description: "*Opis\n\n* - wymagane\n\n Dodanie nowej linii - \\n",
             ingredients: [],
             spices: [],
             response: [],

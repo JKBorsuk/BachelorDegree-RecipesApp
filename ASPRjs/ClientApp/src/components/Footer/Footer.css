@@ -5,11 +5,8 @@
 }
 #main-recipe-master-container > #main-recipe-background {
     padding-top: 10px;
-    padding-bottom: 50px;
+    padding-bottom: 12em;
 }
-#main-recipe-master-container > #main-recipe-background > div {
-}
-
 footer {
     position: absolute;
     bottom: 0;
@@ -24,4 +21,15 @@ footer {
 }
 footer > div {
     text-align: center;
+}
+.footer-c > .row > .col-3 > a {
+    display: block;
+    width: fit-content;
+    margin: auto;
+    text-decoration: none;
+    color: white;
+    transition: 100ms color ease-in-out;
+}
+.footer-c > .row > .col-3 > a:hover {
+    color: rgb(211, 155, 52);
 }

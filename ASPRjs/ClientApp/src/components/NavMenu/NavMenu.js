@@ -41,6 +41,9 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-white-Hoverable" to="/">Strona Główna</NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink tag={Link} className="text-white-Hoverable" to="/FAQ">FAQ</NavLink> 
+                </NavItem>
                 {this.state.sub_load1 === false && this.state.sub_load2 === true ?
                   <NavItem>
                     <NavLink tag={Link} className="text-white-Hoverable" to="/addrecipe">Dodaj przepis</NavLink>
@@ -62,9 +65,6 @@ export class NavMenu extends Component {
                 }
                 {!this.state.login ?
                   <>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-white-Hoverable" to="/FAQ">FAQ</NavLink> 
-                  </NavItem>
                   <NavItem>
                     <NavLink tag={Link} className="text-white-Hoverable" to="/login">Zaloguj</NavLink>
                   </NavItem>
