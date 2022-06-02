@@ -17,14 +17,25 @@ namespace Repositories
         public Recipe getById(int id)
         {
             return _masterDbContext.Recipes
-                .SingleOrDefault(x => x.RecipeId == id);
+                .FirstOrDefault(x => x.Id == id);
         }
         public Recipe getByName(string linkname)
         {
             return _masterDbContext.Recipes
                 .Include(x => x.Ingredients)
                 .Include(x => x.Spices)
-                .SingleOrDefault(x => x.LinkName == linkname);
+                .Include(x => x.Views)
+                .FirstOrDefault(x => x.LinkName == linkname);
+        }
+        public int GetVote(string linkname, int userId)
+        {                
+            var vote = _masterDbContext.Recipes.Include(z => z.Votes)
+                    .FirstOrDefault(x => x.LinkName == linkname).Votes
+                    .FirstOrDefault(y => y.UserId == userId);
+
+            if (vote == null) return 0;
+            else return vote.value;
+
         }
         public IEnumerable<Recipe> getAll()
         {
@@ -37,11 +48,11 @@ namespace Repositories
         public void addRecipe(Recipe recipe)
         {
             _masterDbContext.Recipes.Add(recipe);
-            EachIngredient each;
+            Ingredient each;
 
             foreach(RecipeIngredient ring in recipe.Ingredients)
             {
-                each = _mapper.Map<EachIngredient>(ring);
+                each = _mapper.Map<Ingredient>(ring);
                 if(_masterDbContext.Ingredients.SingleOrDefault(x => x.Name == each.Name) == null) _masterDbContext.Ingredients.Add(each);
             }
 
@@ -63,7 +74,91 @@ namespace Repositories
 
         public IEnumerable<Recipe> getNewestForShowCase()
         {
-            return _masterDbContext.Recipes.OrderByDescending(x => x.RecipeId).Take(3);
+            return _masterDbContext.Recipes.OrderByDescending(x => x.Id).Take(3);
+        }
+        public IEnumerable<Recipe> getBestForShowCase()
+        {
+            return _masterDbContext.Recipes.OrderByDescending(x => x.votes).Take(3);
+        }
+        public IEnumerable<Recipe> getMostPopularForShowCase()
+        {
+            return _masterDbContext.Recipes.OrderByDescending(x => x.Views.Count).Take(3);
+        }
+        public IEnumerable<Recipe> getSmallestForShowCase()
+        {
+            return _masterDbContext.Recipes.OrderBy(x => x.Ingredients.Count).Take(3);
+        }
+        public void UpdateRecipeVote(Recipe recipe, User user, int vote)
+        {
+            var voteEntity = _masterDbContext.Votes.Where(x => x.UserId == user.Id).SingleOrDefault(y => y.RecipeId == recipe.Id);
+
+            if (voteEntity == null || voteEntity.value != vote)
+            {
+
+                if(voteEntity != null)
+                {
+                    _masterDbContext.Recipes.SingleOrDefault(x => x.Id == recipe.Id).votes += 2*vote;
+                    _masterDbContext.Votes.Where(x => x.UserId == user.Id).SingleOrDefault(y => y.RecipeId == recipe.Id).value = vote;
+
+                    _masterDbContext.SaveChanges();
+                }
+                else
+                {
+                    _masterDbContext.Recipes.SingleOrDefault(x => x.Id == recipe.Id).votes += vote;
+
+                    _masterDbContext.Votes.Add(
+                        new Vote()
+                        {
+                            RecipeId = recipe.Id,
+                            UserId = user.Id,
+                            value = vote
+                        });
+
+                    _masterDbContext.SaveChanges();
+                }
+            }
+            else if (voteEntity != null && voteEntity.value == vote)
+            {
+                _masterDbContext.Recipes.SingleOrDefault(x => x.Id == recipe.Id).votes -= vote;
+                _masterDbContext.Votes.Remove(voteEntity);
+
+                _masterDbContext.SaveChanges();
+            }
+        }
+        public void UpdateRecipeView(Recipe recipe, User user)
+        {
+            var viewEntity = _masterDbContext.Views.Where(x => x.UserId == user.Id).SingleOrDefault(y => y.RecipeId == recipe.Id);
+
+            if(viewEntity == null)
+            {
+                _masterDbContext.Views.Add(
+                    new View() { 
+                        RecipeId = recipe.Id, 
+                        UserId = user.Id 
+                    });
+
+                _masterDbContext.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Recipe> RecipeSearch(string keys)
+        {
+            string[] keysArray = keys.ToLower().Split(' ');
+            List<Recipe> recipes = new List<Recipe>();
+
+            foreach(string key in keysArray)
+            {
+                var recipesP = _masterDbContext.Recipes.Where(x => x.Name.ToLower().Contains(key));
+
+                foreach(Recipe recipe in recipesP)
+                {
+                    if(recipes.FirstOrDefault(x => x.Name == recipe.Name) == null)
+                    {
+                        recipes.Add(recipe);
+                    }
+                }
+            }
+            return recipes;
         }
     }
 }

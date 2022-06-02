@@ -19,13 +19,16 @@ namespace ASPRjs.Controllers
             _userService = userService;
             _env = env;
         }
-        [HttpGet("{linkname}")]
-        public IActionResult Get(string linkname)
+
+        [HttpGet("{linkname}/{login}")]
+        public IActionResult Get(string linkname, string login)
         {
             var recipe = _recipeService.getRecipe(linkname);
+            recipe.userVote = _recipeService.GetUserVote(linkname, _userService.getUserByLogin_U(login));
             if (recipe == null) return NotFound();
             return Ok(recipe);
         }
+
         [HttpGet("ViewIngredients")]
         public IActionResult GetIngredients()
         {
@@ -39,6 +42,7 @@ namespace ASPRjs.Controllers
             var recipes = _recipeService.getAllRecipes();
             return Ok(recipes);
         }
+
         [HttpDelete("{linkname}")]
         public IActionResult Delete(string linkname)
         {
@@ -53,8 +57,8 @@ namespace ASPRjs.Controllers
             return Ok();
         }
 
-        [HttpPost("AddRecipe/{login}")]
-        public IActionResult addNewRecipe(string login,RecipeDto recipe)
+        [HttpPost("Add/{login}")]
+        public IActionResult AddNewRecipe(string login, AddRecipeDto recipe)
         {
             var user = _userService.getUserByLogin(login);
             if (user.role > 1 && HttpContext.Session.GetString("user") == login)
@@ -62,7 +66,7 @@ namespace ASPRjs.Controllers
                 var rrecipe = _recipeService.addNewRecipe(recipe);
                 return Created($"Dishes/Recipe/{rrecipe.LinkName}", rrecipe);
             }
-            else { return Unauthorized(); }
+            else return Unauthorized();
         }
 
         [HttpGet("GetImage/{linkname}")]
@@ -96,13 +100,58 @@ namespace ASPRjs.Controllers
             }
         }
 
-        [HttpGet("GetThreeNewest")]
+        [HttpGet("GetThree")]
         public IActionResult getNewest()
         {
-            var list = _recipeService.getNewestRecipes();
-            if (list == null) return NotFound();
 
-            return Ok(list);
+            var list0 = _recipeService.getBestRecipes();
+
+            var list1 = _recipeService.getMostPopularRecipes();
+
+            var list2 = _recipeService.getNewestRecipes();
+
+            var list3 = _recipeService.getSmallestRecipes();
+
+
+            if (list0 == null && list1 == null && list2 == null && list3 == null) return NotFound();
+
+            return Ok(new ListRecipesDto[] { list0, list1, list2, list3 });
+        }
+
+        [HttpGet("GetVotes/{linkname}")]
+        public IActionResult GetVotes(string linkname)
+        {
+            var recipe = _recipeService.getRecipe(linkname);
+            if(recipe == null) return NotFound();
+
+            return Ok(recipe.votes);
+        }
+
+        [HttpPut("{linkname}/{login}/{vote}")]
+        public IActionResult RecipeVote(string linkname, string login, int vote)
+        {
+            var user = _userService.getUserByLogin_U(login);
+            var recipe = _recipeService.RecipeVote(linkname, user, vote);
+            if (!recipe) return NotFound();
+            return Ok(recipe);
+        }
+
+        [HttpPut("{linkname}/{login}")]
+        public IActionResult RecipeView(string linkname, string login)
+        {
+            var user = _userService.getUserByLogin_U(login);
+            var recipe = _recipeService.RecipeView(linkname, user);
+            if (!recipe) return NotFound();
+            return Ok(recipe);
+        }
+
+        [HttpGet("search/{keys}")]
+        public IActionResult RecipeSearch(string keys)
+        {
+            var recipes = _recipeService.RecipeSearch(keys);
+            if (recipes == null) return NotFound("Not found");
+
+            return Ok(recipes);
         }
     }
 }

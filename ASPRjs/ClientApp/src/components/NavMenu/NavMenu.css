@@ -37,14 +37,155 @@ html {
   border-radius: 2px;
   border: none;
 }
-#navbar-search-module > div {
+#navbar-search-module > button {
   cursor: pointer;
   padding: 5px 10px;
   border: 1px solid white;
   border-radius: 5px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0);
 
   transition: 100ms background-color ease-in-out;
 }
-#navbar-search-module > div:hover {
+#navbar-search-module > button:hover {
   background-color: rgb(70, 70, 70)
 }
+
+/* Search */
+
+#recipe-search-exit {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  cursor: pointer;
+  color:white;
+
+  transition: 100ms color;
+}
+#recipe-search-exit:hover {
+  color: rgb(182, 182, 182);
+}
+
+@keyframes searchSlider-down {
+  from {max-height: 0; visibility: hidden;}
+  to {max-height: 600px; visibility: visible;}
+}
+@keyframes searchSlider-up {
+  from {max-height: 600px; visibility: visible;}
+  to {max-height: 0; visibility: hidden;}
+}
+@keyframes A-animC-down {
+  from {opacity: 0; visibility: hidden;}
+  to {opacity: 1; visibility: visible;}
+}
+@keyframes A-animC-up {
+  from {opacity: 1; visibility: visible;}
+  to {opacity: 0; visibility: hidden;}
+}
+
+#recipe-search-animC {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+}
+.animC-down {
+  animation-name: A-animC-down;
+  animation-duration: 600ms;
+  animation-fill-mode: forwards;
+  animation-delay: 600ms;
+}
+.animC-up {
+  animation-name: A-animC-up;
+  animation-duration: 600ms;
+  animation-fill-mode: forwards;
+}
+
+#recipe-search-container {
+  position: relative;
+  bottom: 17px;
+  width: 100%;
+  visibility: hidden;
+  max-height: 0;
+  height: 100%;
+  background-color: #292b2c;
+  border-color: white;
+  border-style: dashed;
+  border-width: 0 0 2px 0;
+  border-top: 1px solid white;
+
+}
+.search-container-down {
+  animation-name: searchSlider-down;
+  animation-duration: 600ms;
+  animation-fill-mode: forwards;
+}
+.search-container-up {
+  animation-name: searchSlider-up;
+  animation-duration: 600ms;
+  animation-fill-mode: forwards;
+}
+
+
+.r-search-recipe-module:first-child {
+  margin-top: 2em;
+}
+.r-search-recipe-module {
+  margin-bottom: 3em;
+}
+.r-search-recipe-module > a {
+  text-decoration: none;
+  color: white;
+  transition: 150ms color;
+}
+.r-search-recipe-module > a:hover, .r-search-recipe-module > a:focus {
+  text-decoration: none;
+  color: rgb(211, 155, 52);
+}
+
+/*
+.recipe-search-image {
+  position: relative;
+  padding-top: 50%;
+  max-width: 300px;
+  width: 100%;
+}
+.recipe-search-image > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+*/
+
+#recipe-search-pages {
+  margin-top: 3em;
+  width: 100%;
+  text-align: center;
+}
+#recipe-search-flex {
+  justify-content: center;
+  display: flex;
+}
+#recipe-search-flex > .recipe-sub-page {
+  cursor: pointer;
+  color: white;
+  transition: 140ms color;
+}
+#recipe-search-flex > .recipe-sub-page:hover {
+  color:rgb(255, 214, 139);
+}
+#recipe-search-flex > .recipe-sub-page:not(:first-child) {
+  margin-left: 0.4em;
+}
+#recipe-search-flex > .recipe-sub-page:first-child::before {
+  color:rgb(211, 155, 52);
+  content: '-\0020';
+}
+#recipe-search-flex > .recipe-sub-page:last-child:after {
+  color:rgb(211, 155, 52);
+  content: '\0020-';
+}
+/* -- END -- */

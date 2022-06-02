@@ -1,0 +1,31 @@
+#contact-admin-container {
+    position: relative;
+    bottom: 27px;
+    width: 100%;
+    background-color: #292b2cc2;
+    padding: 30px;
+    border-color: white;
+    border-style: dashed;
+    border-width: 0 2px 2px 2px;
+}
+
+#contact-textarea-wrap {
+    margin-top: 3em;
+    padding-top: 50%;
+    position: relative;
+}
+#contact-admin-container > form {
+    text-align: center;
+}
+#contact-admin-container > form button {
+    border: 2px solid rgb(211, 155, 52);
+    margin-top: 1em;
+    width: 50%;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: white;
+    transition: 100ms background-color ease-in-out;
+}
+#contact-admin-container > form button:hover {
+    background-color: gray;
+}

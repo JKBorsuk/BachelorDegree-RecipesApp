@@ -2,15 +2,12 @@
 
 namespace ASPRjsAPI.Dto
 {
-    public class RecipeDto
+    public class AddRecipeDto
     {
         public int Type { get; set; }
-        public int userVote { get; set; }
-        public int votes { get; set; }
         public string Name { get; set; }
         public List<RIngredientDto> Ingredients { get; set; }
         public List<RSpiceDto> Spices { get; set; }
-        public int views { get; set; }
         public string Description { get; set; }
         public string Source { get; set; }
         public string PhotoFileName { get; set; }

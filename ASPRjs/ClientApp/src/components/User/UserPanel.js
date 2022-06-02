@@ -10,12 +10,13 @@ export class UserPanel extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            userIngredients: [],
+            userIngredients: this.props.userIng,
             recipeList: [],
             recipeReserveList: [],
-            allIngredients: [],
+            allIngredients: this.props.allIng,
             ingredient: "",
             login: (String)(this.props.appdata),
+            userName: (String)(this.props.appdata2),
             dishType: 0,
             message: "",
             IngredientNName: "",
@@ -31,26 +32,13 @@ export class UserPanel extends Component {
         this.hideMessage = this.hideMessage.bind(this);
     }
 
-    componentDidMount() {
-        try {
-            axios.get("Community/User/Ingredients/" + this.state.login)
-            .then((resp) => {
-                this.setState({userIngredients: resp.data.ingredients});
-            })
-            .catch(() => {});
-
-            axios.get("Dishes/Recipe/ViewIngredients")
-            .then((resp) => {
-                this.setState({allIngredients: resp.data.ingredients});
-            })
-        }
-        catch(err) {
-            console.log("Błąd");
-        }
-    }
-
     onChangeValue(event) {
         this.setState({dishType: event.target.value, message: ""})
+    }
+
+    componentDidMount() {
+        console.log((Object)(this.state.userIngredients).length)
+        console.log(this.state.allIngredients)
     }
 
     recipeSearch() {
@@ -190,7 +178,7 @@ export class UserPanel extends Component {
                 }
                 this.setState({pantryEdit: false, pantryEditElements: []})
             })
-            .catch((err) => {alert("Błąd")})
+            .catch((err) => {console.log("Błąd")})
         }
     }
 
@@ -199,7 +187,7 @@ export class UserPanel extends Component {
             <>
             <div id="user-panel-wrapper">
                 <div id="user-panel-info">
-                    <h3>Witaj w swojej spiżarni!</h3>
+                    <h3>Witaj {this.state.userName} w swojej spiżarni!</h3>
                     <p>Tutaj możesz dodawać / modyfikować jej zawartość co pozwoli na dopasowanie pod ciebie przepisów.</p>
                 </div>
                 <div className='user-panel-container container'>
@@ -207,7 +195,7 @@ export class UserPanel extends Component {
                         <div className='col-lg-4'>
                             <div id='user-panel-user-ingredients-container'>
                                 <div id='user-panel-uingredients-scroll'>
-                                    {(typeof(this.state.userIngredients) == 'object') ?
+                                    {(typeof(this.state.userIngredients) == 'object') && this.state.userIngredients.length > 0 ?
                                         this.state.userIngredients.map(k =>
                                             <div className='user-panel-uingredients-scroll-element scroll-element-hoverableEdit' key={k} id={'uingredient_'+k}>
                                                 <div className='user-uingredient'>{k}</div>

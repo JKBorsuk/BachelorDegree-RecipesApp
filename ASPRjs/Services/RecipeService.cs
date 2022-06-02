@@ -20,6 +20,10 @@ namespace Services
             var recipe = _recipeRepository.getByName(linkname);
             return _mapper.Map<RecipeDto>(recipe);
         }
+        public int GetUserVote(string linkname, User user)
+        {
+            return _recipeRepository.GetVote(linkname, user.Id);
+        }
         public ListRecipesDto getAllRecipes()
         {
             var recipes = _recipeRepository.getAll();
@@ -30,7 +34,7 @@ namespace Services
             var ingredients = _recipeRepository.getAllIngredients();
             return _mapper.Map<ListIngredientDto>(ingredients);
         }
-        public Recipe addNewRecipe(RecipeDto recipe)
+        public Recipe addNewRecipe(AddRecipeDto recipe)
         {
             var nrecipe = _mapper.Map<Recipe>(recipe);
 
@@ -61,11 +65,57 @@ namespace Services
 
             _recipeRepository.updateRecipe(existingRecipe);
         }
+        public void ChangeVote(string linkname, int vote)
+        {
+            var existingRecipe = _recipeRepository.getByName(linkname);
+            if(existingRecipe == null) return;
+
+            existingRecipe.votes += vote;
+            _recipeRepository.updateRecipe(existingRecipe);
+        }
         public ListRecipesDto getNewestRecipes()
         {
             var listRecipes = _recipeRepository.getNewestForShowCase();
 
             return _mapper.Map<ListRecipesDto>(listRecipes);
+        }
+        public ListRecipesDto getBestRecipes()
+        {
+            var listRecipes = _recipeRepository.getBestForShowCase();
+
+            return _mapper.Map<ListRecipesDto>(listRecipes);
+        }
+        public ListRecipesDto getMostPopularRecipes()
+        {
+            var listRecipes = _recipeRepository.getMostPopularForShowCase();
+
+            return _mapper.Map<ListRecipesDto>(listRecipes);
+        }
+        public ListRecipesDto getSmallestRecipes()
+        {
+            var listRecipes = _recipeRepository.getSmallestForShowCase();
+
+            return _mapper.Map<ListRecipesDto>(listRecipes);
+        }
+        public bool RecipeVote(string linkname, User user, int vote)
+        {
+            var existingRecipe = _recipeRepository.getByName(linkname);
+            if (existingRecipe == null) return false;
+            _recipeRepository.UpdateRecipeVote(existingRecipe, user, vote);
+
+            return true;
+        }
+        public bool RecipeView(string linkname, User user)
+        {
+            var exitsingRecipe = _recipeRepository.getByName(linkname);
+            if (exitsingRecipe == null) return false;
+            _recipeRepository.UpdateRecipeView(exitsingRecipe, user);
+
+            return true;
+        }
+        public ListRecipesDto RecipeSearch(string keys)
+        {
+            return _mapper.Map<ListRecipesDto>(_recipeRepository.RecipeSearch(keys));
         }
     }
 }

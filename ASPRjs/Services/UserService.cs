@@ -60,7 +60,7 @@ namespace Services
             var user = getUserByLogin_U(login);
             foreach(var item in userIngredients.UIngredients)
             {
-                user.ingredients.Add(new UserIngredient() { Name = item.Name });
+                user.Ingredients.Add(new UserIngredient() { Name = item.Name });
             }
             _userRepository.updateUser(user);
         }
@@ -69,7 +69,7 @@ namespace Services
         {
             if(uing.Name == null) return null;
             var NIngredient = _mapper.Map<UserIngredient>(uing);
-            NIngredient.UserId = _userRepository.getByLogin(login).UserId;
+            NIngredient.UserId = _userRepository.getByLogin(login).Id;
             _userRepository.addIngredient(NIngredient);
             return NIngredient;
         }
@@ -82,7 +82,7 @@ namespace Services
 
         public ArrayUserRecipesDto readAllICanCook(string login, int type)
         {
-            Dictionary<string, bool> MyDictionary = dictionary(_userRepository.getByLogin(login).UserId);
+            Dictionary<string, bool> MyDictionary = dictionary(_userRepository.getByLogin(login).Id);
             if(MyDictionary == null) return null;
 
             var ones = _userRepository.findOnes(MyDictionary, type);
@@ -94,15 +94,15 @@ namespace Services
             if (existingUser == null) return;
             var updatedUser = _mapper.Map(user, existingUser);
 
-            existingUser.role = updatedUser.role;
+            existingUser.Role = updatedUser.Role;
             existingUser.Name = updatedUser.Name;
-            existingUser.password = updatedUser.password;
+            existingUser.Password = updatedUser.Password;
 
             _userRepository.updateUser(existingUser);
         }
         public User changeRole(User user, int role)
         {
-            user.role = role;
+            user.Role = role;
             _userRepository.updateUser(user);
             return user;
         }

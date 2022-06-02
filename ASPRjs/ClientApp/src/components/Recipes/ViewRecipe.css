@@ -1,12 +1,58 @@
 
 .recipe-container {
+    position: relative;
+    bottom: 27px;
     background-color: #292b2c;
     margin: 0 auto 70px auto;
     width: 100%;
     overflow-x: hidden;
     padding: 50px;
-    border: 3px solid white;
-    border-radius: 10px;
+
+    border-style: dashed;
+    border-width: 0 2px 2px 2px;
+    border-color: white;
+}
+
+.recipe > #views-container {
+    position: absolute;
+    top: -1.5em;
+}
+.recipe {
+    position: relative;
+}
+#views-container > #views, #views-container > .views-icon {
+    display: inline-block;
+}
+#views-container > #views {
+    margin-left: 7px;
+}
+.recipe-container > #votes-container {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    padding: 15px 0;
+    font-size: 1.2em;
+    text-align: center;
+}
+#votes-container > #votes-up {
+    color: rgb(0, 110, 0);
+    transition: 100ms color;
+    font-size: 1.5em;
+}
+#votes-container > #votes {
+    min-width: 3em;
+    width: max-content;
+}
+#votes-container > #votes-up:hover {
+    color: rgb(0, 255, 0);
+}
+#votes-container > #votes-down {
+    color: rgb(129, 0, 0);
+    transition: 100ms color;
+    font-size: 1.5em;
+}
+#votes-container > #votes-down:hover {
+    color: rgb(255, 0, 0);
 }
 .recipe-child:not(:first-child) {
     margin-top: 10px;

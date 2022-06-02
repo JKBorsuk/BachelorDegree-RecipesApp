@@ -17,7 +17,7 @@ export class Footer extends Component {
                         <div className='col-3'><Link to='/contact'><div className='icon-comment'/>Kontakt</Link></div>
                     </div>
                 </div>
-                <div>Stworzone i zaprojektowane przez Jakub Borsuk, Copyright © 2022, Wszelkie prawa zastrzeżone.</div>
+                <div>Zaprojektowane i stworzone przez Jakub Borsuk, Copyright © 2022, Wszelkie prawa zastrzeżone.</div>
             </footer>
             </>
         )

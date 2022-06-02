@@ -15,12 +15,12 @@
   
   /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #555;
 }
 
 #user-panel-wrapper {
     position: relative;
-    bottom: 24px;
+    bottom: 27px;
     color: white
 }
 #user-panel-wrapper > #user-panel-info {

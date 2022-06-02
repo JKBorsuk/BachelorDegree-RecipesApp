@@ -16,9 +16,9 @@ namespace ASPRjsAPI.Mappings
                 cfg.CreateMap<LoginUser, User>();
                 cfg.CreateMap<UpdateUser, User>();
                 cfg.CreateMap<User, UserDto>()
-                .ForMember(cfg => cfg.ingredients, act => act.MapFrom(src => src.ingredients))
-                .ForMember(cfg => cfg.login, act => act.MapFrom(src => src.login))
-                .ForMember(cfg => cfg.role, act => act.MapFrom(src => src.role))
+                .ForMember(cfg => cfg.ingredients, act => act.MapFrom(src => src.Ingredients))
+                .ForMember(cfg => cfg.login, act => act.MapFrom(src => src.Login))
+                .ForMember(cfg => cfg.role, act => act.MapFrom(src => src.Role))
                 .ForMember(cfg => cfg.name, act => act.MapFrom(src => src.Name));
 
                 #endregion
@@ -39,7 +39,7 @@ namespace ASPRjsAPI.Mappings
 
                 cfg.CreateMap<RIngredientDto, RecipeIngredient>();
                 cfg.CreateMap<RecipeIngredient, RIngredientDto>();
-                cfg.CreateMap<RecipeIngredient, EachIngredient>()
+                cfg.CreateMap<RecipeIngredient, Ingredient>()
                 .ForMember(cfg => cfg.Name, act => act.MapFrom(act => act.Name));
 
                 cfg.CreateMap<RSpiceDto, RecipeSpice>();
@@ -59,9 +59,12 @@ namespace ASPRjsAPI.Mappings
 
                 #region Recipe
 
+                cfg.CreateMap<AddRecipeDto, Recipe>();
                 cfg.CreateMap<UpdateRecipe, Recipe>();
                 cfg.CreateMap<RecipeDto, Recipe>();
-                cfg.CreateMap<Recipe, RecipeDto>();
+                cfg.CreateMap<Recipe, RecipeDto>()
+                .ForMember(x => x.views, act => act.MapFrom(src => src.Views.Count));
+
                 cfg.CreateMap<IEnumerable<Recipe>, ListRecipesDto>()
                 .ForMember(dest => dest.Recipes, act => act.MapFrom(src => src))
                 .ForMember(dest => dest.Count, act => act.MapFrom(src => src.Count()));
@@ -73,6 +76,13 @@ namespace ASPRjsAPI.Mappings
                 cfg.CreateMap<List<Recipe>[], ArrayUserRecipesDto>()
                 .ForMember(dest => dest.AllRecipes, act => act.MapFrom(src => src))
                 .ForMember(dest => dest.Count, act => act.MapFrom(src => src.Count()));
+
+                #endregion
+
+                #region Message
+
+                cfg.CreateMap<Message, MessageDto>();
+
                 #endregion
 
             }).CreateMapper();

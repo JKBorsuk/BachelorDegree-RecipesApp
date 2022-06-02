@@ -14,9 +14,9 @@ export class Faq extends Component {
                     Do swojej spiżarni nie powinieneś dodawać przypraw czy składników które wydaje się każdy posiadać. 
                 </p>
                 <h3>Ile mogę posiadać składników w spiżarni?</h3>
-                <p style={{fontSize: '1.1em'}}>Liczba składników jest ograniczona do 50 sztuk dla każdego użytkownika</p>
+                <p style={{fontSize: '1.1em'}}>Liczba składników jest ograniczona do 50 sztuk dla każdego użytkownika.</p>
                 <h3>Czy posiadam limit dziennych wyszukiwań przepisów przy pomocy panelu klienta?</h3>
-                <p style={{fontSize: '1.1em'}}>Nie ma takiego limitu, ta strona jest darmowa. Nie ma żadnego systemu subskrypcji i nie będzie mieć</p>
+                <p style={{fontSize: '1.1em'}}>Nie ma takiego limitu, ta strona jest darmowa. Nie ma żadnego systemu subskrypcji i nie będzie.</p>
                 <h3>Dlaczego nie mogę dodać składnika do spiżarni, pomimo tego że nie został uprzednio wpisany?</h3>
                 <p style={{fontSize: '1.1em'}}>
                     Dodanie składnika który nie znajduje się w żadnym przepisie jest niemożliwe.
@@ -24,7 +24,7 @@ export class Faq extends Component {
                     Korzystaj z listy wyświetlanej pod polem, a wszystko będzie działać.
                 </p>
                 <h3>Znalazłeś jakiś błąd?</h3>
-                <p style={{fontSize: '1.1em'}}>Napisz do mnie wiadomość naciskając pole „Kontakt” na stopce strony</p>
+                <p style={{fontSize: '1.1em'}}>Napisz do mnie wiadomość naciskając pole „Kontakt” na stopce strony.</p>
             </div>
         )
     }

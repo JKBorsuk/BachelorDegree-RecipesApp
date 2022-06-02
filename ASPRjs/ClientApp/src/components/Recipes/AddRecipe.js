@@ -64,7 +64,7 @@ export class AddRecipe extends Component {
             loading: true
         })
         try {
-        axios.post("Dishes/Recipe/AddRecipe/" + this.state.login, {
+        axios.post("Dishes/Recipe/Add/" + this.state.login, {
             type: this.state.type,
             name: this.state.name,
             ingredients: this.state.ingredients,

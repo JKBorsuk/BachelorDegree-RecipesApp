@@ -10,23 +10,32 @@ export class ViewRecipe extends Component {
         this.state = {
             linkname: window.location.href.substring(window.location.href.lastIndexOf('/') + 1),
             ingredient: [],
+            votes: 0,
+            votes_load: true,
+            views: 0,
             max_width: 400,
             description: "",
             condition_v: false,
             login: this.props.appdata,
-            loading: true
+            loading: true,
+            userVote: 0
         }
     }
     componentDidMount() {
         try {
-            axios.get("Dishes/Recipe/" + this.state.linkname)
+            axios.get("Dishes/Recipe/" + this.state.linkname + '/' + this.state.login)
             .then((resp) => {
                 this.setState({
                     condition_v: true,
                     ingredient: resp.data,
                     loading: false,
-                    description: resp.data.description
+                    description: resp.data.description,
+                    votes: resp.data.votes,
+                    votes_load: false,
+                    views: resp.data.views,
+                    userVote: resp.data.userVote
                 })
+                axios.put("Dishes/Recipe/" + this.state.linkname + '/' + this.state.login).catch(() => {console.log("Błąd")})
             }).catch(() => { window.location.href = "/" })
             .finally(() => {
                 document.getElementById('recipe-description-id').innerHTML = this.state.description.replaceAll('\\n','<br/><br/>');
@@ -76,14 +85,41 @@ export class ViewRecipe extends Component {
         else return props;
     }
 
+    RecipeVote(vote) {
+        if((Number)(vote) == this.state.userVote) this.setState({userVote: 0})
+        else this.setState({userVote: (Number)(vote)})
+        axios.put("Dishes/Recipe/" + this.state.linkname + '/' + this.state.login + '/' + vote)
+        .then((resp) => {
+            if(resp.data === true) {
+                axios.get("Dishes/Recipe/GetVotes/" + this.state.linkname)
+                .then((resp2) => {
+                    this.setState({votes: resp2.data})
+                })
+            }
+        })
+    }
+
     render() {
         return(
-            <div>
+            <>
                 {this.state.loading === false ?
-                <div>
+                <>
                     {this.state.condition_v === true ?
                     <div className="recipe-container container">
+                        {this.state.votes_load === false ?
+                            <div id="votes-container" style={{userSelect: 'none'}}>
+                                {this.state.userVote === 1? <div id="votes-up" style={{color: 'rgb(0, 255, 0)'}} onClick={() => this.RecipeVote(1)}>{'\u2191'}</div> : <div id="votes-up" onClick={() => this.RecipeVote(1)}>{'\u2191'}</div>}
+                                <div id="votes">{this.state.votes}</div>
+                                {this.state.userVote === -1? <div id="votes-down" style={{color: 'rgb(255, 0, 0)'}} onClick={() => this.RecipeVote(-1)}>{'\u2193'}</div> : <div id="votes-down" onClick={() => this.RecipeVote(-1)}>{'\u2193'}</div>}
+                            </div>
+                            :
+                            null
+                        }
                         <div className="recipe">
+                            <div id="views-container" style={{userSelect: 'none'}}>
+                                <div className="icon-eye views-icon" style={{color: "rgb(211, 155, 52)"}}/>
+                                <div id="views">{this.state.views}</div>
+                            </div>
                             <div className="recipe-title">{this.state.ingredient.name}</div>
                             <div className="recipe-type"><p>{this.dishType(this.state.ingredient.type)}</p></div>
                             <div className="row">
@@ -143,10 +179,10 @@ export class ViewRecipe extends Component {
                     <div className="recipe-container">
                         <div style={{textAlign: 'center'}}>This recipe does not exist</div>
                     </div>}
-                </div>
+                </>
                 :
                 <div className="user-panel-loading-signature"><div className='RMasterloader'/></div>}
-            </div>
+            </>
         )
     }
 }

@@ -10,10 +10,12 @@ namespace ASPRjs.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IRecipeService _recipeService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IRecipeService recipeService)
         {
             _userService = userService;
+            _recipeService = recipeService;
         }
         [HttpGet("{login}")]
         public IActionResult getUser(string login)
@@ -27,7 +29,18 @@ namespace ASPRjs.Controllers
         [HttpGet("IsLogged")]
         public IActionResult isLogged()
         {
-            return Ok(HttpContext.Session.GetString("user"));
+            var user = _userService.getUserByLogin(HttpContext.Session.GetString("user"));
+            if (user == null) return NoContent();
+
+            return Ok(
+                new SessionUserDto
+                {
+                    login = user.login,
+                    name = user.name,
+                    role = user.role,
+                    ingredients = _userService.readAllUserIngredients(user.login),
+                    allIngredients = _recipeService.getAllIngredients()
+                });
         }
         [HttpGet("Logout")]
         public IActionResult Logout()
@@ -48,19 +61,20 @@ namespace ASPRjs.Controllers
         public IActionResult Register(RegisterUser ruser)
         {
             var user = _userService.addNewUser(ruser);
-            return Created($"Community/User/{user.login}", user);
+            return Created($"Community/User/{user.Login}", user);
         }
 
         [HttpPost("AddIngredient/{login}")]
         public IActionResult addIngredients(UIngredientDto userIngredient, string login)
         {
             var ingredient = _userService.AddNewIngredient(userIngredient, login);
-            return Created($"Community/User/Ingredients/{ingredient.UIngredientId}", ingredient);
+            return Created($"Community/User/Ingredients/{ingredient.Id}", ingredient);
         }
+
         [HttpPost("AddIngredients/{login}")]
         public IActionResult addMultiIngredients(ArrayUIngredientDto userIngredients, string login)
         {
-            if (_userService.getUserByLogin_U(login).ingredients.Count + userIngredients.UIngredients.Length > 50) return Unauthorized("Limit");
+            if (_userService.getUserByLogin_U(login).Ingredients.Count + userIngredients.UIngredients.Length > 50) return Unauthorized("Limit");
             _userService.addMulitIngredients(userIngredients,login);
             return Ok();
         }
@@ -71,13 +85,14 @@ namespace ASPRjs.Controllers
             var loginuser = _userService.getUserByLogin_U(user.login);
             if (loginuser == null) return NotFound("Bad login or password");
 
-            if (loginuser.password == user.password)
+            if (loginuser.Password == user.password)
             {
-                HttpContext.Session.SetString("user", loginuser.login);
+                HttpContext.Session.SetString("user", loginuser.Login);
                 return Ok();
             }
             else return NotFound("Bad login or password");
         }
+
         [HttpPut("Update/{login}")]
         public IActionResult Update(string login, UpdateUser user)
         {
@@ -97,6 +112,7 @@ namespace ASPRjs.Controllers
 
             return Ok(ones);
         }
+
         [HttpGet("URole/{login}")]
         public IActionResult URole(string login)
         {
@@ -107,6 +123,16 @@ namespace ASPRjs.Controllers
             else if (user.role == 3 && HttpContext.Session.GetString("user") == login) return Ok();
             else return NoContent();
         }
+
+        [HttpGet("GetName/{login}")]
+        public IActionResult ViewName(string login)
+        {
+            var user = _userService.getUserByLogin(login);
+            if (user == null) return NotFound("Bad login or user does not exist");
+
+            return Ok(user.name);
+        }
+
         [HttpGet("ViewRole/{login}")]
         public IActionResult ViewRole(string login)
         {
@@ -115,6 +141,7 @@ namespace ASPRjs.Controllers
 
             return Ok(user.role);
         }
+
         [HttpPut("ChangeRole/{login}/{role}")]
         public IActionResult changeRole(string login,int role)
         {
@@ -128,6 +155,7 @@ namespace ASPRjs.Controllers
             }
             else return Unauthorized("Too low rank");
         }
+
         [HttpDelete("DeleteIngredient/{login}/{name}")]
         public IActionResult deleteUserIngredient(string login, string name)
         {
@@ -138,6 +166,7 @@ namespace ASPRjs.Controllers
             }
             else return Unauthorized();
         }
+
         [HttpPut("UpdateIngredient/{login}/{name},{newname}")]
         public IActionResult updateIngredient(string login, string name, string newname)
         {

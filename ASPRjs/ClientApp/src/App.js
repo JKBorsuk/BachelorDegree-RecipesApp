@@ -3,8 +3,6 @@ import { Route } from 'react-router';
 import { Switch, Redirect } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
 import { ViewAll } from './components/Recipes/ViewAll';
 import { ViewUser } from './components/User/ViewUser';
 import { LoginUser } from './components/User/LoginUser';
@@ -15,6 +13,8 @@ import { UserPanel } from './components/User/UserPanel';
 import { Logout } from './components/User/Logout';
 import { Faq } from './components/Faq/Faq';
 import { ChangeRole } from './components/User/ChangeRole';
+import { Contact } from './components/Contact/Contact';
+import { About } from './components/About/About';
 import axios from 'axios';
 
 import './custom.css'
@@ -27,34 +27,36 @@ export default class App extends Component {
     super(props);
     this.state = {
       login: "",
+      name: "",
+      role: 0,
       loading: true,
       sub_load1: true,
-      sub_load2: true
+      sub_load2: true,
+      allIngredients: [],
+      userIngredients: []
     }
   }
 
   componentDidMount() {
     axios.get("Community/User/IsLogged")
     .then((resp) => {
-        this.URole(resp.data);
+        this.setState({
+          login: resp.data.login, 
+          name: resp.data.name, 
+          role: resp.data.role,
+          allIngredients: resp.data.allIngredients.ingredients,
+          userIngredients: resp.data.ingredients.ingredients
+        })
+        
+        if(resp.status == 204) this.setState({loading: false})
+        else {
+          if(resp.data.role === 3) this.setState({sub_load1: false, sub_load2: false})
+          else if(resp.data.role === 2) this.setState({sub_load1: false, sub_load2: true})
+          else if(resp.data.role === 1) this.setState({sub_load1: true, sub_load2: true})
+        }
     })
     .catch(() => {})
-  }
-
-  URole(props) {
-    if(typeof(props) === 'string' && props.length === 0) { this.setState({sub_load1: true, loading: false}); return }
-    axios.get("Community/User/URole/" + props)
-    .then(resp => {
-      if(resp.status === 200) {this.setState({sub_load1: false, sub_load2: false})}
-      else if(resp.status === 202) {this.setState({sub_load1: false, sub_load2: true})}
-      else if(resp.status === 204) this.setState({sub_load1: true, sub_load2: true})
-
-      this.setState({login: props, loading: false})
-    })
-    .catch((er) => {
-      console.log(er)
-      this.setState({sub_load1: true, sub_load2: true})
-    })
+    .finally(() => this.setState({loading: false}))
   }
 
   render () {
@@ -64,16 +66,16 @@ export default class App extends Component {
       <Layout appdata={this.state.login} approleA={this.state.sub_load1} approleB={this.state.sub_load2}>
         <Switch>
           <Route exact path='/'><Home appdata={this.state.login}/></Route>
-          <Route path='/counter' component={Counter} />
-          <Route path='/fetch-data' component={FetchData} />
           <Route path='/view-all'>{!this.state.login || this.state.sub_load1 === true ? <Redirect to="/login"/> : <ViewAll appdata={this.state.login}/>}</Route>
           <Route path='/user-search'>{!this.state.login || this.state.sub_load1 === true ? <Redirect to="/login"/> : <ViewUser appdata={this.state.login}/>}</Route>
           <Route path='/login'>{this.state.login ? <Redirect to="/"/> : <LoginUser appdata={this.state.login}/>}</Route>
           <Route path='/register'>{this.state.login ? <Redirect to="/"/> : <Register appdata={this.state.login}/>}</Route>
           <Route path='/addrecipe'>{!this.state.login || this.state.sub_load1 === true ? <Redirect to="/login"/> : <AddRecipe appdata={this.state.login} approleA={this.state.sub_load1}/>}</Route>
           <Route path='/recipes'>{!this.state.login ? <Redirect to="/login"/> : <ViewRecipe appdata={this.state.login}/>}</Route>
-          <Route path='/user-panel'>{!this.state.login ? <Redirect to="/login"/> : <UserPanel appdata={this.state.login}/>}</Route>
+          <Route path='/user-panel'>{!this.state.login ? <Redirect to="/login"/> : <UserPanel appdata={this.state.login} appdata2={this.state.name} userIng={this.state.userIngredients} allIng={this.state.allIngredients}/>}</Route>
           <Route path='/change-role'>{!this.state.login || this.state.sub_load2 === true ? <Redirect to="/login"/> : <ChangeRole appdata={this.state.login}/>}</Route>
+          <Route path='/contact'>{!this.state.login? <Redirect to="/login"/> : <Contact appdata={this.state.login}/>}</Route>
+          <Route path='/About'><About/></Route>
           <Route path='/FAQ'><Faq/></Route>
           <Route path='/logout' component={Logout}/>
           <Redirect to='/'/>

@@ -14,15 +14,15 @@ namespace Repositories
         public User getById(int id)
         {
             return _masterDbContext.Users
-                .Include(x => x.ingredients)
-                .SingleOrDefault(x => x.UserId == id);
+                .Include(x => x.Ingredients)
+                .SingleOrDefault(x => x.Id == id);
         }
 
         public User getByLogin(string login)
         {
             return _masterDbContext.Users.
-                Include(x => x.ingredients).
-                SingleOrDefault(x => x.login == login);
+                Include(x => x.Ingredients).
+                SingleOrDefault(x => x.Login == login);
         }
 
         public void addUser(User user)
@@ -45,7 +45,7 @@ namespace Repositories
         {
             try
             {
-                UserIngredient userIngredient = _masterDbContext.UserIngredients.Where(x => x.UserId == user.UserId).SingleOrDefault(y => y.Name == name);
+                UserIngredient userIngredient = _masterDbContext.UserIngredients.Where(x => x.UserId == user.Id).SingleOrDefault(y => y.Name == name);
                 return userIngredient;
             }
             catch(InvalidOperationException ex)
@@ -65,7 +65,7 @@ namespace Repositories
         }
         public IEnumerable<string> readIngredients(string login)
         {
-            return _masterDbContext.UserIngredients.Where(x => x.UserId == getByLogin(login).UserId).Select(y => y.Name);
+            return _masterDbContext.UserIngredients.Where(x => x.UserId == getByLogin(login).Id).Select(y => y.Name);
         }
         public List<Recipe>[] findOnes(Dictionary<string, bool> dictionary, int type)
         {

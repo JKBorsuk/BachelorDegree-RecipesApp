@@ -13,7 +13,7 @@ namespace ASPRjsAPI.Validators
             RuleFor(x => x.login)
                 .Custom((value, context) =>
                 {
-                    var usersInDatabase = DbContext.Users.Any(c => c.login == value);
+                    var usersInDatabase = DbContext.Users.Any(c => c.Login == value);
                     if (usersInDatabase)
                     {
                         context.AddFailure("Login", "This user already exists");

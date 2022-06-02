@@ -6,9 +6,11 @@ namespace ASPRjs.Models
     public class RecipeIngredient
     {
         [Key]
-        public int RIngredientId { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "varchar(100)")]
+
         public string Name { get; set; }
+
         [Column(TypeName = "varchar(100)")]
         public string Amount { get; set; }
         public int RecipeId { get; set; }

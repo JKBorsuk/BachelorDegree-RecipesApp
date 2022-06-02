@@ -3,6 +3,7 @@ using ASPRjs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPRjs.Migrations
 {
     [DbContext(typeof(RecipeMasterDbContext))]
-    partial class RecipeMasterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220529214346_newKeys")]
+    partial class newKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,11 +71,6 @@ namespace ASPRjs.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
-
-                    b.Property<int>("votes")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
@@ -180,57 +177,6 @@ namespace ASPRjs.Migrations
                     b.ToTable("UserIngredients");
                 });
 
-            modelBuilder.Entity("ASPRjs.Models.View", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Views");
-                });
-
-            modelBuilder.Entity("ASPRjs.Models.Vote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("value")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Votes");
-                });
-
             modelBuilder.Entity("ASPRjs.Models.RecipeIngredient", b =>
                 {
                     b.HasOne("ASPRjs.Models.Recipe", "Recipe")
@@ -264,62 +210,16 @@ namespace ASPRjs.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ASPRjs.Models.View", b =>
-                {
-                    b.HasOne("ASPRjs.Models.Recipe", "Recipe")
-                        .WithMany("Views")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ASPRjs.Models.User", "User")
-                        .WithMany("Views")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ASPRjs.Models.Vote", b =>
-                {
-                    b.HasOne("ASPRjs.Models.Recipe", "Recipe")
-                        .WithMany("Votes")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ASPRjs.Models.User", "User")
-                        .WithMany("Votes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ASPRjs.Models.Recipe", b =>
                 {
                     b.Navigation("Ingredients");
 
                     b.Navigation("Spices");
-
-                    b.Navigation("Views");
-
-                    b.Navigation("Votes");
                 });
 
             modelBuilder.Entity("ASPRjs.Models.User", b =>
                 {
                     b.Navigation("Ingredients");
-
-                    b.Navigation("Views");
-
-                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

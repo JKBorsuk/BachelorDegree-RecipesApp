@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ASPRjs.Models
 {
-    public class EachIngredient
+    public class Ingredient
     {
         [Key]
-        public int EachIngredientId { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string Name { get; set; }
     }

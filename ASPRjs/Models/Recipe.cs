@@ -7,7 +7,8 @@ namespace ASPRjs.Models
     public class Recipe
     {
         [Key]
-        public int RecipeId { get; set; }
+        public int Id { get; set; }
+        public int votes { get; set; }
         public int Type { get; set; }
 
         [Column(TypeName = "varchar(100)")]
@@ -15,6 +16,8 @@ namespace ASPRjs.Models
 
         public List<RecipeIngredient> Ingredients { get; set; }
         public List<RecipeSpice> Spices { get; set; }
+        public List<Vote> Votes { get; set; }
+        public List<View> Views { get; set; }
 
         [Column(TypeName = "varchar(MAX)")]
         public string Description { get; set; }
