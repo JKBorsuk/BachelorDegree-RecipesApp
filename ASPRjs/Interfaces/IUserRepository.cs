@@ -14,5 +14,10 @@ namespace Interfaces
         public void addIngredient(UserIngredient Uing);
         public IEnumerable<string> readIngredients(string login);
         public List<Recipe>[] findOnes(Dictionary<string, bool> dictionary, int type);
+        public IEnumerable<Message> GetMessages();
+        public void WriteNewMessage(Message message);
+        public void DeleteMessages();
+        public IEnumerable<Recipe> GetFavorites(User user);
+        public IEnumerable<Recipe> GetHistory(User user);
     }
 }

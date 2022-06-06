@@ -17,7 +17,13 @@ export class Footer extends Component {
                         <div className='col-3'><Link to='/contact'><div className='icon-comment'/>Kontakt</Link></div>
                     </div>
                 </div>
-                <div>Zaprojektowane i stworzone przez Jakub Borsuk, Copyright © 2022, Wszelkie prawa zastrzeżone.</div>
+                <div className='footer-d container'>
+                    <div className='row my-auto'>
+                        <div className='col-3'><Link to='/Faq'>FAQ</Link></div>
+                        <div className='col-6'>Zaprojektowane i stworzone przez Jakub Borsuk, Copyright © 2022, Wszelkie prawa zastrzeżone.</div>
+                        <div className='col-3'><Link to='/About'>About</Link></div>
+                    </div>
+                </div>
             </footer>
             </>
         )

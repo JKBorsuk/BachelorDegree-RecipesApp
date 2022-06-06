@@ -67,6 +67,28 @@ namespace Repositories
         {
             return _masterDbContext.UserIngredients.Where(x => x.UserId == getByLogin(login).Id).Select(y => y.Name);
         }
+        public IEnumerable<Message> GetMessages()
+        {
+            return _masterDbContext.Messages.OrderBy(x => x.Sent).AsEnumerable();
+        }
+        public void WriteNewMessage(Message message)
+        {
+            _masterDbContext.Messages.Add(message);
+            _masterDbContext.SaveChanges();
+        }
+        public void DeleteMessages()
+        {
+            _masterDbContext.Database.ExecuteSqlRaw("TRUNCATE TABLE Messages");
+            _masterDbContext.SaveChanges();
+        }
+        public IEnumerable<Recipe> GetFavorites(User user)
+        {
+            return _masterDbContext.Votes.Where(x => x.UserId == user.Id && x.value == 1).Select(y => y.Recipe);
+        }
+        public IEnumerable<Recipe> GetHistory(User user)
+        {
+            return _masterDbContext.Views.Where(x => x.UserId == user.Id).Select(y => y.Recipe).Take(15);
+        }
         public List<Recipe>[] findOnes(Dictionary<string, bool> dictionary, int type)
         {
             bool found;

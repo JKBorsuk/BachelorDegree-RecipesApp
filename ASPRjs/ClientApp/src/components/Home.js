@@ -46,121 +46,122 @@ export class Home extends Component {
           <h3>Nie wiesz co dzisiaj ugotować?</h3>
           <p>Pozwól że pomogę Ci rozwiązać Twój problem</p>
 
-          {this.state.bestR.length > 0 ?
-            <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
-              <h4>Najwyżej oceniane przepisy:</h4>
-              <div className='row'>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.bestR[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.bestR[0].photoFileName} alt={this.state.bestR[0].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.bestR[0].name}</figcaption>
-                    </div>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.bestR[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.bestR[1].photoFileName} alt={this.state.bestR[1].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.bestR[1].name}</figcaption>
-                    </div>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.bestR[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.bestR[2].photoFileName} alt={this.state.bestR[2].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.bestR[2].name}</figcaption>
-                    </div>
+          <div id="main-home-container-wrapper">
+            {this.state.bestR.length > 0 ?
+              <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
+                <h4>Najwyżej oceniane przepisy:</h4>
+                <div className='row'>
+                      <div className='col-sm-12 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.bestR[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.bestR[0].photoFileName} alt={this.state.bestR[0].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.bestR[0].name}</figcaption>
+                      </div>
+                      <div className='col-sm-6 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.bestR[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.bestR[1].photoFileName} alt={this.state.bestR[1].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.bestR[1].name}</figcaption>
+                      </div>
+                      <div className='col-sm-6 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.bestR[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.bestR[2].photoFileName} alt={this.state.bestR[2].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.bestR[2].name}</figcaption>
+                      </div>
+                </div>
               </div>
-            </div>
-            :
-            null
-          }
+              :
+              null
+            }
 
-          {this.state.popularR.length > 0 ?
-            <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
-              <h4>Najczęściej wyświetlane:</h4>
-              <div className='row'>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.popularR[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.popularR[0].photoFileName} alt={this.state.popularR[0].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.popularR[0].name}</figcaption>
-                    </div>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.popularR[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.popularR[1].photoFileName} alt={this.state.popularR[1].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.popularR[1].name}</figcaption>
-                    </div>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.popularR[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.popularR[2].photoFileName} alt={this.state.popularR[2].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.popularR[2].name}</figcaption>
-                    </div>
+            {this.state.popularR.length > 0 ?
+              <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
+                <h4>Najczęściej wyświetlane:</h4>
+                <div className='row'>
+                      <div className='col-sm-12 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.popularR[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.popularR[0].photoFileName} alt={this.state.popularR[0].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.popularR[0].name}</figcaption>
+                      </div>
+                      <div className='col-sm-6 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.popularR[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.popularR[1].photoFileName} alt={this.state.popularR[1].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.popularR[1].name}</figcaption>
+                      </div>
+                      <div className='col-sm-6 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.popularR[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.popularR[2].photoFileName} alt={this.state.popularR[2].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.popularR[2].name}</figcaption>
+                      </div>
+                </div>
               </div>
-            </div>
-            :
-            null
-          }
+              :
+              null
+            }
 
-          {this.state.newest.length > 0 ?
-            <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
-              <h4>Najnowsze przepisy:</h4>
-              <div className='row'>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.newest[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[0].photoFileName} alt={this.state.newest[0].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.newest[0].name}</figcaption>
-                    </div>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.newest[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[1].photoFileName} alt={this.state.newest[1].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.newest[1].name}</figcaption>
-                    </div>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.newest[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[2].photoFileName} alt={this.state.newest[2].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.newest[2].name}</figcaption>
-                    </div>
+            {this.state.newest.length > 0 ?
+              <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
+                <h4>Najnowsze przepisy:</h4>
+                <div className='row'>
+                      <div className='col-sm-12 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.newest[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[0].photoFileName} alt={this.state.newest[0].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.newest[0].name}</figcaption>
+                      </div>
+                      <div className='col-sm-6 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.newest[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[1].photoFileName} alt={this.state.newest[1].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.newest[1].name}</figcaption>
+                      </div>
+                      <div className='col-sm-6 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.newest[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.newest[2].photoFileName} alt={this.state.newest[2].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.newest[2].name}</figcaption>
+                      </div>
+                </div>
               </div>
-            </div>
-            :
-            null
-          }
+              :
+              null
+            }
 
-          {this.state.smallestR.length > 0 ?
-            <div className="main-home-container-3 container" style={{marginBottom: '5em'}}>
-              <h4>Mające najmniej składników:</h4>
-              <div className='row'>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.smallestR[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.smallestR[0].photoFileName} alt={this.state.smallestR[0].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.smallestR[0].name}</figcaption>
-                    </div>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.smallestR[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.smallestR[1].photoFileName} alt={this.state.smallestR[1].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.smallestR[1].name}</figcaption>
-                    </div>
-                    <div className='col-sm-4'>
-                      <figure>
-                        <Link to={'/recipes/' + this.state.smallestR[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.smallestR[2].photoFileName} alt={this.state.smallestR[2].name}/></Link>
-                      </figure>
-                      <figcaption className='mt-2'>{this.state.smallestR[2].name}</figcaption>
-                    </div>
+            {this.state.smallestR.length > 0 ?
+              <div className="main-home-container-3 container" style={{marginBottom: '5em'}}>
+                <h4>Mające najmniej składników:</h4>
+                <div className='row'>
+                      <div className='col-sm-12 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.smallestR[0].linkName}><img className='img-fluid' src={'/Images/' + this.state.smallestR[0].photoFileName} alt={this.state.smallestR[0].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.smallestR[0].name}</figcaption>
+                      </div>
+                      <div className='col-sm-6 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.smallestR[1].linkName}><img className='img-fluid' src={'/Images/' + this.state.smallestR[1].photoFileName} alt={this.state.smallestR[1].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.smallestR[1].name}</figcaption>
+                      </div>
+                      <div className='col-sm-6 col-md-4'>
+                        <figure>
+                          <Link to={'/recipes/' + this.state.smallestR[2].linkName}><img className='img-fluid' src={'/Images/' + this.state.smallestR[2].photoFileName} alt={this.state.smallestR[2].name}/></Link>
+                        </figure>
+                        <figcaption className='mt-2'>{this.state.smallestR[2].name}</figcaption>
+                      </div>
+                </div>
               </div>
-            </div>
-            :
-            null
-          }
-
+              :
+              null
+            }
+          </div>
           {!this.state.login?
             <div className='main-home-container-2 container'>
-              <div className='row'>
+              <div className='row my-auto'>
                 <div id="main-account-offer" className='col-6'><h6>Chciałbyś dostać dopasowane pod siebie przepisy?</h6></div>
                 <Link to="/register" id="main-account-register" className='col-4 offset-1 col-sm-2 my-auto'>Zarejestruj się</Link>
               </div>
@@ -168,7 +169,6 @@ export class Home extends Component {
             :
             null
           }
-
         </div>
         :
         <div id="reg-loading--l">

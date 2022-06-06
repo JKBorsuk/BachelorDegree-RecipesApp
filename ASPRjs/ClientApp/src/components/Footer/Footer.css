@@ -33,3 +33,11 @@ footer > div {
 .footer-c > .row > .col-3 > a:hover {
     color: rgb(211, 155, 52);
 }
+.footer-d > .row > .col-3 a {
+    text-decoration: none;
+    color: white;
+    transition: 100ms color ease-in-out;
+}
+.footer-d > .row > .col-3 a:hover {
+    color:rgb(211, 155, 52)
+}

@@ -17,6 +17,7 @@ namespace ASPRjs.Models
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Vote> Votes { get; set; }
         public DbSet<View> Views { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -116,5 +116,31 @@ namespace Services
             existingIngredient.Name = newName;
             _userRepository.updateIngredient(existingIngredient);
         }
+
+        public ListMessageDto GetAllMessages()
+        {
+            return _mapper.Map<ListMessageDto>(_userRepository.GetMessages());
+        }
+        public Message WriteMessage(MessageDto message)
+        {
+            var newMessage = _mapper.Map<Message>(message);
+            newMessage.Sent = DateTime.Now;
+            _userRepository.WriteNewMessage(newMessage);
+            return newMessage;
+        }
+        public void DeleteAllMessages()
+        {
+            _userRepository.DeleteMessages();
+        }
+        public ListRecipesDto GetFavoritesRecipes(User user)
+        {
+            var favorites = _userRepository.GetFavorites(user);
+            return _mapper.Map<ListRecipesDto>(favorites);
+        }
+        public ListRecipesDto GetHistoryRecipes(User user)
+        {
+            var history = _userRepository.GetHistory(user);
+            return _mapper.Map<ListRecipesDto>(history);
+        }
     }
 }

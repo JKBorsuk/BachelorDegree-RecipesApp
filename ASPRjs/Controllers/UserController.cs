@@ -42,6 +42,42 @@ namespace ASPRjs.Controllers
                     allIngredients = _recipeService.getAllIngredients()
                 });
         }
+
+        [HttpGet("GetMessages")]
+        public IActionResult GetMessages()
+        {
+            var userLogin = HttpContext.Session.GetString("user");
+            if (userLogin != null)
+            {
+                if (_userService.getUserByLogin_U(userLogin).Role != 3) return NoContent();
+
+                var messages = _userService.GetAllMessages();
+                if (messages == null) return NoContent();
+
+                return Ok(messages);
+            }
+            else return NoContent();
+
+        }
+
+        [HttpPost("WriteMessage")]
+        public IActionResult WriteMessage(MessageDto message)
+        {
+            var mess = _userService.WriteMessage(message);
+            return Created($"Community/User/WriteMessage/{message.UserLogin}", message);
+        }
+
+        [HttpDelete("Messages")]
+        public IActionResult DeleteMessages()
+        {
+            if (_userService.getUserByLogin_U(HttpContext.Session.GetString("user")).Role != 3) return Unauthorized();
+
+            _userService.DeleteAllMessages();
+
+            return Ok();
+
+        }
+
         [HttpGet("Logout")]
         public IActionResult Logout()
         {
@@ -176,6 +212,30 @@ namespace ASPRjs.Controllers
                 return Ok(newname);
             }
             else return Unauthorized(name);
+        }
+
+        [HttpGet("Favorites")]
+        public IActionResult GetFavorites()
+        {
+            var user = _userService.getUserByLogin_U(HttpContext.Session.GetString("user"));
+            if (user == null) return Unauthorized();
+
+            var recipes = _userService.GetFavoritesRecipes(user);
+
+            if (recipes == null) return NoContent();
+            return Ok(recipes);
+        }
+
+        [HttpGet("History")]
+        public IActionResult GetHistory()
+        {
+            var user = _userService.getUserByLogin_U(HttpContext.Session.GetString("user"));
+            if (user == null) return Unauthorized();
+
+            var recipes = _userService.GetHistoryRecipes(user);
+
+            if (recipes == null) return NoContent();
+            return Ok(recipes);
         }
     }
 }

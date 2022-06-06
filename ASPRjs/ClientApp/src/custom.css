@@ -170,6 +170,10 @@ body {
   ::-webkit-scrollbar {
     display: none; /* for Chrome, Safari, and Opera */
   }
+
+  #user-panel-fav-hist > .fav-hist > .col-lg-6:first-child {
+    margin-bottom: 1em;
+  }
 }
 @media (min-width:768px) and (max-width: 991px) {
     /* Left Side Padding */
@@ -373,12 +377,16 @@ body {
 
 /* Container - 3 */
 
+#main-home-container-wrapper {
+  background-color: #292b2c;
+  padding: 0 2.5em;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+
 .main-home-container-3 {
   margin-top: 2.5em;
-  background-color: #292b2caf;
-  border: 2px solid white;
   padding: 20px;
-  border-radius: 5px;
 }
 
 .main-home-container-3 h4 {
@@ -386,23 +394,25 @@ body {
   margin-bottom: 20px;
 }
 
-.row > .col-sm-4 > figure {
+.row > .col-md-4 > figure {
   padding-top: 50%;
   position: relative;
-
-  transition: 100ms color ease-in-out;
 }
 
-.row > .col-sm-4 > figure:hover {
+.row > .col-md-4 > figcaption {
+  color: white;
+  transition: 100ms color ease-in-out;
+}
+.row > .col-md-4 > figure:hover + figcaption {
   color:rgb(211, 155, 52)
 }
 
-.main-home-container-3 > .row > .col-sm-4 > figcaption {
+.main-home-container-3:not(:last-child) > .row > .col-md-4 > figcaption {
   margin: 0 10px;
   margin-bottom: 1.5em;
 }
 
-.row > .col-sm-4 > figure > a > img {
+.row > .col-md-4 > figure > a > img {
   border-radius: 5px;
   position: absolute;
   top: 0;
@@ -415,6 +425,6 @@ body {
 
   transition: 60ms border ease-in-out;
 }
-.row > .col-sm-4 > figure > a > img:hover {
+.row > .col-md-4 > figure > a > img:hover {
   border-width: 5px 0 5px 0;
 }

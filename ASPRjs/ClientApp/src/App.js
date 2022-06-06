@@ -56,7 +56,9 @@ export default class App extends Component {
         }
     })
     .catch(() => {})
-    .finally(() => this.setState({loading: false}))
+    .finally(() => {
+    this.setState({loading: false})
+    })
   }
 
   render () {

@@ -18,5 +18,10 @@ namespace Interfaces
         public User changeRole(User user, int role);
         public void deleteIngredient(User user, string nazwa);
         public void updateIngredient(User user, string Name, string newName);
+        public ListMessageDto GetAllMessages();
+        public Message WriteMessage(MessageDto message);
+        public void DeleteAllMessages();
+        public ListRecipesDto GetFavoritesRecipes(User user);
+        public ListRecipesDto GetHistoryRecipes(User user);
     }
 }

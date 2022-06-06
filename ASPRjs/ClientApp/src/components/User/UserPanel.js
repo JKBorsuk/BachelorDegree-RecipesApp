@@ -24,7 +24,11 @@ export class UserPanel extends Component {
             pantryEditElements: [],
             IngredientEdit: false,
             loading_dishes: false,
-            pantryEdit: false
+            pantryEdit: false,
+            favoritesOpened: false,
+            historyOpened: false,
+            favorites: [],
+            history: []
         }
         this.onChangeValue = this.onChangeValue.bind(this);
         this.recipeSearch = this.recipeSearch.bind(this);
@@ -32,13 +36,15 @@ export class UserPanel extends Component {
         this.hideMessage = this.hideMessage.bind(this);
     }
 
-    onChangeValue(event) {
-        this.setState({dishType: event.target.value, message: ""})
+    componentDidMount() {
+        axios.get("Community/User/Favorites")
+        .then((resp) => {console.log(resp.data.recipes); this.setState({favorites: resp.data.recipes})});
+        axios.get("Community/User/History")
+        .then((resp2) => {console.log(resp2.data.recipes); this.setState({history: resp2.data.recipes})});
     }
 
-    componentDidMount() {
-        console.log((Object)(this.state.userIngredients).length)
-        console.log(this.state.allIngredients)
+    onChangeValue(event) {
+        this.setState({dishType: event.target.value, message: ""})
     }
 
     recipeSearch() {
@@ -182,6 +188,29 @@ export class UserPanel extends Component {
         }
     }
 
+    showHiddenRecipes(props) {
+        if((Number)(props) === 1) {
+            if(this.state.favoritesOpened === false) {
+                $("#user-panel-fav-container").removeClass("user-panel-sliders-up").addClass("user-panel-sliders-down");
+                this.setState({favoritesOpened: true})
+            }
+            else {
+                $("#user-panel-fav-container").removeClass("user-panel-sliders-down").addClass("user-panel-sliders-up");
+                this.setState({favoritesOpened: false})
+            }
+        }
+        else {
+            if(this.state.historyOpened === false) {
+                $("#user-panel-hist-container").removeClass("user-panel-sliders-up").addClass("user-panel-sliders-down");
+                this.setState({historyOpened: true})
+            }
+            else {
+                $("#user-panel-hist-container").removeClass("user-panel-sliders-down").addClass("user-panel-sliders-up");
+                this.setState({historyOpened: false})
+            }
+        }
+    }
+
     render() {
         return(
             <>
@@ -189,6 +218,38 @@ export class UserPanel extends Component {
                 <div id="user-panel-info">
                     <h3>Witaj {this.state.userName} w swojej spiżarni!</h3>
                     <p>Tutaj możesz dodawać / modyfikować jej zawartość co pozwoli na dopasowanie pod ciebie przepisów.</p>
+                </div>
+                <div id="user-panel-fav-hist" className='container' style={{marginTop: '2.5em'}}>
+                    <div className='row fav-hist'>
+                        <div className='col-lg-6 text-center'>
+                            <div id="user-panel-favorites" onClick={() => this.showHiddenRecipes(1)}><h5>Twoje ulubione posiłki {this.state.favoritesOpened === true? <span style={{color: 'gray'}} className='icon-down-dir'/> : <span className='icon-down-dir'/>}</h5></div>
+                            <div id="user-panel-fav-container">
+                                {(typeof(this.state.favorites)) == 'object' && this.state.favorites.length > 0?
+                                    this.state.favorites.map(el => 
+                                        <div className='user-panel-fav-hist-element' key={el.linkName}>
+                                            <Link to={'./recipes/' + el.linkName}>{el.name}</Link>
+                                        </div>
+                                    )
+                                    :
+                                    <div className='fav-hist-container-centered'>Brak ulubionych</div>
+                                }
+                            </div>
+                        </div>
+                        <div className='col-lg-6 text-center'>
+                            <div id="user-panel-history" onClick={() => this.showHiddenRecipes(0)}><h5>Historia przeglądania {this.state.historyOpened === true? <span style={{color: 'gray'}} className='icon-down-dir'/> : <span className='icon-down-dir'/>}</h5></div>
+                            <div id="user-panel-hist-container">
+                                {(typeof(this.state.history)) == 'object' && this.state.history.length > 0?
+                                    this.state.history.map(el => 
+                                        <div className='user-panel-fav-hist-element' key={el.linkName}>
+                                            <Link to={'./recipes/' + el.linkName}>{el.name}</Link>
+                                        </div>
+                                    )
+                                    :
+                                    <div className='fav-hist-container-centered'>Brak ulubionych</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className='user-panel-container container'>
                     <div className='row'>

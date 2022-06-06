@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Component } from "react";
 import './contact.css';
 
@@ -17,6 +18,13 @@ export class Contact extends Component {
     submitForm(event) {
         event.preventDefault();
         if((String)(this.state.AdminMessage).length >= 500) this.setState({userMessage: "Maksymalna długość wiadomości to 500 znaków"})
+
+        axios.post("Community/User/WriteMessage",{
+            UserMessage: this.state.AdminMessage,
+            UserLogin: this.state.login
+        })
+        .then(() => {this.setState({userMessage: "Wiadomość wysłana"})})
+        .catch((resp) => {console.log(resp.data)})
     }
     
     render() {

@@ -514,6 +514,82 @@ form > .uingredient-ok:hover {
 .pantryEdit-buttons > .btn-bckgrd-green:hover {
     background-color: rgb(0, 160, 0);
 }
+
+#user-panel-favorites, #user-panel-history {
+    background-color: #292b2c;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 2px solid white;
+    padding: 2em;
+    cursor: pointer;
+}
+#user-panel-favorites > h5 > span, #user-panel-history > h5 > span {
+    color: white;
+    transition: 100ms color;
+}
+#user-panel-favorites:hover > h5 > span, #user-panel-history:hover > h5 > span {
+    color: gray;
+}
+.user-panel-fav-hist-element {
+    margin-top: 1em;
+    padding: 1em;
+}
+.user-panel-fav-hist-element:last-child {
+    margin-bottom: 1em;
+}
+.user-panel-fav-hist-element > a {
+    text-decoration: none;
+    color: white;
+
+    transition: 100ms color;
+}
+.user-panel-fav-hist-element > a:hover {
+    color:rgb(211, 155, 52);
+}
+
+@keyframes user-panel-down {
+    from {height: 0; visibility: hidden;}
+    to {height: 300px; visibility: visible;}
+}
+@keyframes user-panel-up {
+    from {height: 300px; visibility: visible;}
+    to {height: 0; visibility: hidden;}
+}
+
+#user-panel-fav-container, #user-panel-hist-container {
+    position: relative;
+    background-color:#292b2cd5;
+    border-width: 0 2px 2px 2px;
+    border-style: dashed;
+    border-color: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    overflow-y: scroll;
+    height: 0;
+
+    visibility: hidden;
+}
+.user-panel-sliders-down {
+    animation-name: user-panel-down;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+.user-panel-sliders-up {
+    animation-name: user-panel-up;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+.fav-hist-container-centered {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+}
 /* 
 <div className='missing-ingredients'>
 {el.ingredients.map(sk => 

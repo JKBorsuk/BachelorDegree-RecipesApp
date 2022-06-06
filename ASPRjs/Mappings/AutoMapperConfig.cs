@@ -81,6 +81,11 @@ namespace ASPRjsAPI.Mappings
 
                 #region Message
 
+                cfg.CreateMap<IEnumerable<Message>, ListMessageDto>()
+                .ForMember(x => x.Messages, act => act.MapFrom(src => src))
+                .ForMember(x => x.Count, act => act.MapFrom(src => src.Count()));
+
+                cfg.CreateMap<MessageDto, Message>();
                 cfg.CreateMap<Message, MessageDto>();
 
                 #endregion
