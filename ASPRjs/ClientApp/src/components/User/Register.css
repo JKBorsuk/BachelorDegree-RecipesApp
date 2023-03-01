@@ -29,20 +29,17 @@
 
 
 .reg-container {
-    padding-top: 25px;
     width: 100%;
-    margin-bottom: 5em;
+    /*margin-top: 25px;*/
+    margin-bottom: 25px;
 }
 
 .register {
     background-color: #292b2c;
     text-align: center;
-    border: 2px solid white;
     padding: 50px 25px;
     max-width: 420px;
     margin: auto;
-
-    border-radius: 10px;
 }
 .register > form {
     text-align: center;

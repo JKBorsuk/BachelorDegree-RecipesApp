@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import './Register.css';
+import './Register-jquery';
+import $ from 'jquery';
 import { validLogin, validPassword, validName } from './Regex/regex';
 
 export class Register extends Component {
@@ -17,6 +19,13 @@ export class Register extends Component {
     }
     this.hideMessage_R = this.hideMessage_R.bind(this);
   }
+
+  componentDidMount() {
+    $('.reg-container').css({
+      'margin-top': 25
+    });
+  }
+
 
   submit(e) {
     e.preventDefault();

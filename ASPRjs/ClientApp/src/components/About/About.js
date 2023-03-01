@@ -14,7 +14,7 @@ export class About extends Component
     render() {
         return(
             <div id='contact-admin-container'>
-                <h2 style={{margin: '0.5em auto 0 auto', width: 'fit-content', padding: '0.5em 0'}}>Kilka słów od autora</h2>
+                <h2 style={{margin: '0.5em auto 0 auto', width: 'fit-content', padding: '0.5em 0'}}>Kilka słów na temat strony</h2>
                 <div id="main-home-page">
                     <div className="main-home-container-1 container">
                         <div className='row'>

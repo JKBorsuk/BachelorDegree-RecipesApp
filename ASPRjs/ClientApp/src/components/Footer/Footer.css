@@ -1,15 +1,16 @@
 ﻿#main-recipe-master-container {
+    display: flex;
+    flex-direction: column;
     position: relative;
     min-height: 100vh;
     height: 100%;
 }
 #main-recipe-master-container > #main-recipe-background {
     padding-top: 10px;
-    padding-bottom: 12em;
+    margin-bottom: 25px;
 }
 footer {
-    position: absolute;
-    bottom: 0;
+    margin-top: auto;
     background-color: white;
     padding: 12px 0;
     width: 100%;

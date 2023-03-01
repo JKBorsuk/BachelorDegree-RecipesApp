@@ -53,7 +53,7 @@ export class UserPanel extends Component {
             this.setState({message: "Najpierw wybierz porę i rodzaj posiłku", loading_dishes: false});
             return
         }
-        axios.get("Community/User/Cooking/" + this.state.login + "/" + this.state.dishType)
+        axios.get("Community/User/Cooking/" + this.state.dishType)
         .then((resp) => {
             this.setState({recipeList: resp.data.allRecipes[0], recipeReserveList: resp.data.allRecipes[1], message: "", loading_dishes: false});
         })
@@ -80,7 +80,7 @@ export class UserPanel extends Component {
         if(!this.state.ingredient) { this.setState({message: "Podaj nazwę składnika przed dodaniem"}); return }
         if(!this.state.allIngredients.some(el => el === this.state.ingredient) || this.state.userIngredients.some(el => el === this.state.ingredient)) { this.setState({message: "Składnika nie ma w bazie danych bądź jest już w twojej spiżarni"}); return }
         if((this.state.userIngredients.length + 1) >= 50) { this.setState({message: "Maksymalna liczba składników w spiżarni wynosi 50"}); }
-        axios.post("Community/User/AddIngredient/" + this.state.login, {
+        axios.post("Community/User/AddIngredient", {
             Name: this.state.ingredient
         })
         .then(() => {
@@ -100,7 +100,7 @@ export class UserPanel extends Component {
 
     deleteIngredient(props) {
         if(window.confirm("Czy chcesz usunąć składnik \"" + props + "\" ?")) {
-            axios.delete("Community/User/DeleteIngredient/" + this.state.login + "/" + props);
+            axios.delete("Community/User/DeleteIngredient/" + props);
             var array = [...this.state.userIngredients];
             var index = array.indexOf(props);
             if (index !== -1) {
@@ -129,7 +129,7 @@ export class UserPanel extends Component {
         e.preventDefault();
         if(!this.state.IngredientNName) { this.setState({message: "Podaj nazwę składnika przed dodaniem"}); return }
         if(!this.state.allIngredients.some(el => el === this.state.IngredientNName) || this.state.userIngredients.some(el => el === this.state.IngredientNName)) { this.setState({message: "Składnika nie ma w bazie danych bądź jest już w twojej spiżarni"}); return }
-        axios.put("Community/User/UpdateIngredient/" + this.state.login + '/' + this.state.IngredientOName + ',' + this.state.IngredientNName)
+        axios.put("Community/User/UpdateIngredient/" + this.state.IngredientOName + ',' + this.state.IngredientNName)
         .then(() => {
             let array = this.state.userIngredients;
             array[array.indexOf(this.state.IngredientOName)] = this.state.IngredientNName;
@@ -152,7 +152,7 @@ export class UserPanel extends Component {
     editPantry_Save() {
         let count = this.state.pantryEditElements.length
         if(this.state.userIngredients.length + count <= 50) {
-            axios.post("Community/User/AddIngredients/"+this.state.login,{
+            axios.post("Community/User/AddIngredients",{
                 UIngredients: this.state.pantryEditElements
             })
             .then((resp) => {
@@ -245,7 +245,7 @@ export class UserPanel extends Component {
                                         </div>
                                     )
                                     :
-                                    <div className='fav-hist-container-centered'>Brak ulubionych</div>
+                                    <div className='fav-hist-container-centered'>Brak historii</div>
                                 }
                             </div>
                         </div>

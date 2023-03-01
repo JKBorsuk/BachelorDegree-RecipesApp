@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Component } from "react";
-import './ViewRecipe.css'
+import './ViewRecipe.css';
 
 export class ViewRecipe extends Component {
     static displayName = ViewRecipe.name
@@ -8,22 +8,27 @@ export class ViewRecipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            linkname: window.location.href.substring(window.location.href.lastIndexOf('/') + 1),
+            linkname: "",
             ingredient: [],
             votes: 0,
             votes_load: true,
             views: 0,
-            max_width: 400,
+            max_width: 380,
             description: "",
             condition_v: false,
             login: this.props.appdata,
             loading: true,
-            userVote: 0
+            userVote: 0,
         }
     }
+
     componentDidMount() {
+        this.load(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
+    }
+    load(link) {
+        if(link === null) return;
         try {
-            axios.get("Dishes/Recipe/" + this.state.linkname + '/' + this.state.login)
+            axios.get("Dishes/Recipe/" + (String)(link) + '/' + this.state.login)
             .then((resp) => {
                 this.setState({
                     condition_v: true,
@@ -33,9 +38,10 @@ export class ViewRecipe extends Component {
                     votes: resp.data.votes,
                     votes_load: false,
                     views: resp.data.views,
-                    userVote: resp.data.userVote
+                    userVote: resp.data.userVote,
+                    linkname: (String)(link)
                 })
-                axios.put("Dishes/Recipe/" + this.state.linkname + '/' + this.state.login).catch(() => {console.log("Błąd")})
+                axios.put("Dishes/Recipe/" + (String)(link) + '/' + this.state.login).catch(() => {console.log("Błąd")})
             }).catch(() => { window.location.href = "/" })
             .finally(() => {
                 document.getElementById('recipe-description-id').innerHTML = this.state.description.replaceAll('\\n','<br/><br/>');
@@ -128,12 +134,10 @@ export class ViewRecipe extends Component {
                                     <div className="recipe-child recipe-ingredients">
                                         {(typeof(this.state.ingredient.ingredients) == "object") ?
                                             <div>
-                                                {this.state.ingredient.ingredients.map(p => 
-                                                    <a href={"https://www.google.com/search?q=" + p.name}>
-                                                        <div key={p.name} className="recipe-ingredient" style={{display: "inline-block"}}>
-                                                            {p.name + " - " + p.amount}
-                                                        </div>
-                                                    </a>
+                                                {this.state.ingredient.ingredients.map(p =>
+                                                    <div key={p.name} className="recipe-ingredient" style={{display: "inline-block"}}>
+                                                        {p.name + " - " + p.amount}
+                                                    </div>
                                                 )}
                                             </div>
                                         :
@@ -143,9 +147,9 @@ export class ViewRecipe extends Component {
                                 </div>
                                 <div className="col-md-6">
                                     {typeof(this.state.ingredient.photoFileName) == 'string' && this.state.ingredient.photoFileName != "Noimg.png" ?
-                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '1.4', objectFit: 'cover'}} src={"Images/" + this.state.ingredient.photoFileName}/></div>
+                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width + 'px', width: '100%', height: 'auto', aspectRatio: '1.4', objectFit: 'cover'}} src={"Images/" + this.state.ingredient.photoFileName}/></div>
                                         :
-                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width, width: '100%', height: 'auto', aspectRatio: '1.4', objectFit: 'cover'}} src="Images/Noimg.png"/></div>
+                                        <div className="recipe-child recipe-image"><img id='rec-image' alt="" style={{maxWidth: this.state.max_width + 'px', width: '100%', height: 'auto', aspectRatio: '1.4', objectFit: 'cover'}} src="Images/Noimg.png"/></div>
                                     }
                                 </div>
                             </div>

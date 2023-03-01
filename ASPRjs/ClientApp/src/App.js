@@ -73,7 +73,7 @@ export default class App extends Component {
           <Route path='/login'>{this.state.login ? <Redirect to="/"/> : <LoginUser appdata={this.state.login}/>}</Route>
           <Route path='/register'>{this.state.login ? <Redirect to="/"/> : <Register appdata={this.state.login}/>}</Route>
           <Route path='/addrecipe'>{!this.state.login || this.state.sub_load1 === true ? <Redirect to="/login"/> : <AddRecipe appdata={this.state.login} approleA={this.state.sub_load1}/>}</Route>
-          <Route path='/recipes'>{!this.state.login ? <Redirect to="/login"/> : <ViewRecipe appdata={this.state.login}/>}</Route>
+          <Route path='/recipes'>{!this.state.login? <Redirect to="/login"/> : <ViewRecipe appdata={this.state.login}/>}</Route>
           <Route path='/user-panel'>{!this.state.login ? <Redirect to="/login"/> : <UserPanel appdata={this.state.login} appdata2={this.state.name} userIng={this.state.userIngredients} allIng={this.state.allIngredients}/>}</Route>
           <Route path='/change-role'>{!this.state.login || this.state.sub_load2 === true ? <Redirect to="/login"/> : <ChangeRole appdata={this.state.login}/>}</Route>
           <Route path='/contact'>{!this.state.login? <Redirect to="/login"/> : <Contact appdata={this.state.login}/>}</Route>

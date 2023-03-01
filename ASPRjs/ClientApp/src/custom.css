@@ -21,6 +21,64 @@ body {
 }
 
 /* Home.js and media queries */
+@media (max-width: 575px) {
+  #main-recipe-background > .container {
+    padding-left: 0!important;
+    padding-right: 0!important;
+  }
+  #main-home-container-wrapper {
+    border-width: 2px 0 2px 0;
+    border-style: solid;
+    border-color: white;
+    border-radius: 0;
+  }
+  #main-banner > img {
+    border-radius: 0;
+  }
+  .register {
+    border-width: 2px 0 2px 0;
+    border-style: solid;
+    border-color: white;
+    border-radius: 0;
+  }
+  .main-home-container-2 {
+    padding: 2em 0 1em 0;
+    border-width: 0 0 2px 0;
+    border-style: dashed;
+    border-color: white;
+    background-color: #292b2c;
+  }
+}
+
+@media (min-width: 576px) {
+  #main-home-container-wrapper {
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
+    border-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 5px 5px 20px #292b2c;
+  }
+  #main-banner > img {
+    border-radius: 10px;
+  }
+  .register {
+    border: 2px solid white;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px #292b2c;
+  }
+  .main-home-container-2 {
+    padding: 4em 0 3em 0;
+    border-width: 0 2px 2px 2px;
+    border-style: dashed;
+    border-color: white;
+    background-color: #292b2c;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 60px;
+    box-shadow: 5px 5px 20px #292b2c;
+  }
+}
 
 
 @media (max-width: 767px) {
@@ -309,7 +367,6 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 10px;
 }
 #main-banner {
   width: 100%;
@@ -347,27 +404,18 @@ body {
 
 /* Container - 2 */
 
-.main-home-container-2 {
-  margin-top: 40px;
-}
-
-.row > #main-account-offer {
-  padding: 20px;
-  border: 2px solid white;
-  background-color: #292b2c;
-  border-radius: 5px;
-}
-.row > #main-account-register {
+#main-account-register {
   text-decoration: none;
   color: white;
-  padding: 20px 0;
+  padding: 15px;
   border: 2px solid white;
   background-color: #292b2c93;
   border-radius: 15px;
+  width: auto;
   transition: 100ms background-color, border-color, color ease-in-out;
 }
 
-.row > #main-account-register:hover {
+#main-account-register:hover {
   background-color: #292b2c;
   color: rgb(211, 155, 52);
   border-color: rgb(211, 155, 52);
@@ -380,8 +428,6 @@ body {
 #main-home-container-wrapper {
   background-color: #292b2c;
   padding: 0 2.5em;
-  border: 2px solid white;
-  border-radius: 5px;
 }
 
 .main-home-container-3 {
@@ -407,7 +453,7 @@ body {
   color:rgb(211, 155, 52)
 }
 
-.main-home-container-3:not(:last-child) > .row > .col-md-4 > figcaption {
+.main-home-container-3 > .row > .col-md-4 > figcaption {
   margin: 0 10px;
   margin-bottom: 1.5em;
 }

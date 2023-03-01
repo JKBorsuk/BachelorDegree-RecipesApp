@@ -37,8 +37,7 @@ export class Home extends Component {
           <div id="main-banner-wrapper">
             <div id="main-banner">
               <div id="main-banner-text">
-                <h3>Recipe Master</h3>
-                <p>Jeden by wszystkie zebrać i ludziom podarować</p>
+                <h3 style={{padding: '0 1em'}}>Recipe Master</h3>
               </div>
               <img src="/Images/taryn-elliott-4099237.jpg" alt=""/>
             </div>
@@ -161,9 +160,9 @@ export class Home extends Component {
           </div>
           {!this.state.login?
             <div className='main-home-container-2 container'>
-              <div className='row my-auto'>
-                <div id="main-account-offer" className='col-6'><h6>Chciałbyś dostać dopasowane pod siebie przepisy?</h6></div>
-                <Link to="/register" id="main-account-register" className='col-4 offset-1 col-sm-2 my-auto'>Zarejestruj się</Link>
+              <div className='row'>
+                <div id="main-account-offer" className='col-12 col-lg-4 offset-lg-4 my-lg-auto'><h6>Chciałbyś dostać dopasowane pod siebie przepisy?</h6></div>
+                <Link to="/register" id="main-account-register" className='col-12 my-4 mx-auto col-lg-4 mx-lg-1 my-lg-auto'>Zarejestruj się</Link>
               </div>
             </div>
             :

@@ -168,7 +168,7 @@ export class NavMenu extends Component {
                   (typeof(el)) == 'object' && el.length > 0 && index === this.state.actIndex?
                     el.map(sk =>
                       <div key={sk.name} className="r-search-recipe-module">
-                        <Link to={window.location.href.includes('recipe')? sk.linkName : '/recipes/' + sk.linkName}>{sk.name}</Link>
+                        <a href={'./recipes/' + sk.linkName}>{sk.name}</a>
                       </div>
                     )
                     :
