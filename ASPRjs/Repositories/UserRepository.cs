@@ -95,8 +95,8 @@ namespace Repositories
             int count;
 
             List<Recipe> recipes = new List<Recipe>();
-            List<Recipe> recipes_reserve = new List<Recipe>(); // recipes that can be done by adding up to 3 random elements
-            List<RecipeIngredient> reserveIngredients = new List<RecipeIngredient>(); // those elements
+            List<Recipe> recipes_reserve = new List<Recipe>();
+            List<RecipeIngredient> reserveIngredients = new List<RecipeIngredient>();
 
             foreach (Recipe recipe in _masterDbContext.Recipes.Include(x => x.Ingredients).Where(y => y.Type == type))
             {

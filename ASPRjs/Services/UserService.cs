@@ -23,23 +23,6 @@ namespace Services
             return newuser;
         }
 
-        public Dictionary<string, bool> dictionary(int id)
-        {
-            UserDto user = getUserById(id);
-            if(user == null) return null;
-            Dictionary<string, bool> dict = new Dictionary<string, bool>();
-            foreach(UIngredientDto item in user.ingredients)
-            {
-                try
-                {
-                    dict.Add(item.Name, true);
-                }
-                catch (ArgumentException) {}
-            }
-
-            return dict;
-        }
-
         public UserDto getUserById(int id)
         {
             var user = _userRepository.getById(id);
@@ -79,12 +62,25 @@ namespace Services
 
             return _mapper.Map<ListIngredientDto>(ingredients);
         }
+        public Dictionary<string, bool> dictionary(int id)
+        {
+            UserDto user = getUserById(id);
+            if (user == null) return null;
+            Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
+            foreach (UIngredientDto item in user.ingredients)
+            {
+                try
+                {
+                    dictionary.Add(item.Name, true);
+                }
+                catch (ArgumentException) { }
+            }
+            return dictionary;
+        }
 
         public ArrayUserRecipesDto readAllICanCook(string login, int type)
         {
             Dictionary<string, bool> MyDictionary = dictionary(_userRepository.getByLogin(login).Id);
-            if(MyDictionary == null) return null;
-
             var ones = _userRepository.findOnes(MyDictionary, type);
             return _mapper.Map<ArrayUserRecipesDto>(ones);
         }

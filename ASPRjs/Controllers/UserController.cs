@@ -20,7 +20,7 @@ namespace ASPRjs.Controllers
         [HttpGet("{login}")]
         public IActionResult getUser(string login)
         {
-            if(login == "") return NotFound("User does not exist");
+            if(login == null) return NotFound("User does not exist");
 
             var user = _userService.getUserByLogin(login);
             if(user == null) return NotFound("User does not exist");
@@ -85,10 +85,12 @@ namespace ASPRjs.Controllers
             return Ok("User logged out");
         }
 
-        [HttpGet("Ingredients/{login}")]
-        public IActionResult readIngredients(string login)
+        [HttpGet("Ingredients")]
+        public IActionResult readIngredients()
         {
-            if (_userService.getUserByLogin(login) == null) return NotFound("User does not exist");
+            var login = HttpContext.Session.GetString("user");
+            if(login == null) return NotFound("User does not exist");
+
             var ingredients = _userService.readAllUserIngredients(login);
             return Ok(ingredients);
         }
@@ -100,19 +102,26 @@ namespace ASPRjs.Controllers
             return Created($"Community/User/{user.Login}", user);
         }
 
-        [HttpPost("AddIngredient/{login}")]
-        public IActionResult addIngredients(UIngredientDto userIngredient, string login)
+        [HttpPost("AddIngredient")]
+        public IActionResult addIngredients(UIngredientDto userIngredient)
         {
-            var ingredient = _userService.AddNewIngredient(userIngredient, login);
+            var login = HttpContext.Session.GetString("user");
+            if (login == null) return NoContent();
+            else if (_userService.getUserByLogin_U(login).Ingredients.Count + 1 > 50) return Unauthorized("Limit");
+
+            var ingredient = _userService.AddNewIngredient(userIngredient, HttpContext.Session.GetString("user"));
             return Created($"Community/User/Ingredients/{ingredient.Id}", ingredient);
         }
 
-        [HttpPost("AddIngredients/{login}")]
-        public IActionResult addMultiIngredients(ArrayUIngredientDto userIngredients, string login)
+        [HttpPost("AddIngredients")]
+        public IActionResult addMultiIngredients(ArrayUIngredientDto userIngredients)
         {
+            var login = HttpContext.Session.GetString("user");
+            if (login == null) return NoContent();
             if (_userService.getUserByLogin_U(login).Ingredients.Count + userIngredients.UIngredients.Length > 50) return Unauthorized("Limit");
+
             _userService.addMulitIngredients(userIngredients,login);
-            return Ok();
+            return Created($"Community/User/Ingredients",1);
         }
 
         [HttpPost("Login")]
@@ -129,24 +138,26 @@ namespace ASPRjs.Controllers
             else return NotFound("Bad login or password");
         }
 
-        [HttpPut("Update/{login}")]
-        public IActionResult Update(string login, UpdateUser user)
+        [HttpPut("Update")]
+        public IActionResult Update(UpdateUser user)
         {
-            if (user == null) return NotFound();
+            var mainUser = _userService.getUserByLogin_U(HttpContext.Session.GetString("user"));
+            if (user == null || mainUser == null) return NotFound();
 
-            _userService.updateUser(login, user);
+            _userService.updateUser(mainUser.Login, user);
             return Ok();
         }
 
-        [HttpGet("Cooking/{login}/{type}")]
-        public IActionResult findProperOnes(string login, int type)
+        [HttpGet("Cooking/{type}")]
+        public IActionResult findProperOnes(int type)
         {
-            if (HttpContext.Session.GetString("user") != login) return NotFound("No recepies were found");
+            var user = _userService.getUserByLogin_U(HttpContext.Session.GetString("user"));
+            if (user == null) return NotFound("No recepies were found");
 
-            var ones = _userService.readAllICanCook(login,type);
-            if (ones.AllRecipes[0].Count == 0 && ones.AllRecipes[1].Count == 0) return NotFound("No recepies were found");
+            var recipes = _userService.readAllICanCook(user.Login, type);
+            if (recipes.AllRecipes[0].Count == 0 && recipes.AllRecipes[1].Count == 0) return NotFound("No recepies were found");
 
-            return Ok(ones);
+            return Ok(recipes);
         }
 
         [HttpGet("URole/{login}")]
@@ -192,10 +203,11 @@ namespace ASPRjs.Controllers
             else return Unauthorized("Too low rank");
         }
 
-        [HttpDelete("DeleteIngredient/{login}/{name}")]
-        public IActionResult deleteUserIngredient(string login, string name)
+        [HttpDelete("DeleteIngredient/{name}")]
+        public IActionResult deleteUserIngredient(string name)
         {
-            if (HttpContext.Session.GetString("user") == login)
+            var login = HttpContext.Session.GetString("user");
+            if (login != null)
             {
                 _userService.deleteIngredient(_userService.getUserByLogin_U(login), name);
                 return Ok();
@@ -203,10 +215,11 @@ namespace ASPRjs.Controllers
             else return Unauthorized();
         }
 
-        [HttpPut("UpdateIngredient/{login}/{name},{newname}")]
-        public IActionResult updateIngredient(string login, string name, string newname)
+        [HttpPut("UpdateIngredient/{name},{newname}")]
+        public IActionResult updateIngredient(string name, string newname)
         {
-            if (HttpContext.Session.GetString("user") == login)
+            var login = HttpContext.Session.GetString("user");
+            if (login != null)
             {
                 _userService.updateIngredient(_userService.getUserByLogin_U(login), name, newname);
                 return Ok(newname);

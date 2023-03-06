@@ -20,6 +20,14 @@ body {
   background-position: top;
 }
 
+@media (max-width: 375px) {
+  .user-list-element-container > .list-element-text > .reserve-recipe-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 /* Home.js and media queries */
 @media (max-width: 575px) {
   #main-recipe-background > .container {
@@ -186,7 +194,6 @@ body {
   }
   /* -- END -- */
   #user-panel-main-labels {
-    display: block;
     text-align: center;
   }
   #user-panel-main-labels > label {
@@ -198,6 +205,7 @@ body {
   }
   #user-panel-main-labels > label:not(:last-child) {
     margin-right: 0;
+    margin-left: 0;
     margin-bottom: 1em;
   }
   /* -- END -- */

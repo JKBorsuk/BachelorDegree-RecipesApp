@@ -222,7 +222,12 @@ export class UserPanel extends Component {
                 <div id="user-panel-fav-hist" className='container' style={{marginTop: '2.5em'}}>
                     <div className='row fav-hist'>
                         <div className='col-lg-6 text-center'>
-                            <div id="user-panel-favorites" onClick={() => this.showHiddenRecipes(1)}><h5>Twoje ulubione posiłki {this.state.favoritesOpened === true? <span style={{color: 'gray'}} className='icon-down-dir'/> : <span className='icon-down-dir'/>}</h5></div>
+                            <div id="user-panel-favorites" onClick={() => this.showHiddenRecipes(1)}>
+                                <h5>Twoje ulubione posiłki {this.state.favoritesOpened === true? 
+                                    <span style={{color: 'gray'}} className='icon-down-dir'/> : 
+                                    <span className='icon-down-dir'/>}
+                                </h5>
+                            </div>
                             <div id="user-panel-fav-container">
                                 {(typeof(this.state.favorites)) == 'object' && this.state.favorites.length > 0?
                                     this.state.favorites.map(el => 
@@ -236,7 +241,15 @@ export class UserPanel extends Component {
                             </div>
                         </div>
                         <div className='col-lg-6 text-center'>
-                            <div id="user-panel-history" onClick={() => this.showHiddenRecipes(0)}><h5>Historia przeglądania {this.state.historyOpened === true? <span style={{color: 'gray'}} className='icon-down-dir'/> : <span className='icon-down-dir'/>}</h5></div>
+                            <div id="user-panel-history" onClick={() => this.showHiddenRecipes(0)}>
+                                <h5>
+                                    Historia przeglądania 
+                                    {this.state.historyOpened === true? 
+                                        <span style={{color: 'gray'}} className='icon-down-dir'/> : 
+                                        <span className='icon-down-dir'/>
+                                    }
+                                </h5>
+                            </div>
                             <div id="user-panel-hist-container">
                                 {(typeof(this.state.history)) == 'object' && this.state.history.length > 0?
                                     this.state.history.map(el => 

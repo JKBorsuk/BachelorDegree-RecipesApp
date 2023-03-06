@@ -316,6 +316,8 @@
     font-weight: 500;
     color:rgb(211, 155, 52);
     position: absolute;
+    z-index: 5;
+    background-color: white;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -450,6 +452,7 @@ form > .uingredient-ok:hover {
 
 #pantryEdit-absolute-wrapper {
     position: absolute;
+    z-index: 6;
     top: 0;
     left: 0;
     width: 100%;
@@ -590,10 +593,3 @@ form > .uingredient-ok:hover {
     -moz-transform: translate(-50%,-50%);
     -webkit-transform: translate(-50%,-50%);
 }
-/* 
-<div className='missing-ingredients'>
-{el.ingredients.map(sk => 
-    <div style={{display: 'inline-block'}}>{sk.name}</div>
-)}
-</div>
-*/
