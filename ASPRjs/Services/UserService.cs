@@ -48,10 +48,10 @@ namespace Services
             _userRepository.updateUser(user);
         }
 
-        public UserIngredient AddNewIngredient(UIngredientDto uing, string login)
+        public UserIngredient AddNewIngredient(UIngredientDto user_ingredient, string login)
         {
-            if(uing.Name == null) return null;
-            var NIngredient = _mapper.Map<UserIngredient>(uing);
+            if(user_ingredient.Name == null) return null;
+            var NIngredient = _mapper.Map<UserIngredient>(user_ingredient);
             NIngredient.UserId = _userRepository.getByLogin(login).Id;
             _userRepository.addIngredient(NIngredient);
             return NIngredient;

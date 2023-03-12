@@ -90,22 +90,24 @@ namespace Repositories
         }
         public void UpdateRecipeVote(Recipe recipe, User user, int vote)
         {
-            var voteEntity = _masterDbContext.Votes.Where(x => x.UserId == user.Id).SingleOrDefault(y => y.RecipeId == recipe.Id);
-
+            var voteEntity = _masterDbContext.Votes
+                .Where(x => x.UserId == user.Id)
+                .SingleOrDefault(y => y.RecipeId == recipe.Id);
             if (voteEntity == null || voteEntity.value != vote)
             {
-
                 if(voteEntity != null)
                 {
-                    _masterDbContext.Recipes.SingleOrDefault(x => x.Id == recipe.Id).votes += 2*vote;
-                    _masterDbContext.Votes.Where(x => x.UserId == user.Id).SingleOrDefault(y => y.RecipeId == recipe.Id).value = vote;
-
+                    _masterDbContext.Recipes
+                        .SingleOrDefault(x => x.Id == recipe.Id).votes += 2*vote;
+                    _masterDbContext.Votes
+                        .Where(x => x.UserId == user.Id)
+                        .SingleOrDefault(y => y.RecipeId == recipe.Id).value = vote;
                     _masterDbContext.SaveChanges();
                 }
                 else
                 {
-                    _masterDbContext.Recipes.SingleOrDefault(x => x.Id == recipe.Id).votes += vote;
-
+                    _masterDbContext.Recipes
+                        .SingleOrDefault(x => x.Id == recipe.Id).votes += vote;
                     _masterDbContext.Votes.Add(
                         new Vote()
                         {
@@ -113,21 +115,22 @@ namespace Repositories
                             UserId = user.Id,
                             value = vote
                         });
-
                     _masterDbContext.SaveChanges();
                 }
             }
-            else if (voteEntity != null && voteEntity.value == vote)
+            else
             {
-                _masterDbContext.Recipes.SingleOrDefault(x => x.Id == recipe.Id).votes -= vote;
+                _masterDbContext.Recipes
+                    .SingleOrDefault(x => x.Id == recipe.Id).votes -= vote;
                 _masterDbContext.Votes.Remove(voteEntity);
-
                 _masterDbContext.SaveChanges();
             }
         }
         public void UpdateRecipeView(Recipe recipe, User user)
         {
-            var viewEntity = _masterDbContext.Views.Where(x => x.UserId == user.Id).SingleOrDefault(y => y.RecipeId == recipe.Id);
+            var viewEntity = _masterDbContext.Views
+                .Where(x => x.UserId == user.Id)
+                .SingleOrDefault(y => y.RecipeId == recipe.Id);
 
             if(viewEntity == null)
             {

@@ -24,6 +24,22 @@ namespace Services
         {
             return _recipeRepository.GetVote(linkname, user.Id);
         }
+        public bool RecipeVote(string linkname, User user, int vote)
+        {
+            var existingRecipe = _recipeRepository.getByName(linkname);
+            if (existingRecipe == null) return false;
+            _recipeRepository.UpdateRecipeVote(existingRecipe, user, vote);
+
+            return true;
+        }
+        public bool RecipeView(string linkname, User user)
+        {
+            var exitsingRecipe = _recipeRepository.getByName(linkname);
+            if (exitsingRecipe == null) return false;
+            _recipeRepository.UpdateRecipeView(exitsingRecipe, user);
+
+            return true;
+        }
         public ListRecipesDto getAllRecipes()
         {
             var recipes = _recipeRepository.getAll();
@@ -96,22 +112,6 @@ namespace Services
             var listRecipes = _recipeRepository.getSmallestForShowCase();
 
             return _mapper.Map<ListRecipesDto>(listRecipes);
-        }
-        public bool RecipeVote(string linkname, User user, int vote)
-        {
-            var existingRecipe = _recipeRepository.getByName(linkname);
-            if (existingRecipe == null) return false;
-            _recipeRepository.UpdateRecipeVote(existingRecipe, user, vote);
-
-            return true;
-        }
-        public bool RecipeView(string linkname, User user)
-        {
-            var exitsingRecipe = _recipeRepository.getByName(linkname);
-            if (exitsingRecipe == null) return false;
-            _recipeRepository.UpdateRecipeView(exitsingRecipe, user);
-
-            return true;
         }
         public ListRecipesDto RecipeSearch(string keys)
         {

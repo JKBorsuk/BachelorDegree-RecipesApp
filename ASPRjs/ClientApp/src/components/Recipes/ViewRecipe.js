@@ -28,7 +28,7 @@ export class ViewRecipe extends Component {
     load(link) {
         if(link === null) return;
         try {
-            axios.get("Dishes/Recipe/" + (String)(link) + '/' + this.state.login)
+            axios.get("Dishes/Recipe/" + (String)(link))
             .then((resp) => {
                 this.setState({
                     condition_v: true,
@@ -41,7 +41,7 @@ export class ViewRecipe extends Component {
                     userVote: resp.data.userVote,
                     linkname: (String)(link)
                 })
-                axios.put("Dishes/Recipe/" + (String)(link) + '/' + this.state.login).catch(() => {console.log("Błąd")})
+                axios.put("Dishes/Recipe/" + (String)(link)).catch(() => {console.log("Błąd")})
             }).catch(() => { window.location.href = "/" })
             .finally(() => {
                 document.getElementById('recipe-description-id').innerHTML = this.state.description.replaceAll('\\n','<br/><br/>');
@@ -94,7 +94,7 @@ export class ViewRecipe extends Component {
     RecipeVote(vote) {
         if((Number)(vote) == this.state.userVote) this.setState({userVote: 0})
         else this.setState({userVote: (Number)(vote)})
-        axios.put("Dishes/Recipe/" + this.state.linkname + '/' + this.state.login + '/' + vote)
+        axios.put("Dishes/Recipe/" + this.state.linkname + '/' + vote)
         .then((resp) => {
             if(resp.data === true) {
                 axios.get("Dishes/Recipe/GetVotes/" + this.state.linkname)
@@ -114,9 +114,15 @@ export class ViewRecipe extends Component {
                     <div className="recipe-container container">
                         {this.state.votes_load === false ?
                             <div id="votes-container" style={{userSelect: 'none'}}>
-                                {this.state.userVote === 1? <div id="votes-up" style={{color: 'rgb(0, 255, 0)'}} onClick={() => this.RecipeVote(1)}>{'\u2191'}</div> : <div id="votes-up" onClick={() => this.RecipeVote(1)}>{'\u2191'}</div>}
+                                {this.state.userVote === 1? 
+                                    <div id="votes-up" style={{color: 'rgb(0, 255, 0)'}} onClick={() => this.RecipeVote(1)}>{'\u2191'}</div> : 
+                                    <div id="votes-up" onClick={() => this.RecipeVote(1)}>{'\u2191'}</div>
+                                }
                                 <div id="votes">{this.state.votes}</div>
-                                {this.state.userVote === -1? <div id="votes-down" style={{color: 'rgb(255, 0, 0)'}} onClick={() => this.RecipeVote(-1)}>{'\u2193'}</div> : <div id="votes-down" onClick={() => this.RecipeVote(-1)}>{'\u2193'}</div>}
+                                {this.state.userVote === -1? 
+                                    <div id="votes-down" style={{color: 'rgb(255, 0, 0)'}} onClick={() => this.RecipeVote(-1)}>{'\u2193'}</div> : 
+                                    <div id="votes-down" onClick={() => this.RecipeVote(-1)}>{'\u2193'}</div>
+                                }
                             </div>
                             :
                             null

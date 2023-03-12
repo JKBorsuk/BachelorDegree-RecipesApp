@@ -20,12 +20,36 @@ namespace ASPRjs.Controllers
             _env = env;
         }
 
-        [HttpGet("{linkname}/{login}")]
-        public IActionResult Get(string linkname, string login)
+        [HttpGet("{linkname}")]
+        public IActionResult Get(string linkname)
         {
+            var login = HttpContext.Session.GetString("user");
+            if (login == null) return Unauthorized("You are not logged in");
             var recipe = _recipeService.getRecipe(linkname);
             recipe.userVote = _recipeService.GetUserVote(linkname, _userService.getUserByLogin_U(login));
             if (recipe == null) return NotFound();
+            return Ok(recipe);
+        }
+
+        [HttpPut("{linkname}")]
+        public IActionResult RecipeView(string linkname)
+        {
+            var login = HttpContext.Session.GetString("user");
+            if (login == null) return Unauthorized("You are not logged in");
+            var user = _userService.getUserByLogin_U(login);
+            var recipe = _recipeService.RecipeView(linkname, user);
+            if (!recipe) return NotFound();
+            return Ok(recipe);
+        }
+
+        [HttpPut("{linkname}/{vote}")]
+        public IActionResult RecipeVote(string linkname, int vote)
+        {
+            var login = HttpContext.Session.GetString("user");
+            if (login == null) return Unauthorized("You are not logged in");
+            var user = _userService.getUserByLogin_U(login);
+            var recipe = _recipeService.RecipeVote(linkname, user, vote);
+            if (!recipe) return NotFound();
             return Ok(recipe);
         }
 
@@ -125,24 +149,6 @@ namespace ASPRjs.Controllers
             if(recipe == null) return NotFound();
 
             return Ok(recipe.votes);
-        }
-
-        [HttpPut("{linkname}/{login}/{vote}")]
-        public IActionResult RecipeVote(string linkname, string login, int vote)
-        {
-            var user = _userService.getUserByLogin_U(login);
-            var recipe = _recipeService.RecipeVote(linkname, user, vote);
-            if (!recipe) return NotFound();
-            return Ok(recipe);
-        }
-
-        [HttpPut("{linkname}/{login}")]
-        public IActionResult RecipeView(string linkname, string login)
-        {
-            var user = _userService.getUserByLogin_U(login);
-            var recipe = _recipeService.RecipeView(linkname, user);
-            if (!recipe) return NotFound();
-            return Ok(recipe);
         }
 
         [HttpGet("search/{keys}")]
