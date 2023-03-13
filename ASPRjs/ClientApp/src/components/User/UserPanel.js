@@ -28,7 +28,8 @@ export class UserPanel extends Component {
             favoritesOpened: false,
             historyOpened: false,
             favorites: [],
-            history: []
+            history: [],
+            block_operation: false
         }
         this.onChangeValue = this.onChangeValue.bind(this);
         this.recipeSearch = this.recipeSearch.bind(this);
@@ -83,10 +84,11 @@ export class UserPanel extends Component {
             Name: this.state.ingredient
         })
         .then(() => {
+            this.props.addIngr(this.state.ingredient);
             this.setState({
-                userIngredients: [...this.state.userIngredients, this.state.ingredient], 
-                ingredient: ""
-            })
+                ingredient: "",
+                userIngredients: [...this.state.userIngredients, this.state.ingredient] 
+            });
         })
         .catch((err) => {
         })
@@ -148,6 +150,8 @@ export class UserPanel extends Component {
     }
 
     editPantry_Save() {
+        if(this.state.block_operation === true) return;
+        this.setState({loading_dishes: true, block_operation: true});
         let count = this.state.pantryEditElements.length
         if(this.state.userIngredients.length + count <= 50) {
             axios.post("Community/User/AddIngredients",{
@@ -178,9 +182,9 @@ export class UserPanel extends Component {
                         this.recipeSearch();
                         break
                 }
-                this.setState({pantryEdit: false, pantryEditElements: []})
+                this.setState({pantryEdit: false, pantryEditElements: [], loading_dishes: false, block_operation: false})
             })
-            .catch((err) => {console.log("Błąd")})
+            .catch((err) => {this.setState({loading_dishes: false, block_operation: false})})
         }
     }
 
@@ -296,7 +300,7 @@ export class UserPanel extends Component {
                                     <datalist id="allIngr">
                                         {(typeof(this.state.allIngredients) == 'object') && this.state.ingredient || this.state.IngredientNName ?
                                             this.state.allIngredients.map((p) => 
-                                                <option value={p}></option>
+                                                <option key={p} value={p}></option>
                                             )
                                             :
                                             null

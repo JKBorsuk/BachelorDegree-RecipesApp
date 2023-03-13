@@ -20,13 +20,6 @@ export class Register extends Component {
     this.hideMessage_R = this.hideMessage_R.bind(this);
   }
 
-  componentDidMount() {
-    $('.reg-container').css({
-      'margin-top': 25
-    });
-  }
-
-
   submit(e) {
     e.preventDefault();
     this.setState({loading: true})
@@ -71,7 +64,7 @@ export class Register extends Component {
       <>
       <div className="reg-container">
         <div className="register">
-          <div className='display-6' style={{letterSpacing: '1px', marginBottom: '1em', userSelect: 'none'}}>Register</div>
+          <div className='display-6' style={{letterSpacing: '1px', marginBottom: '1em', userSelect: 'none'}}>Rejestracja</div>
           <form onSubmit={(e) => this.submit(e)}>
               <input
                   type="text"

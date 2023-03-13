@@ -17,7 +17,7 @@ export class AddRecipe extends Component {
             description: "*Opis\n\n* - wymagane\n\n Dodanie nowej linii - \\n",
             ingredients: [],
             spices: [],
-            response: [],
+            response: this.getData(),
             message: "",
             filename: "Noimg.png",
             condition: true,
@@ -30,11 +30,10 @@ export class AddRecipe extends Component {
 
     spice = (name) => { return { name: name } }
 
-
-    componentDidMount() {
+    getData() {
         axios.get("Dishes/Recipe/ViewIngredients")
         .then((resp) => {
-            this.setState({response : resp.data.ingredients});
+            return resp.data.ingredients;
         })
         .catch(() => {})
     }

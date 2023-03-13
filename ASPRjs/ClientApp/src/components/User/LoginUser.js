@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import { Link } from 'react-router-dom';
-import  { Redirect } from 'react-router-dom'
+import  { Redirect } from 'react-router-dom';
 import Axios from 'axios';
 
 export class LoginUser extends Component {
@@ -49,7 +49,7 @@ export class LoginUser extends Component {
             <>
             <div className='reg-container'>
                 <div className='register'>
-                <div className='display-6' style={{letterSpacing: '1px', marginBottom: '1em', userSelect: 'none'}}>Login</div>
+                    <div className='display-6' style={{letterSpacing: '1px', marginBottom: '1em', userSelect: 'none'}}>Logowanie</div>
                     <form onSubmit={this.submit}>
                         <input type="text" value={this.state.login} onChange={e => this.setState({login: e.target.value})} placeholder="login" autoComplete='off'/>
                         <input type="password" value={this.state.password} onChange={e => this.setState({password: e.target.value})} placeholder="password" autoComplete='off'/>
