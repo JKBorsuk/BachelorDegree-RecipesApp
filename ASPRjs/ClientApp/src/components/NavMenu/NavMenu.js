@@ -80,7 +80,7 @@ export class NavMenu extends Component {
       <header>
         <Navbar className="navbar-expand-lg navbar-toggleable-lg navbar-dark bg-dark border-bottom box-shadow mb-3" light>
           <Container>
-            <NavbarBrand tag={Link} to="/" className='text-white' >Recipe Master</NavbarBrand>
+            <NavbarBrand tag={Link} to="/" className='text-white' >Recipe Catering</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-lg-inline-flex flex-lg-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">

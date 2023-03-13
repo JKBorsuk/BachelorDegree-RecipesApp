@@ -37,7 +37,7 @@ export class Home extends Component {
           <div id="main-banner-wrapper">
             <div id="main-banner">
               <div id="main-banner-text">
-                <h3 style={{padding: '0 1em'}}>Recipe Master</h3>
+                <h3 style={{padding: '0 1em'}}>Recipe Catering</h3>
               </div>
               <img src="/Images/taryn-elliott-4099237.jpg" alt=""/>
             </div>
