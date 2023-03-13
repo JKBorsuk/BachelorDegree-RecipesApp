@@ -38,9 +38,9 @@ export class UserPanel extends Component {
 
     componentDidMount() {
         axios.get("Community/User/Favorites")
-        .then((resp) => {console.log(resp.data.recipes); this.setState({favorites: resp.data.recipes})});
+        .then((resp) => {this.setState({favorites: resp.data.recipes})});
         axios.get("Community/User/History")
-        .then((resp2) => {console.log(resp2.data.recipes); this.setState({history: resp2.data.recipes})});
+        .then((resp2) => {this.setState({history: resp2.data.recipes})});
     }
 
     onChangeValue(event) {
@@ -58,7 +58,6 @@ export class UserPanel extends Component {
             this.setState({recipeList: resp.data.allRecipes[0], recipeReserveList: resp.data.allRecipes[1], message: "", loading_dishes: false});
         })
         .catch(err => {
-            console.log(err);
             this.setState({message: "Brak dopasowań do \"" + this.whatMealType((Number)(this.state.dishType)) + "\"", loading_dishes: false, recipeList: []})
         })
     }
@@ -90,7 +89,6 @@ export class UserPanel extends Component {
             })
         })
         .catch((err) => {
-            console.log(err);
         })
     }
 
@@ -156,8 +154,6 @@ export class UserPanel extends Component {
                 UIngredients: this.state.pantryEditElements
             })
             .then((resp) => {
-                console.log(resp);
-
                 let firstChild;
                 let secondChild;
                 let thirdChild;

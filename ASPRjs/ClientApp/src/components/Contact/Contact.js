@@ -24,7 +24,7 @@ export class Contact extends Component {
             UserLogin: this.state.login
         })
         .then(() => {this.setState({userMessage: "Wiadomość wysłana"})})
-        .catch((resp) => {console.log(resp.data)})
+        .catch(() => {})
     }
     
     render() {

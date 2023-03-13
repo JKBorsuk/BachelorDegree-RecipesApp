@@ -64,30 +64,31 @@ export class AddRecipe extends Component {
             loading: true
         })
         try {
-        axios.post("Dishes/Recipe/Add/" + this.state.login, {
-            type: this.state.type,
-            name: this.state.name,
-            ingredients: this.state.ingredients,
-            spices: this.state.spices,
-            description: this.state.description,
-            source: this.state.source,
-            photoFileName: document.getElementById('myimage').files[0].name ? this.state.linkname + '-' + document.getElementById('myimage').files[0].name : this.state.filename,
-            linkName: this.state.linkname
-            })
-            .catch(() => {this.setState({message: "Najprawdopodobniej zajęty link", loading: false}); return})
-            .then(() => {
-                try {
-                    this.bodyFormData = new FormData();
-                    this.bodyFormData.append('file', this.refs.file.files[0]);
-                    axios.post("Dishes/Recipe/SaveImage/" + this.state.linkname, this.bodyFormData)
-                    .then(() => {
-                        this.setState({message: "Utworzono", loading: false});
-                    })
-                }
-                catch(err) {
-                    this.setState({message: "Utworzono bez zdjęcia", loading: false})
-                }
-            })
+            let is_image_set = document.getElementById('myimage').files[0] != undefined ? true : false;
+            axios.post("Dishes/Recipe/Add/" + this.state.login, {
+                Type: this.state.type,
+                Name: this.state.name,
+                Ingredients: this.state.ingredients,
+                Spices: this.state.spices,
+                Description: this.state.description,
+                Source: this.state.source,
+                PhotoFileName: is_image_set ? this.state.linkname + '-' + document.getElementById('myimage').files[0].name : this.state.filename,
+                LinkName: this.state.linkname
+                })
+                .catch(() => {this.setState({message: "Najprawdopodobniej zajęty link", loading: false}); return})
+                .then(() => {
+                    try {
+                        this.bodyFormData = new FormData();
+                        this.bodyFormData.append('file', this.refs.file.files[0]);
+                        axios.post("Dishes/Recipe/SaveImage/" + this.state.linkname, this.bodyFormData)
+                        .then(() => {
+                            this.setState({message: "Utworzono", loading: false});
+                        })
+                    }
+                    catch(err) {
+                        this.setState({message: "Utworzono bez zdjęcia", loading: false})
+                    }
+                })
         }
         catch(err) {
             this.setState({message: "Podano błędne wartości lub link jest zajęty", loading: false})

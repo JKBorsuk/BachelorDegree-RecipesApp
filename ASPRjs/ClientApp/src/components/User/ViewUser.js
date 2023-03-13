@@ -78,7 +78,6 @@ export class ViewUser extends Component {
             this.setState({ user: data, loading: false });
         }
         catch (error) {
-            console.log('404 Not Found');
             this.setState({ loading: false });
         }
     }

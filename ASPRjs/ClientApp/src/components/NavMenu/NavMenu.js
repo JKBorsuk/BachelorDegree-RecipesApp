@@ -45,7 +45,7 @@ export class NavMenu extends Component {
       else subpages = resp.data.recipes.length / 5;
       this.setState({recipes: resp.data.recipes, subPagesCount: subpages, actIndex: 0})
     })
-    .catch((err) => {console.log(err.data)})
+    .catch((err) => {})
     .finally(() => {
       this.setState({subPageRecipes: []})
       for(let i = 0; i < this.state.subPagesCount; i++) {

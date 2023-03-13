@@ -14,7 +14,7 @@ export class Logout extends Component {
             .catch(() => {})
         }
         catch(err) {
-            console.log("BŁĄD")
+            
         }
       }
 

@@ -41,14 +41,14 @@ export class ViewRecipe extends Component {
                     userVote: resp.data.userVote,
                     linkname: (String)(link)
                 })
-                axios.put("Dishes/Recipe/" + (String)(link)).catch(() => {console.log("Błąd")})
+                axios.put("Dishes/Recipe/" + (String)(link)).catch(() => {})
             }).catch(() => { window.location.href = "/" })
             .finally(() => {
                 document.getElementById('recipe-description-id').innerHTML = this.state.description.replaceAll('\\n','<br/><br/>');
             })
         }
         catch(err) {
-            console.log(err.status)
+            
         }
     }
 
