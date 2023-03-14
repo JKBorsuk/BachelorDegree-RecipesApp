@@ -30,6 +30,13 @@ body {
 
 /* Home.js and media queries */
 @media (max-width: 575px) {
+  .cookieContainer {
+    border-top-right-radius: 0;
+    border-width: 2px 0 0 0;
+  }
+  #contact-admin-container, #Faq-info-container {
+    border-width: 0 0 2px 0;
+  }
   #main-recipe-background > .container {
     padding-left: 0!important;
     padding-right: 0!important;
@@ -56,9 +63,18 @@ body {
     border-color: white;
     background-color: #292b2c;
   }
+  .recipe-container-add {
+    padding: 10px;
+    border-radius: 0;
+    border-width: 1px 0 1px 0;
+  }
 }
 
 @media (min-width: 576px) {
+  .cookieContainer {
+    border-top-right-radius: 15px;
+    border-width: 2px 2px 0 0;
+  }
   #main-home-container-wrapper {
     border-width: 2px 2px 2px 2px;
     border-style: solid;
@@ -216,6 +232,7 @@ body {
   }
   .recipe-container-add {
     padding: 10px;
+    border-width: 1px 1px 1px 1px;
   }
   .arec-row-input-text {
     margin-top: 10px;
@@ -323,6 +340,30 @@ body {
     /* -- END -- */
 }
 
+
+.cookieContainer {
+  position: fixed;
+  bottom: 0;
+  background-color: #292b2c;
+  border-style: solid;
+  border-color: white;
+  z-index: 1000;
+  padding: 2em 3em;
+}
+.row > #agree, .row > #disagree {
+  border: 1px dashed white;
+  border-radius: 1em;
+  margin: auto;
+  cursor: pointer;
+  transition: 0.4s;
+  text-align: center;
+}
+.row > #agree:hover {
+  background-color: #484b4c;
+}
+.row > #disagree:hover {
+  background-color: #36393a;
+}
 
 /* Loading signature */
 

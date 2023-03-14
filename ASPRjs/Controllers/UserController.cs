@@ -29,8 +29,9 @@ namespace ASPRjs.Controllers
         [HttpGet("IsLogged")]
         public IActionResult isLogged()
         {
-            var user = _userService.getUserByLogin(HttpContext.Session.GetString("user"));
-            if (user == null) return NoContent();
+            var user = _userService.getUserByLogin(HttpContext.Session.GetString("user")); ;
+            if (Request.Cookies["acceptance"] != null && user == null) return NoContent();
+            else if (user == null) return Ok(new SessionDto{ cookies = false });
 
             return Ok(
                 new SessionUserDto
@@ -39,8 +40,18 @@ namespace ASPRjs.Controllers
                     name = user.name,
                     role = user.role,
                     ingredients = _userService.readAllUserIngredients(user.login),
-                    allIngredients = _recipeService.getAllIngredients()
+                    allIngredients = _recipeService.getAllIngredients(),
+                    cookies = Request.Cookies["acceptance"] != null ? true : false
                 });
+        }
+
+        [HttpPut("setCookie")]
+        public IActionResult setCookie()
+        {
+            CookieOptions options = new CookieOptions();
+            options.Expires = DateTime.Now.AddMonths(1);
+            Response.Cookies.Append("acceptance", "1", options);
+            return Ok();
         }
 
         [HttpGet("GetMessages")]

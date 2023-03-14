@@ -33,8 +33,11 @@ export default class App extends Component {
       sub_load1: true,
       sub_load2: true,
       allIngredients: [],
-      userIngredients: []
+      userIngredients: [],
+      cookie: false
     }
+    this.setCookie = this.setCookie.bind(this);
+    this.hideCookie = this.hideCookie.bind(this);
   }
 
   componentDidMount() {
@@ -45,7 +48,8 @@ export default class App extends Component {
           name: resp.data.name, 
           role: resp.data.role,
           allIngredients: resp.data.allIngredients.ingredients,
-          userIngredients: resp.data.ingredients.ingredients
+          userIngredients: resp.data.ingredients.ingredients,
+          cookie: resp.data.cookies
         })
         
         if(resp.status == 204) this.setState({loading: false})
@@ -57,14 +61,38 @@ export default class App extends Component {
     })
     .catch(() => {})
     .finally(() => {
-    this.setState({loading: false})
+      this.setState({loading: false})
     })
+  }
+
+  setCookie() {
+    axios.put("Community/User/setCookie").catch(() => {}).finally(() => this.setState({cookie: true}));
+  }
+  hideCookie() {
+    this.setCookie({cookie: true});
   }
 
   render () {
     return (
       this.state.loading === false ?
       <>
+      {!this.state.cookie ? 
+        <div className='cookieContainer container'>
+          <div className='row'>
+            <div className='col-md-8 my-auto'>Klikając przycisk "Zgoda" wyrażasz zgodę na użycie wymaganych plików cookie do prawidłowego działania aplikacji.</div>
+            <div className='col-md-4 mt-3 mt-md-auto'>
+              <div className='container mt-2'>
+                <div className='row'>
+                  <div id='agree' className='col-5 px-md-2 py-md-3' onClick={this.setCookie}>Zgoda</div>
+                  <div id='disagree' className='col-5 px-md-2 py-md-3' onClick={this.hideCookie}>Ukryj</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+        : 
+        null
+      }
       <Layout appdata={this.state.login} approleA={this.state.sub_load1} approleB={this.state.sub_load2}>
         <Switch>
           <Route exact path='/'><Home appdata={this.state.login}/></Route>

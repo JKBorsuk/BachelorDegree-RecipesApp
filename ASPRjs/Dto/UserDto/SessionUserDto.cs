@@ -7,5 +7,6 @@
         public string login { get; set; }
         public ListIngredientDto ingredients { get; set; }
         public ListIngredientDto allIngredients { get; set; }
+        public bool cookies { get; set; }
     }
 }
