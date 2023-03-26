@@ -17,7 +17,7 @@ export class AddRecipe extends Component {
             description: "*Opis\n\n* - wymagane\n\n Dodanie nowej linii - \\n",
             ingredients: [],
             spices: [],
-            response: this.getData(),
+            response: [],
             message: "",
             filename: "Noimg.png",
             condition: true,
@@ -30,10 +30,10 @@ export class AddRecipe extends Component {
 
     spice = (name) => { return { name: name } }
 
-    getData() {
+    componentDidMount() {
         axios.get("Dishes/Recipe/ViewIngredients")
         .then((resp) => {
-            return resp.data.ingredients;
+            this.setState({response: resp.data.ingredients});
         })
         .catch(() => {})
     }
@@ -81,7 +81,8 @@ export class AddRecipe extends Component {
                         this.bodyFormData.append('file', this.refs.file.files[0]);
                         axios.post("Dishes/Recipe/SaveImage/" + this.state.linkname, this.bodyFormData)
                         .then(() => {
-                            this.setState({message: "Utworzono", loading: false});
+                            alert("Utworzono!");
+                            this.setState({loading: false});
                         })
                     }
                     catch(err) {

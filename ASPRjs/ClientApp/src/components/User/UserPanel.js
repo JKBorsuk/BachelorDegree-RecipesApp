@@ -38,10 +38,13 @@ export class UserPanel extends Component {
     }
 
     componentDidMount() {
-        axios.get("Community/User/Favorites")
-        .then((resp) => {this.setState({favorites: resp.data.recipes})});
-        axios.get("Community/User/History")
-        .then((resp2) => {this.setState({history: resp2.data.recipes})});
+        axios.get("Community/user/UserData").then((resp) => {
+            this.setState({
+                userIngredients: resp.data.userIngredients.ingredients, 
+                favorites: resp.data.favorites.recipes, 
+                history: resp.data.history.recipes
+            });
+        });
     }
 
     onChangeValue(event) {
@@ -84,7 +87,6 @@ export class UserPanel extends Component {
             Name: this.state.ingredient
         })
         .then(() => {
-            this.props.addIngr(this.state.ingredient);
             this.setState({
                 ingredient: "",
                 userIngredients: [...this.state.userIngredients, this.state.ingredient] 

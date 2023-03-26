@@ -14,7 +14,6 @@ code {
 }
 body {
   color: white;
-  background-image: url('bckgrd/pexels-malidate-van-784633.jpg');
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
   background-position: top;
@@ -30,6 +29,16 @@ body {
 
 /* Home.js and media queries */
 @media (max-width: 575px) {
+  #main-home-page {
+    position: relative;
+    bottom: 27px;
+  }
+  #user-panel-wrapper > #user-panel-info {
+    border-width: 0 0 2px 0;
+  }
+  body {
+    background-color: #777777;
+  }
   .cookieContainer {
     border-top-right-radius: 0;
     border-width: 2px 0 0 0;
@@ -71,6 +80,12 @@ body {
 }
 
 @media (min-width: 576px) {
+  body {
+    background-image: url('bckgrd/pexels-malidate-van-784633.jpg');
+  }
+  #user-panel-wrapper > #user-panel-info {
+    border-width: 0 2px 2px 2px;
+  }
   .cookieContainer {
     border-top-right-radius: 15px;
     border-width: 2px 2px 0 0;

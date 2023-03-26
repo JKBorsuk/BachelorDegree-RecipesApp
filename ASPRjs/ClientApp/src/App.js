@@ -37,7 +37,6 @@ export default class App extends Component {
       cookie: false
     }
     this.setCookie = this.setCookie.bind(this);
-    this.hideCookie = this.hideCookie.bind(this);
   }
 
   componentDidMount() {
@@ -48,10 +47,8 @@ export default class App extends Component {
           name: resp.data.name, 
           role: resp.data.role,
           allIngredients: resp.data.allIngredients.ingredients,
-          userIngredients: resp.data.ingredients.ingredients,
-          cookie: resp.data.cookies
+          userIngredients: resp.data.ingredients.ingredients
         })
-        
         if(resp.status == 204) this.setState({loading: false})
         else {
           if(resp.data.role === 3) this.setState({sub_load1: false, sub_load2: false})
@@ -61,15 +58,17 @@ export default class App extends Component {
     })
     .catch(() => {})
     .finally(() => {
-      this.setState({loading: false})
+      axios.get("Community/User/getCookie")
+      .then((resp) => resp.data ? this.setState({cookie: true}) : null)
+      .catch(() => ({}))
+      .finally(() => {this.setState({loading: false})});
     })
   }
 
   setCookie() {
-    axios.put("Community/User/setCookie").catch(() => {}).finally(() => this.setState({cookie: true}));
-  }
-  hideCookie() {
-    this.setCookie({cookie: true});
+    axios.put("Community/User/setCookie")
+    .catch(() => {})
+    .finally(() => this.setState({cookie: true}));
   }
 
   render () {
@@ -83,8 +82,8 @@ export default class App extends Component {
             <div className='col-md-4 mt-3 mt-md-auto'>
               <div className='container mt-2'>
                 <div className='row'>
-                  <div id='agree' className='col-5 px-md-2 py-md-3' onClick={this.setCookie}>Zgoda</div>
-                  <div id='disagree' className='col-5 px-md-2 py-md-3' onClick={this.hideCookie}>Ukryj</div>
+                  <div id='agree' className='col-5 px-2 py-3' onClick={this.setCookie}>Zgoda</div>
+                  <div id='disagree' className='col-5 px-2 py-3' onClick={() => this.setState({cookie: true})}>Ukryj</div>
                 </div>
               </div>
             </div>

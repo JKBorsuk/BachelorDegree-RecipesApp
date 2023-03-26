@@ -46,7 +46,7 @@ export class Home extends Component {
           <p>Pozwól że pomogę Ci rozwiązać Twój problem</p>
 
           <div id="main-home-container-wrapper">
-            {this.state.bestR.length > 2 ?
+            {this.state.bestR ?
               <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
                 <h4>Najwyżej oceniane przepisy:</h4>
                 <div className='row'>
@@ -74,7 +74,7 @@ export class Home extends Component {
               null
             }
 
-            {this.state.popularR.length > 2 ?
+            {this.state.popularR ?
               <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
                 <h4>Najczęściej wyświetlane:</h4>
                 <div className='row'>
@@ -102,7 +102,7 @@ export class Home extends Component {
               null
             }
 
-            {this.state.newest.length > 2 ?
+            {this.state.newest ?
               <div className="main-home-container-3 container" style={{marginBottom: '2.5em'}}>
                 <h4>Najnowsze przepisy:</h4>
                 <div className='row'>
@@ -130,7 +130,7 @@ export class Home extends Component {
               null
             }
 
-            {this.state.smallestR.length > 2 ?
+            {this.state.smallestR ?
               <div className="main-home-container-3 container" style={{marginBottom: '5em'}}>
                 <h4>Mające najmniej składników:</h4>
                 <div className='row'>
