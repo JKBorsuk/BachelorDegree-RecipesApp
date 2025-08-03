@@ -56,6 +56,15 @@ namespace Services
             _userRepository.addIngredient(NIngredient);
             return NIngredient;
         }
+        public UserDataDto getUserData(string login)
+        {
+            UserDataDto userData = new UserDataDto();
+            User user = getUserByLogin_U(login);
+            userData.userIngredients = readAllUserIngredients(login);
+            userData.history = GetHistoryRecipes(user);
+            userData.favorites = GetFavoritesRecipes(user);
+            return userData;
+        }
         public ListIngredientDto readAllUserIngredients(string login)
         {
             var ingredients = _userRepository.readIngredients(login);

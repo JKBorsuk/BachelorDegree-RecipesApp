@@ -11,6 +11,7 @@ namespace Interfaces
         public User addNewUser(RegisterUser user);
         public Dictionary<string, bool> dictionary(int id);
         public void addMulitIngredients(ArrayUIngredientDto userIngredients, string login);
+        public UserDataDto getUserData(string login);
         public UserIngredient AddNewIngredient(UIngredientDto uing, string login);
         public ListIngredientDto readAllUserIngredients(string login);
         public ArrayUserRecipesDto readAllICanCook(string login, int type);
